@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f938960435665fd45946d6ae8c3a10dd, type: 3}
+  m_Name: Quest2
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: Quest2
+  title: Quest2
+  description: desc quest2
+  secret: 0
+  questsRequired:
+  - {fileID: 11400000, guid: 935912ff45ce3f0488073411f016b949, type: 2}
+  taskPrefabs:
+  - {fileID: 3606368001315105743, guid: 629d78d4a43c174488dacab776a39582, type: 3}
+  - {fileID: 4717679531943984634, guid: a67f585d9932da344a0c5c51fba6d613, type: 3}
+  gold: 0
+  experience: 0
