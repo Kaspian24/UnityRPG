@@ -17,7 +17,7 @@ public class Item : MonoBehaviour
 {
 
     [SerializeField]
-    private ItemType itemType;
+    public ItemType itemType;
 
     [SerializeField]
     public int itemId;
@@ -32,7 +32,7 @@ public class Item : MonoBehaviour
     public Sprite sprite;
 
     [SerializeField]
-    private string description;
+    public string description;
 
     private void Start()
     {
