@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum ItemType
 { 
+    None,
     Consumable,
     EquipHead,
     EquipChest,
@@ -13,30 +14,57 @@ public enum ItemType
     EquipHand,
 }
 
+[System.Serializable]
+public struct Stats
+{
+    public int HP;
+    public int MP;
+    public int STR;
+    public int MAG;
+    public int DEF;
+}
+
 public class Item : MonoBehaviour
 {
+    [Header("DATA")]
+    [SerializeField]
+    private ItemType itemType;
 
     [SerializeField]
-    public ItemType itemType;
+    private int itemId;
 
     [SerializeField]
-    public int itemId;
+    private string itemName;
 
     [SerializeField]
-    public string itemName;
+    private int quantity;
 
     [SerializeField]
-    public int quantity;
+    private Sprite sprite;
 
     [SerializeField]
-    public Sprite sprite;
+    private string description;
 
     [SerializeField]
-    public string description;
+    private Stats stats;
+
+    public ItemType ItemType { get => itemType; set => itemType = value; }
+    public int ItemId { get => itemId; set => itemId = value; }
+    public string ItemName { get => itemName; set => itemName = value; }
+    public int Quantity { get => quantity; set => quantity = value; }
+    public Sprite Sprite { get => sprite; set => sprite = value; }
+    public string Description { get => description; set => description = value; }
+    public Stats Stats { get => stats; set => stats = value; }
 
     private void Start()
     {
         
     }
+
+    public void swapStats(Item item)
+    {
+        (this.Stats, item.Stats) = (item.Stats, this.Stats);
+    }
+
 
 }

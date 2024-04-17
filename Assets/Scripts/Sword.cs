@@ -5,15 +5,15 @@ using UnityEngine;
 public class Sword : Item
 {
     [SerializeField]
-    private int attackDamage;
+    public int STR;
 
-    public Sword()
-    {
-        itemType = ItemType.EquipHand;
-        itemName = "Sword";
-        description = "A sharp blade for slashing enemies.";
-        attackDamage = 10;
-    }
+    //public Sword()
+    //{
+    //    itemType = ItemType.EquipHand;
+    //    itemName = "Sword";
+    //    description = "A sharp blade for slashing enemies.";
+    //    attackDamage = 10;
+    //}
     // Start is called before the first frame update
     void Start()
     {

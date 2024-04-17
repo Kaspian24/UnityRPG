@@ -10,9 +10,9 @@ public class Boots : Item
 
     public Boots()
     {
-        itemType = ItemType.EquipBoots;
-        itemName = "Boots";
-        description = "Boots that give you some protection.";
+        ItemType = ItemType.EquipBoots;
+        ItemName = "Boots";
+        Description = "Boots that give you some protection.";
         armor = 10;
     }
     // Start is called before the first frame update

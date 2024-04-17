@@ -9,9 +9,9 @@ public class Helmet : Item
 
     public Helmet()
     {
-        itemType = ItemType.EquipHead;
-        itemName = "Helmet";
-        description = "Helmet that give you some protection.";
+        ItemType = ItemType.EquipHead;
+        ItemName = "Helmet";
+        Description = "Helmet that give you some protection.";
         armor = 15;
     }
     // Start is called before the first frame update

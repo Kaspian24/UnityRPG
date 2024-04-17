@@ -9,9 +9,9 @@ public class Pants : Item
 
     public Pants()
     {
-        itemType = ItemType.EquipLegs;
-        itemName = "Pants";
-        description = "Pants that give you some protection.";
+        ItemType = ItemType.EquipLegs;
+        ItemName = "Pants";
+        Description = "Pants that give you some protection.";
         armor = 20;
     }
     // Start is called before the first frame update

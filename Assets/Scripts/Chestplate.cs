@@ -9,9 +9,9 @@ public class Chestplate : Item
 
     public Chestplate()
     {
-        itemType = ItemType.EquipChest;
-        itemName = "Chestplate";
-        description = "Chestplate that give you some protection.";
+        ItemType = ItemType.EquipChest;
+        ItemName = "Chestplate";
+        Description = "Chestplate that give you some protection.";
         armor = 30;
     }
 

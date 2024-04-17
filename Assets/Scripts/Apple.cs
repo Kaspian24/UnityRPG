@@ -10,9 +10,9 @@ public class Apple : Item
 
     public Apple()
     {
-        itemType = ItemType.Consumable;
-        itemName = "Apple";
-        description = "A sweet, juicy apple that restores some health.";
+        ItemType = ItemType.Consumable;
+        ItemName = "Apple";
+        Description = "A sweet, juicy apple that restores some health.";
         healthRegain = 10;
     }
     // Start is called before the first frame update
