@@ -118,15 +118,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0e217542794a149901b9c10e97bd75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 3
+  hp: 0
+  mp: 0
+  str: 5
+  mag: -2
+  def: 0
+  itemType: 6
   itemId: 1
   itemName: Sword
   quantity: 1
   sprite: {fileID: 21300000, guid: be4ce60e2c9768c44b9b10b9c5258045, type: 3}
   description: Sword
-  stats:
-    HP: 12
-    MP: 12
-    STR: 10
-    MAG: 100
-    DEF: 10

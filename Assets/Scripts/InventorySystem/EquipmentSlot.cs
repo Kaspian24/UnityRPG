@@ -4,74 +4,95 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
-public class EquipmentSlot : InventorySlot, IPointerClickHandler
+public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private Item item;
 
-    public new void AddItem(Item item)
+    [SerializeField]
+    private bool isFull;
+
+    [SerializeField]
+    private GameObject itemPrefab;
+
+    private InventoryManager inventoryManager;
+
+    public bool IsFull { get => isFull; set => isFull = value; }
+    public GameObject ItemPrefab { get => itemPrefab; set => itemPrefab = value; }
+    public InventoryManager InventoryManager { get => inventoryManager; set => inventoryManager = value; }
+    public Item Item { get => item; set => item = value; }
+
+    private void Start()
     {
-        this.ItemId = item.ItemId;
-        this.ItemName = item.ItemName;
-        this.Sprite = item.Sprite;
-        this.ItemType = item.ItemType;
+        InventoryManager = GameObject.Find("InventoryCanvasV.2").GetComponent<InventoryManager>();
+    }
+
+    private void Update()
+    {
+        if(transform.childCount == 0 && IsFull)
+        {
+            DeleteItem();
+        }
+        if (transform.childCount == 1 && !IsFull)
+        {
+            Transform DraggedItem = this.transform.GetChild(0);
+            AddItem(DraggedItem.GetComponent<DraggableItem>().Item);
+        }
+    }
+
+    public virtual void AddItem(Item item)
+    {
+        this.item = item;
         IsFull = true;
 
-        ItemImage.sprite = Sprite;
-        ItemImage.enabled = true;
-
-
-        ItemPrefab = Resources.Load("Prefabs/Items/" + ItemId) as GameObject;
-
-        swapStats(item);
-    }
-
-    public new void DeleteItem()
-    {
-        this.ItemType = ItemType.None;
-        this.ItemId = 0;
-        this.ItemName = "";
-        this.Quantity = 0;
-        this.Sprite = null;
-        IsFull = false;
-
-        ItemImage.sprite = null;
-        ItemImage.enabled = false;
+        ItemPrefab = Resources.Load("Prefabs/Items/" + item.ItemId) as GameObject;
 
     }
 
-    public new void OnPointerClick(PointerEventData eventData)
+    public virtual void DeleteItem()
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        this.isFull = false;
+        this.item = null;
+        this.itemPrefab = null;
+    }
+
+    public void SwapItems(Item item)
+    {
+        (this.item, item) = (item, this.item);
+    }
+
+    public virtual void OnDrop(PointerEventData eventData)
+    {
+        if (!isFull)
         {
-            OnLeftClick();
-        }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            OnRightClick();
-        }
-    }
-
-    private void OnLeftClick()
-    {
-        InventoryManager.DeselectAllSlots();
-        SelectedShader.SetActive(true);
-        IsSelected = true;
-    }
-
-    private void OnRightClick()
-    {
-        
-        if (IsFull)
-        {
-            if (InventoryManager.EquipItem(this))
+            GameObject dropped = eventData.pointerDrag;
+            DraggableItem draggableItem;
+            if(draggableItem = dropped.GetComponent<DraggableItem>())
             {
-                DeleteItem();
+                draggableItem.parentAfterDrag = transform;
+                AddItem(draggableItem.Item);
             }
-            //    Vector3 playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
-            //    Instantiate(itemPrefab, playerTransform, Quaternion.identity);
-            //    DeleteItem();
+            
         }
     }
+
+    public void DropItem()
+    {
+        itemPrefab.GetComponent<Item>().copyItem(this.Item);
+        Vector3 playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
+        Instantiate(ItemPrefab, playerTransform, Quaternion.identity);
+        DeleteItem();
+    }
+
+    public void ShowDescription(Item item)
+    {
+        InventoryManager.showDescription(item);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        InventoryManager.showDescription(null);
+    }
+
 }

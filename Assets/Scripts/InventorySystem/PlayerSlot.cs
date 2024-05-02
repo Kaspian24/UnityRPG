@@ -3,64 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public class PlayerSlot : EquipmentSlot, IPointerClickHandler
+public class PlayerSlot : EquipmentSlot
 {
+    [SerializeField]
+    private ItemType slotType;
 
-    public void EquipItem(Item item)
+    public ItemType SlotType { get => slotType;}
+
+    private void Update()
     {
-
-        this.ItemId = item.ItemId;
-        this.ItemName = item.ItemName;
-        this.Sprite = item.Sprite;
-        IsFull = true;
-
-        ItemImage.sprite = Sprite;
-        ItemImage.enabled = true;
-
-        swapStats(item);
-
-    }
-
-    public new void DeleteItem()
-    {
-        this.ItemName = "";
-        this.Quantity = 0;
-        this.Sprite = null;
-        IsFull = false;
-
-        ItemImage.sprite = null;
-        ItemImage.enabled = false;
-
-    }
-
-    public new void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if(transform.childCount == 0 && IsFull)
         {
-            OnLeftClick();
-        }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            OnRightClick();
-        }
-    }
-
-    private void OnLeftClick()
-    {
-        InventoryManager.DeselectAllSlots();
-        SelectedShader.SetActive(true);
-        IsSelected = true;
-    }
-
-    private void OnRightClick()
-    {
-        if (IsFull)
-        {
-            InventoryManager.UpdateStats(this, false);
-            InventoryManager.AddItem(this);
+            InventoryManager.UpdateStats(Item, false);
             DeleteItem();
+        }
+        if (transform.childCount == 1 && !IsFull)
+        {
+            Transform DraggedItem = this.transform.GetChild(0);
+            AddItem(DraggedItem.GetComponent<DraggableItem>().Item);
+            InventoryManager.UpdateStats(Item, true);
+        }
+    }
 
+    public override void OnDrop(PointerEventData eventData)
+    {
+        if (!IsFull)
+        {
+            GameObject dropped = eventData.pointerDrag;
+            DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
+            if (slotType == draggableItem.Item.ItemType)
+            {
+                draggableItem.parentAfterDrag = transform;
+                AddItem(draggableItem.Item);
+                InventoryManager.UpdateStats(draggableItem.Item, true);
+            }
         }
     }
 }

@@ -1,9 +1,13 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -14,6 +18,9 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject EquipmentMenu;
+
+    [SerializeField]
+    private GameObject InventoryPanel;
 
     [SerializeField]
     private Camera uiCamera;
@@ -28,11 +35,10 @@ public class InventoryManager : MonoBehaviour
     private PlayerSlot[] playerSlots;
 
     [SerializeField]
-    private TextMeshProUGUI description;
+    private GameObject scrollPanel;
 
-    private bool inventoryActivated;
-    private bool equipmentActivated;
-
+    [SerializeField]
+    private GameObject slotPrefab;
 
     [Header("STATS")]
     [SerializeField]
@@ -50,6 +56,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private int DEF;
 
+
+    [Header("UI ELEMENTS")]
     [SerializeField]
     private TextMeshProUGUI HpText; 
     [SerializeField]
@@ -61,12 +69,19 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI DefText;
 
+    [SerializeField]
+    private GameObject descriptionPanel;
+    [SerializeField]
+    private TextMeshProUGUI itemName;
+    [SerializeField]
+    private TextMeshProUGUI itemDescription;
+
+    private bool inventoryOpen = false;
 
     void Start()
     {
         GameObject item = GameObject.FindGameObjectWithTag("Item");
         Item i = item.GetComponent<Item>();
-        AddItem(i);
         AddItem(i);
         Destroy(item);
     }
@@ -74,52 +89,52 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I) && (inventoryActivated || equipmentActivated))
+        if(Input.GetKeyDown(KeyCode.I) && inventoryOpen)
         {
             Time.timeScale = 1;
+            descriptionPanel.SetActive(false);
+            InventoryPanel.SetActive(false);
             InventoryMenu.SetActive(false);
             EquipmentMenu.SetActive(false);
             uiCamera.enabled = false;
-            inventoryActivated = false;
-            equipmentActivated = false;
+            inventoryOpen = false;
         }
-        else if(Input.GetKeyDown(KeyCode.I) && !inventoryActivated && !equipmentActivated)
+        else if (Input.GetKeyDown(KeyCode.I) && !inventoryOpen)
         {
             Time.timeScale = 0;
+            InventoryPanel.SetActive(true);
             InventoryMenu.SetActive(true);
             uiCamera.enabled = true;
-            inventoryActivated = true;
+            inventoryOpen = true;
         }
-        else if(Input.GetKeyDown(KeyCode.E) && inventoryActivated)
-        {
-            InventoryMenu.SetActive(false);
-            inventoryActivated = false;
-            EquipmentMenu.SetActive(true);
-            equipmentActivated = true;
-
-        }
-        else if(Input.GetKeyDown(KeyCode.Q) && equipmentActivated)
-        {
-            InventoryMenu.SetActive(true);
-            inventoryActivated=true;
-            EquipmentMenu.SetActive(false);
-            equipmentActivated = false;
-        }
-
     }
 
     public void AddItem(Item item)
     {
+
         if (item.ItemType == ItemType.Consumable)
         {
             for (int i = 0; i < inventorySlots.Length; i++)
             {
                 if (!inventorySlots[i].IsFull)
                 {
-                    inventorySlots[i].AddItem(item);
+
+                    GameObject draggableItem = new GameObject("DraggableItem");
+                    draggableItem.AddComponent<Image>();
+                    draggableItem.AddComponent<DraggableItem>();
+                    draggableItem.AddComponent<Item>();
+                    draggableItem.GetComponent<Item>().copyItem(item);
+                    draggableItem.GetComponent<DraggableItem>().Item = draggableItem.GetComponent<Item>();
+                    draggableItem.GetComponent<Image>().sprite = item.Sprite;
+                    draggableItem.GetComponent<DraggableItem>().parentAfterDrag = inventorySlots[i].transform;
+                    draggableItem.GetComponent<DraggableItem>().Image = draggableItem.GetComponent<Image>();
+
+                    draggableItem.transform.SetParent(inventorySlots[i].transform);
+
+                    inventorySlots[i].AddItem(draggableItem.GetComponent<Item>());
                     break;
                 }
-                if (inventorySlots[i].ItemId == item.ItemId)
+                if (inventorySlots[i].Item.ItemId == item.ItemId)
                 {
                     inventorySlots[i].AddExistingItem(item.Quantity);
                     break;
@@ -132,34 +147,32 @@ public class InventoryManager : MonoBehaviour
             {
                 if (!equipmentSlots[i].IsFull)
                 {
-                    equipmentSlots[i].AddItem(item);
+                    GameObject draggableItem = new GameObject("DraggableItem");
+                    draggableItem.AddComponent<Image>();
+                    draggableItem.AddComponent<DraggableItem>();
+                    draggableItem.AddComponent<Item>();
+                    draggableItem.GetComponent<Item>().copyItem(item);
+                    draggableItem.GetComponent<DraggableItem>().Item = draggableItem.GetComponent<Item>();
+                    draggableItem.GetComponent<Image>().sprite = item.Sprite;
+                    draggableItem.GetComponent<DraggableItem>().parentAfterDrag = equipmentSlots[i].transform;
+                    draggableItem.GetComponent<DraggableItem>().Image = draggableItem.GetComponent<Image>();
+
+                    draggableItem.transform.SetParent(equipmentSlots[i].transform);
+
+                    equipmentSlots[i].AddItem(draggableItem.GetComponent<Item>());
                     break;
                 }
             }
         }
     }
 
-    public bool EquipItem(Item item)
-    {
-        for (int i = 0; i < playerSlots.Length; i++)
-        {
-            if (playerSlots[i].ItemType == item.ItemType && !playerSlots[i].IsFull)
-            {
-                playerSlots[i].EquipItem(item);
-                UpdateStats(playerSlots[i], true);
-                return true;
-            }
-        }
-        return false;
-    }
-
     public bool UseItem(Item item)
     {
         if (HP < MaxHP)
         {
-            if ((HP + item.Stats.HP) <= MaxHP)
+            if ((HP + item.HP) <= MaxHP)
             {
-                HP += item.Stats.HP;
+                HP += item.HP;
             }
             else
             {
@@ -188,19 +201,19 @@ public class InventoryManager : MonoBehaviour
     {
         if(equipped)
         {
-            MaxHP += item.Stats.HP;
-            MaxMP += item.Stats.MP;
-            STR += item.Stats.STR;
-            MAG += item.Stats.MAG;
-            DEF += item.Stats.DEF;
+            MaxHP += item.HP;
+            MaxMP += item.MP;
+            STR += item.STR;
+            MAG += item.MAG;
+            DEF += item.DEF;
         }
         else if(!equipped)
         {
-            MaxHP -= item.Stats.HP;
-            MaxMP -= item.Stats.MP;
-            STR -= item.Stats.STR;
-            MAG -= item.Stats.MAG;
-            DEF -= item.Stats.DEF;
+            MaxHP -= item.HP;
+            MaxMP -= item.MP;
+            STR -= item.STR;
+            MAG -= item.MAG;
+            DEF -= item.DEF;
         }
 
         HpText.text = "HP - " + HP.ToString() + "/" + MaxHP.ToString();
@@ -212,23 +225,56 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public void DeselectAllSlots()
+    public void openInventory()
     {
-        for (int i = 0; i < inventorySlots.Length; i++)
+        InventoryMenu.SetActive(true);
+        EquipmentMenu.SetActive(false);
+    }
+
+    public void openEquipment()
+    {
+        InventoryMenu.SetActive(false);
+        EquipmentMenu.SetActive(true);
+    }
+
+    public void showDescription(Item item)
+    {
+        if (item != null)
         {
-            inventorySlots[i].SelectedShader.SetActive(false);
-            inventorySlots[i].IsSelected = false;
+            descriptionPanel.SetActive(true);
+            itemName.text = item.ItemName;
+            if (item.ItemType == ItemType.Consumable)
+            {
+                itemDescription.text = item.Description + "\n\nQuantity: " + item.Quantity;
+                
+            }
+            else
+            {
+                itemDescription.text = item.Description + "\n" + item.PrintStats();
+            }
+            itemName.enabled = true;
+            itemDescription.enabled = true;
+
         }
-        for(int i = 0; i < equipmentSlots.Length; i++)
+        else
         {
-            equipmentSlots[i].SelectedShader.SetActive(false);
-            equipmentSlots[i].IsSelected = false;
+            descriptionPanel.SetActive(false);
+            itemName.enabled = false;
+            itemDescription.enabled = false;
         }
-        for (int i = 0; i < playerSlots.Length; i++)
+        
+        
+    }
+
+    public void AddSlots()
+    {
+        RectTransform rectTransform = scrollPanel.GetComponent<RectTransform>();
+        rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, rectTransform.offsetMin.y - 110);
+        for (int i = 0; i < 7; i++)
         {
-            playerSlots[i].SelectedShader.SetActive(false);
-            playerSlots[i].IsSelected = false;
+            Instantiate(slotPrefab, scrollPanel.transform);
         }
     }
+    
 
 }
