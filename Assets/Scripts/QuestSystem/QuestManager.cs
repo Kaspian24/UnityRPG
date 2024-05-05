@@ -17,11 +17,13 @@ public class QuestManager : MonoBehaviour
     {
         GameEventsManager.Instance.questEvents.OnQuestStart += QuestStart;
         GameEventsManager.Instance.questEvents.OnTaskComplete += TaskComplete;
+        GameEventsManager.Instance.questEvents.OnTaskDataChange += TaskDataChange;
     }
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.OnQuestStart -= QuestStart;
         GameEventsManager.Instance.questEvents.OnTaskComplete -= TaskComplete;
+        GameEventsManager.Instance.questEvents.OnTaskDataChange -= TaskDataChange;
     }
     private void Start()
     {
@@ -72,6 +74,11 @@ public class QuestManager : MonoBehaviour
     {
         // ToDo when there's player stats and inventory
         Debug.Log("Given Reward");
+    }
+    private void TaskDataChange(string questId, int taskIndex, TaskData taskData)
+    {
+        Quest quest = questsDict[questId];
+        quest.UpdateTaskData(taskIndex, taskData);
     }
     private bool RequirementsMet(Quest quest)
     {

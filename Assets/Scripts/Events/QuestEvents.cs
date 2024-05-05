@@ -19,4 +19,10 @@ public class QuestEvents
     {
         OnTaskComplete?.Invoke(questId);
     }
+
+    public event Action<string, int, TaskData> OnTaskDataChange;
+    public void TaskDataChange(string questId, int taskIndex, TaskData taskData)
+    {
+        OnTaskDataChange?.Invoke(questId, taskIndex, taskData);
+    }
 }
