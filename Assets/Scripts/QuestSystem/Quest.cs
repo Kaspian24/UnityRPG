@@ -6,6 +6,7 @@ public class Quest
     public QuestState state;
     private int currentTask;
     public TaskData[] taskDatas;
+    public System.DateTime lastChanged;
 
     public Quest(QuestStaticSO questStaticSO)
     {
@@ -13,6 +14,7 @@ public class Quest
         state = QuestState.CannotStart;
         currentTask = 0;
         taskDatas = new TaskData[staticData.taskPrefabs.Length];
+        lastChanged = System.DateTime.MinValue;
         for (int i = 0; i < taskDatas.Length; i++)
         {
             taskDatas[i] = new TaskData();
@@ -24,6 +26,7 @@ public class Quest
         state = questData.state;
         currentTask = questData.currentTask;
         taskDatas = questData.taskDatas;
+        lastChanged = System.DateTime.MinValue;
     }
     public bool NextTask(Transform parrentTransform)
     {
@@ -44,5 +47,6 @@ public class Quest
     public void UpdateTaskData(int taskIndex, TaskData taskData)
     {
         taskDatas[taskIndex] = taskData;
+        lastChanged = System.DateTime.Now;
     }
 }

@@ -7,7 +7,7 @@ public abstract class Task : MonoBehaviour
     private bool isCompleted;
     private string questId;
     private int taskIndex;
-    private List<Tuple<string, bool>> log;
+    private List<Tuple<string, bool>> log; // <task part description visible to player, isTaskPartFinished>
 
     public void InitializeTask(string questId, int taskIndex, string taskData)
     {

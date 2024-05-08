@@ -91,4 +91,11 @@ public class QuestManager : MonoBehaviour
         }
         return true;
     }
+
+    public List<Quest> GetQuestsSortedByLastChanged()
+    {
+        List<Quest> questsList = new List<Quest>(questsDict.Values);
+        questsList.Sort((a, b) => a.lastChanged.CompareTo(b.lastChanged));
+        return questsList;
+    }
 }
