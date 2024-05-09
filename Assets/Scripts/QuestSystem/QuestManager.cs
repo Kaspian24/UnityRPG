@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
+    public static QuestManager Instance { get; private set; }
     private Dictionary<string, Quest> questsDict;
     private void Awake()
     {
+        Instance = this;
+
         questsDict = new Dictionary<string, Quest>();
         QuestStaticSO[] questsToLoad = Resources.LoadAll<QuestStaticSO>("Quests"); // Load SO's from location
         foreach (QuestStaticSO questStaticSO in questsToLoad)
@@ -94,8 +97,14 @@ public class QuestManager : MonoBehaviour
 
     public List<Quest> GetQuestsSortedByLastChanged()
     {
-        List<Quest> questsList = new List<Quest>(questsDict.Values);
-        questsList.Sort((a, b) => a.lastChanged.CompareTo(b.lastChanged));
+        List<Quest> questsList = new(questsDict.Values);
+        questsList.Sort((a, b) => b.lastChanged.CompareTo(a.lastChanged));
         return questsList;
+    }
+
+    public Quest GetQuestById(string questId)
+    {
+        Quest quest = questsDict[questId];
+        return quest;
     }
 }

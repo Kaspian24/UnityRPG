@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8364965459402469619
+--- !u!1 &8366170729878670563
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8998475345702973069}
-  - component: {fileID: -714510833534352188}
+  - component: {fileID: 6617089505444483456}
+  - component: {fileID: -7799510834903548502}
   m_Layer: 0
-  m_Name: Quest3_Task3
+  m_Name: Quest2Task2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8998475345702973069
+--- !u!4 &6617089505444483456
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8364965459402469619}
+  m_GameObject: {fileID: 8366170729878670563}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,15 +32,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-714510833534352188
+--- !u!114 &-7799510834903548502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8364965459402469619}
+  m_GameObject: {fileID: 8366170729878670563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa4ede4b3eeb164f9d24f64cc07b79a, type: 3}
+  m_Script: {fileID: 11500000, guid: 21b1906c2fb68db42a4609227d878536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: "Zatrzymaj dodatkow\u0105 fal\u0119 wrog\xF3w."
+  enemiesToKill:
+  - enemyType: red
+    enemyCount: 2
+    displayedNameInSentence: czerwonych

@@ -3,14 +3,14 @@ public class QuestData
 {
     public QuestState state;
     public int currentTask;
-    public TaskData[] taskDatas;
+    public TaskData[] tasksData;
     public System.DateTime lastChanged;
 
-    public QuestData(QuestState state, int currentTask, TaskData[] taskDatas, System.DateTime lastChanged)
+    public QuestData(QuestState state, int currentTask, TaskData[] tasksData, System.DateTime lastChanged)
     {
         this.state = state;
         this.currentTask = currentTask;
-        this.taskDatas = taskDatas;
+        this.tasksData = tasksData;
         this.lastChanged = lastChanged;
     }
 }

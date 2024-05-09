@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7834190454191497968
+--- !u!1 &7142598169051919200
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6797968458811749433}
-  - component: {fileID: 6857620464499399259}
+  - component: {fileID: 6718911786562835385}
+  - component: {fileID: -2751324795997690212}
   m_Layer: 0
-  m_Name: Quest4_Task1
+  m_Name: Quest3Task3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6797968458811749433
+--- !u!4 &6718911786562835385
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7834190454191497968}
+  m_GameObject: {fileID: 7142598169051919200}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,15 +32,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6857620464499399259
+--- !u!114 &-2751324795997690212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7834190454191497968}
+  m_GameObject: {fileID: 7142598169051919200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce700c6d7528cd144874b7d73ca70bc2, type: 3}
+  m_Script: {fileID: 11500000, guid: 21b1906c2fb68db42a4609227d878536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: "Zatrzymaj dwie fale wrog\xF3w na raz."
+  enemiesToKill:
+  - enemyType: orange
+    enemyCount: 2
+    displayedNameInSentence: "pomara\u0144czowych"
+  - enemyType: yellow
+    enemyCount: 3
+    displayedNameInSentence: "\u017C\xF3\u0142tych"

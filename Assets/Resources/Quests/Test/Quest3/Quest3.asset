@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: Quest3
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Quest3
-  title: Quest3
-  description: 
+  title: "Teraz jest ich dw\xF3ch"
+  description: "Ataki nie ustaj\u0105, trzeba dzia\u0142a\u0107!"
   secret: 0
   questsRequired:
   - {fileID: 11400000, guid: 935912ff45ce3f0488073411f016b949, type: 2}
-  - {fileID: 11400000, guid: 78a5240d40eee9c4a9a28d350604c46d, type: 2}
+  - {fileID: 11400000, guid: f0f578626429540479a336b2d781258f, type: 2}
   taskPrefabs:
-  - {fileID: 8364965459402469619, guid: 8c9f0a86c7292dc42b9910acc2366d28, type: 3}
-  - {fileID: 8364965459402469619, guid: 060051547ce6dac41935b9b29cbe5b29, type: 3}
-  - {fileID: 8364965459402469619, guid: 0cc6e48d1806cfe41b850a7a9b5fe084, type: 3}
+  - {fileID: 7142598169051919200, guid: b8babdc12f935a3419f05c33095fb2f7, type: 3}
   gold: 0
   experience: 0

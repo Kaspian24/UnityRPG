@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Quest4
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Quest4
-  title: 
-  description: 
-  secret: 0
+  title: Ukryty quest
+  description: Tajny opis
+  secret: 1
   questsRequired: []
   taskPrefabs:
-  - {fileID: 7834190454191497968, guid: 2b78145040ba87246952615e323187d3, type: 3}
+  - {fileID: 765051389670817995, guid: c15a8923239525a45b77facaea90de2a, type: 3}
   gold: 0
   experience: 0

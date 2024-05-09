@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "QuestStaticSO", menuName = "ScriptableObjects/QuestStaticSO", order = 1)]
+[CreateAssetMenu(fileName = "QuestStaticSO", menuName = "Quests/QuestStaticSO", order = 1)]
 public class QuestStaticSO : ScriptableObject
 {
     [field: SerializeField]
@@ -8,6 +8,7 @@ public class QuestStaticSO : ScriptableObject
 
     [Header("Info")]
     public string title;
+    [TextArea]
     public string description;
     public bool secret;
 
@@ -24,9 +25,9 @@ public class QuestStaticSO : ScriptableObject
 
     private void OnValidate() // Enforces that the id and file name is the same as Id
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         Id = this.name;
         UnityEditor.EditorUtility.SetDirty(this);
-        #endif
+#endif
     }
 }

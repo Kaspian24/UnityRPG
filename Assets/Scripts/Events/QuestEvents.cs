@@ -25,4 +25,10 @@ public class QuestEvents
     {
         OnTaskDataChange?.Invoke(questId, taskIndex, taskData);
     }
+
+    public event Action<string> OnEnemyDeath;
+    public void EnemyDeath(string enemyType)
+    {
+        OnEnemyDeath?.Invoke(enemyType);
+    }
 }

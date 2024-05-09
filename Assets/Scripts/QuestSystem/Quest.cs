@@ -4,8 +4,8 @@ public class Quest
 {
     public QuestStaticSO staticData;
     public QuestState state;
-    private int currentTask;
-    public TaskData[] taskDatas;
+    public int currentTask;
+    public TaskData[] tasksData;
     public System.DateTime lastChanged;
 
     public Quest(QuestStaticSO questStaticSO)
@@ -13,11 +13,11 @@ public class Quest
         this.staticData = questStaticSO;
         state = QuestState.CannotStart;
         currentTask = 0;
-        taskDatas = new TaskData[staticData.taskPrefabs.Length];
+        tasksData = new TaskData[staticData.taskPrefabs.Length];
         lastChanged = System.DateTime.MinValue;
-        for (int i = 0; i < taskDatas.Length; i++)
+        for (int i = 0; i < tasksData.Length; i++)
         {
-            taskDatas[i] = new TaskData();
+            tasksData[i] = new TaskData();
         }
     }
     public Quest(QuestStaticSO questStaticSO, QuestData questData)
@@ -25,11 +25,15 @@ public class Quest
         this.staticData = questStaticSO;
         state = questData.state;
         currentTask = questData.currentTask;
-        taskDatas = questData.taskDatas;
+        tasksData = questData.tasksData;
         lastChanged = System.DateTime.MinValue;
     }
     public bool NextTask(Transform parrentTransform)
     {
+        if (1 + currentTask >= staticData.taskPrefabs.Length)
+        {
+            return false;
+        }
         currentTask++;
         return InstantiateTask(parrentTransform);
     }
@@ -39,14 +43,14 @@ public class Quest
         {
             GameObject taskPrefab = staticData.taskPrefabs[currentTask];
             Task task = Object.Instantiate<GameObject>(taskPrefab, parrentTransform).GetComponent<Task>();
-            task.InitializeTask(staticData.Id, currentTask, taskDatas[currentTask].state);
+            task.InitializeTask(staticData.Id, currentTask, tasksData[currentTask].state);
             return true;
         }
         return false;
     }
     public void UpdateTaskData(int taskIndex, TaskData taskData)
     {
-        taskDatas[taskIndex] = taskData;
+        tasksData[taskIndex] = taskData;
         lastChanged = System.DateTime.Now;
     }
 }

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Quest1
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Quest1
-  title: Quest1
-  description: desc
+  title: Czerwoni
+  description: "Czerwoni nam zagra\u017Caj\u0105, trzeba ich powstrzyma\u0107!"
   secret: 0
   questsRequired: []
   taskPrefabs:
-  - {fileID: 2178124230724067448, guid: f485a7cb90b8e33448452f9fe16f3859, type: 3}
+  - {fileID: 2585358507067876231, guid: d9e74110d118e07448ee8ac3c8cf445f, type: 3}
   gold: 0
   experience: 0

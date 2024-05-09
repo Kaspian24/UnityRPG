@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Task : MonoBehaviour
 {
+    public string description;
     private bool isCompleted;
     private string questId;
     private int taskIndex;
-    private List<Tuple<string, bool>> log; // <task part description visible to player, isTaskPartFinished>
 
-    public void InitializeTask(string questId, int taskIndex, string taskData)
+    public void InitializeTask(string questId, int taskIndex, string taskState)
     {
         this.questId = questId;
         this.taskIndex = taskIndex;
-        if (!string.IsNullOrEmpty(taskData))
+        if (!string.IsNullOrEmpty(taskState))
         {
-            SetTaskData(taskData);
+            SetTaskState(taskState);
         }
     }
     protected void Complete()
@@ -27,9 +25,9 @@ public abstract class Task : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    protected void ChangeData(string state)
+    protected void ChangeData(string state, (string, bool)[] log)
     {
-        GameEventsManager.Instance.questEvents.TaskDataChange(questId, taskIndex, new TaskData(state, log));
+        GameEventsManager.Instance.questEvents.TaskDataChange(questId, taskIndex, new TaskData(state, description, log));
     }
-    protected abstract void SetTaskData(string taskData);
+    protected abstract void SetTaskState(string taskState);
 }
