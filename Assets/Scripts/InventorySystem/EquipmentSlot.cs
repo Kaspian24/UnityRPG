@@ -25,7 +25,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 
     private void Start()
     {
-        InventoryManager = GameObject.Find("InventoryCanvasV.2").GetComponent<InventoryManager>();
+        InventoryManager = GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>();
     }
 
     private void Update()
