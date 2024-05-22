@@ -3,6 +3,10 @@ using UnityEngine;
 [System.Serializable]
 public class QuestGiver : MonoBehaviour
 {
+    [Header("Ink Json Dialogue")]
+    [SerializeField]
+    private TextAsset inkJson;
+
     public QuestStaticSO questSO;
     private string questId;
     private void Awake()
@@ -29,7 +33,18 @@ public class QuestGiver : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        GameEventsManager.Instance.questEvents.QuestStart(questId);
-        Destroy(gameObject);
+        if(other.tag != "Player")
+        {
+            return;
+        }
+        if (inkJson)
+        {
+            DialogueManager.Instance.StartDialogue(inkJson);
+        }
+        else
+        {
+            GameEventsManager.Instance.questEvents.QuestStart(questId);
+            Destroy(gameObject);
+        }
     }
 }

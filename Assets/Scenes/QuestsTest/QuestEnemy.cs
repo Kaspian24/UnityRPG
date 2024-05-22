@@ -13,11 +13,19 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag != "Player")
+        {
+            return;
+        }
         GameEventsManager.Instance.questEvents.EnemyDeath(enemy);
         GetComponent<Renderer>().material.color = Color.cyan;
     }
     private void OnTriggerExit(Collider other)
     {
+        if (other.tag != "Player")
+        {
+            return;
+        }
         GetComponent<Renderer>().material.color = color;
     }
 }
