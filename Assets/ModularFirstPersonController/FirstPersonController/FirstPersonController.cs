@@ -369,6 +369,18 @@ public class FirstPersonController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) )
         { Attack(); }
 
+        if (Input.GetMouseButton(2))
+        {
+            isAiming = true;
+            CastSpell(); 
+        }
+
+        if (Input.GetMouseButtonUp(2))
+        { 
+            isAiming = false;
+            ThrowSpell(); 
+        }
+
         SetAnimations();
     }
 
@@ -485,9 +497,13 @@ public class FirstPersonController : MonoBehaviour
 
     private void Crouch()
     {
+        if (isSprinting)
+        {
+            return; // Do nothing if the player is sprinting
+        }
         // Stands player up to full height
         // Brings walkSpeed back up to original speed
-        if(isCrouched)
+        if (isCrouched)
         {
             transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
             walkSpeed /= speedReduction;
@@ -545,6 +561,8 @@ public class FirstPersonController : MonoBehaviour
     public const string JUMP = "Jump";
     public const string CROUCH = "Crouch";
     public const string ATTACK1 = "Attack 1";
+    public const string CASTSPELL = "Cast Spell";
+    public const string THROWSPELL = "Throw Spell";
 
     string currentAnimationState;
 
@@ -561,7 +579,7 @@ public class FirstPersonController : MonoBehaviour
     void SetAnimations()
     {
         // If player is not attacking
-        if (!attacking)
+        if (!attacking && !isAiming)
         {
             if(isGrounded && isWalking)
             { ChangeAnimationState(WALK); }
@@ -590,6 +608,8 @@ public class FirstPersonController : MonoBehaviour
     public AudioClip swordSwing;
     public AudioClip hitSound;
 
+    private bool isAiming = false;
+    private bool spellReady = false;
     bool attacking = false;
     bool readyToAttack = true;
  
@@ -609,8 +629,31 @@ public class FirstPersonController : MonoBehaviour
         ChangeAnimationState(ATTACK1);
     }
 
+    private void CastSpell()
+    {
+        if (!isAiming || !isGrounded || isSprinting || attacking) return;
+
+        attacking = true;
+        spellReady = true;
+
+        ChangeAnimationState(CASTSPELL);
+
+        //Invoke(nameof(ResetAttack), attackSpeed); // Upewnij się, że ResetAttack przywróci domyślne stany
+    }
+
+    private void ThrowSpell()
+    {
+        if (!spellReady) return;
+
+        isAiming = false;
+        ChangeAnimationState(THROWSPELL);
+
+        Invoke(nameof(ResetAttack), attackSpeed);
+    }
+
     void ResetAttack()
     {
+        spellReady = false;
         attacking = false;
         readyToAttack = true;
     }
