@@ -1,20 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MinimapMarkerManager : MonoBehaviour
+public class PlayerMarkerManager : MonoBehaviour
 {
     public GameObject markerPrefab;
     public RectTransform minimapImage;
     public Camera minimapCamera;
+    private bool initial = true;
 
-    void Update()
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Vector3 playerPosition = GetPlayerPosition();
-            Vector2 minimapPosition = WorldToMinimap(playerPosition);
-            AddMarker(minimapPosition);
-        }
+        Initialize(GetPlayerPosition());
+    }
+
+    public void Initialize(Vector3 playerPosition)
+    {
+        Vector2 minimapPosition = WorldToMinimap(playerPosition);
+        AddMarker(minimapPosition);
     }
 
     Vector3 GetPlayerPosition()
@@ -38,7 +40,7 @@ public class MinimapMarkerManager : MonoBehaviour
     void AddMarker(Vector2 position)
     {
         GameObject newMarker = Instantiate(markerPrefab);
-        newMarker.transform.SetParent(null);
+        newMarker.transform.SetParent(minimapImage, false);
         newMarker.GetComponent<RectTransform>().anchoredPosition = position;
     }
 }
