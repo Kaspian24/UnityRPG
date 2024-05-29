@@ -1,6 +1,8 @@
-EXTERNAL startQuest(questId)
-EXTERNAL isQuestStartable(questId)
-EXTERNAL triggerEvent(npcName, conversationTopic)
+INCLUDE ../../globals.ink
+
+{ isDialogueStartable("NPC1", "zakonczonoZadanie"):
+-> Quest1Task2Finish
+}
 
 { isQuestStartable("Quest1"):
 -> Quest1Startable
@@ -17,4 +19,9 @@ Potrzebujemy twojej pomocy z odparciem najazdu czerwonych. Czy podejmujesz się 
 -> DONE
 + nie
 Szkoda
+-> DONE
+
+== Quest1Task2Finish ==
+~disableTopic("NPC1", "zakonczonoZadanie")
+Dziękuję za pomoc, bez ciebie by się nie udało.
 -> DONE

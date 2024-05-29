@@ -30,32 +30,69 @@ public class DialogueManager : MonoBehaviour
 
     private List<GameObject> instantiatedChoices = new List<GameObject>();
 
+    private HashSet<(string, string)> enabledTopics = new HashSet<(string, string)>();
+
     private void Start()
     {
         dialoguePanel.SetActive(false);
     }
-
+    private void EnableTopic(string npcName, string conversationTopic)
+    {
+        enabledTopics.Add((npcName, conversationTopic));
+    }
+    private void DisableTopic(string npcName, string conversationTopic)
+    {
+        enabledTopics.Remove((npcName, conversationTopic));
+    }
     private void Awake()
     {
         Instance = this;
     }
-
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.dialogueEvents.OnEnableTopic += EnableTopic;
+        GameEventsManager.Instance.dialogueEvents.OnDisableTopic += DisableTopic;
+    }
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.dialogueEvents.OnEnableTopic -= EnableTopic;
+        GameEventsManager.Instance.dialogueEvents.OnDisableTopic -= DisableTopic;
+    }
     public void StartDialogue(TextAsset inkJson)
     {
         Pause();
 
         story = new Story(inkJson.text);
 
-        story.BindExternalFunction("startQuest", (string questId) => {
+        story.BindExternalFunction("startQuest", (string questId) =>
+        {
             GameEventsManager.Instance.questEvents.QuestStart(questId);
         });
 
-        story.BindExternalFunction("isQuestStartable", (string questId) => {
+        story.BindExternalFunction("isQuestStartable", (string questId) =>
+        {
             return QuestManager.Instance.GetQuestById(questId).state == QuestState.CanStart;
         });
 
-        story.BindExternalFunction("triggerEvent", (string npcName, string conversationTopic) => {
-            GameEventsManager.Instance.dialogueEventManager.NpcTalkedTo(npcName, conversationTopic);
+        story.BindExternalFunction("topicTalkedAbout", (string npcName, string conversationTopic) =>
+        {
+            GameEventsManager.Instance.dialogueEvents.TopicTalkedAbout(npcName, conversationTopic);
+        });
+
+        story.BindExternalFunction("isDialogueStartable", (string npcName, string conversationTopic) =>
+        {
+            bool test = enabledTopics.Contains((npcName, conversationTopic));
+            return test;
+        });
+
+        story.BindExternalFunction("enableTopic", (string npcName, string conversationTopic) =>
+        {
+            GameEventsManager.Instance.dialogueEvents.EnableTopic(npcName, conversationTopic);
+        });
+
+        story.BindExternalFunction("disableTopic", (string npcName, string conversationTopic) =>
+        {
+            GameEventsManager.Instance.dialogueEvents.DisableTopic(npcName, conversationTopic);
         });
 
         dialoguePanel.SetActive(true);
@@ -129,7 +166,7 @@ public class DialogueManager : MonoBehaviour
         {
             Button dialogueChoice = Instantiate(dialogueChoicePrefab, dialogueChoices.transform);
             dialogueChoice.GetComponentInChildren<TextMeshProUGUI>().text = choice.text;
-            int buttonIndexCopy = buttonIndex; // to tak powinno dzia³aæ?
+            int buttonIndexCopy = buttonIndex;
             dialogueChoice.onClick.AddListener(delegate () { MakeChoice(buttonIndexCopy); ContinueStory(); ContinueStory(); });
             instantiatedChoices.Add(dialogueChoice.gameObject);
             buttonIndex++;

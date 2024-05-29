@@ -1,0 +1,6 @@
+EXTERNAL startQuest(questId)
+EXTERNAL isQuestStartable(questId)
+EXTERNAL topicTalkedAbout(npcName, conversationTopic)
+EXTERNAL isDialogueStartable(npcName, conversationTopic)
+EXTERNAL enableTopic(npcName, conversationTopic)
+EXTERNAL disableTopic(npcName, conversationTopic)

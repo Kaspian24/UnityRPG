@@ -1,6 +1,4 @@
-EXTERNAL startQuest(questId)
-EXTERNAL isQuestStartable(questId)
-EXTERNAL triggerEvent(npcName, conversationTopic)
+INCLUDE ../../globals.ink
 
 {isQuestStartable("Quest4"):
 ~startQuest("Quest4")
