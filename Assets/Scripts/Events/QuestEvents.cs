@@ -31,4 +31,16 @@ public class QuestEvents
     {
         OnEnemyDeath?.Invoke(enemyType);
     }
+
+    public event Action<string> OnQuestTrack;
+    public void QuestTrack(string questId)
+    {
+        OnQuestTrack?.Invoke(questId);
+    }
+
+    public event Action OnQuestTrackUpdate;
+    public void QuestTrackUpdate()
+    {
+        OnQuestTrackUpdate?.Invoke();
+    }
 }

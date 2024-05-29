@@ -10,19 +10,19 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject dialoguePanel;
 
-    public GameObject dialogueHistory;
+    private GameObject dialogueHistory;
 
-    public TextMeshProUGUI dialogueHistoryItemPrefab;
+    private TextMeshProUGUI dialogueHistoryItemPrefab;
 
-    public TextMeshProUGUI dialogueText;
+    private TextMeshProUGUI dialogueText;
 
-    public GameObject dialogueChoices;
+    private GameObject dialogueChoices;
 
-    public Button dialogueChoicePrefab;
+    private Button dialogueChoicePrefab;
 
-    public Button continueButtonPrefab;
+    private Button continueButtonPrefab;
 
-    public GameObject PlayerController;
+    public GameObject playerController;
 
     private Story story;
 
@@ -46,7 +46,24 @@ public class DialogueManager : MonoBehaviour
     }
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
+
+        dialogueHistory = dialoguePanel.GetComponent<DialoguePanel>().dialogueHistory;
+
+        dialogueHistoryItemPrefab = dialoguePanel.GetComponent<DialoguePanel>().dialogueHistoryItemPrefab;
+
+        dialogueText = dialoguePanel.GetComponent<DialoguePanel>().dialogueText;
+
+        dialogueChoices = dialoguePanel.GetComponent<DialoguePanel>().dialogueChoices;
+
+        dialogueChoicePrefab = dialoguePanel.GetComponent<DialoguePanel>().dialogueChoicePrefab;
+
+        continueButtonPrefab = dialoguePanel.GetComponent<DialoguePanel>().continueButtonPrefab;
     }
     private void OnEnable()
     {
@@ -64,6 +81,23 @@ public class DialogueManager : MonoBehaviour
 
         story = new Story(inkJson.text);
 
+        BindExternalFunctions();
+
+        dialoguePanel.SetActive(true);
+
+        if (story.canContinue)
+        {
+            dialogueText.text = story.Continue();
+            DisplayChoices();
+        }
+        else
+        {
+            EndDialogue();
+        }
+    }
+
+    private void BindExternalFunctions()
+    {
         story.BindExternalFunction("startQuest", (string questId) =>
         {
             GameEventsManager.Instance.questEvents.QuestStart(questId);
@@ -94,18 +128,6 @@ public class DialogueManager : MonoBehaviour
         {
             GameEventsManager.Instance.dialogueEvents.DisableTopic(npcName, conversationTopic);
         });
-
-        dialoguePanel.SetActive(true);
-
-        if (story.canContinue)
-        {
-            dialogueText.text = story.Continue();
-            DisplayChoices();
-        }
-        else
-        {
-            EndDialogue();
-        }
     }
 
     private void ContinueStory()
@@ -138,14 +160,14 @@ public class DialogueManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
-        PlayerController.GetComponent<FirstPersonController>().enabled = false;
+        playerController.GetComponent<FirstPersonController>().enabled = false;
     }
 
     private void Resume() // to powinno byæ w osobnym menagerze stanu gry
     {
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
-        PlayerController.GetComponent<FirstPersonController>().enabled = true;
+        playerController.GetComponent<FirstPersonController>().enabled = true;
     }
 
     private void ClearInstantiated(List<GameObject> gameObjects)
@@ -176,6 +198,10 @@ public class DialogueManager : MonoBehaviour
             Button continueDialog = Instantiate(continueButtonPrefab, dialogueChoices.transform);
             continueDialog.onClick.AddListener(delegate () { ContinueStory(); });
             instantiatedChoices.Add(continueDialog.gameObject);
+            if (!story.canContinue)
+            {
+                continueDialog.GetComponentInChildren<TextMeshProUGUI>().text = "Zakoñcz";
+            }
         }
         instantiatedChoices[0].GetComponent<Button>().Select();
     }

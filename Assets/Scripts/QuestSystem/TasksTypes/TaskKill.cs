@@ -67,11 +67,11 @@ public class TaskKill : Task
                 completed = false;
             }
         }
+        ChangeData(state, log);
         if (completed)
         {
             Complete();
         }
-        ChangeData(state, log);
     }
     protected override void SetTaskState(string state)
     {

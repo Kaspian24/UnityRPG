@@ -22,6 +22,7 @@ Szkoda
 -> DONE
 
 == Quest1Task2Finish ==
+~topicTalkedAbout("NPC1", "zakonczonoZadanie")
 ~disableTopic("NPC1", "zakonczonoZadanie")
 Dziękuję za pomoc, bez ciebie by się nie udało.
 -> DONE

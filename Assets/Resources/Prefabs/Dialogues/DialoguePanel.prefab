@@ -721,6 +721,7 @@ GameObject:
   - component: {fileID: 3634944633018608741}
   - component: {fileID: 5012781451663576156}
   - component: {fileID: 6811918902535432662}
+  - component: {fileID: -6796042828327116115}
   m_Layer: 5
   m_Name: DialoguePanel
   m_TagString: Untagged
@@ -786,6 +787,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-6796042828327116115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8964026870269557646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb1db350e9cc92459b7db0cb5a3a62e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueHistory: {fileID: 2330136199197082503}
+  dialogueHistoryItemPrefab: {fileID: 9195686095470278388, guid: fff5fbab0539b004a9d18c53f43c8cfa, type: 3}
+  dialogueText: {fileID: 1352616523816553819}
+  dialogueChoices: {fileID: 4970039672800034154}
+  dialogueChoicePrefab: {fileID: 8115170623714841085, guid: e2f7e4d3c33f2b1429337f77ecd350aa, type: 3}
+  continueButtonPrefab: {fileID: 7053511994312311668, guid: 28d65e86fb478a74e81b5f125d30b357, type: 3}
 --- !u!1 &8985293742214839105
 GameObject:
   m_ObjectHideFlags: 0

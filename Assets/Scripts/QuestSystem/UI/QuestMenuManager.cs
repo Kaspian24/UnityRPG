@@ -8,16 +8,24 @@ public class QuestMenuManager : MonoBehaviour
 
     public GameObject questMenuPanel;
 
-    public GameObject PlayerController;
+    public GameObject playerController;
+
+    public GameObject trackedQuestPanel;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
     }
 
     private void Start()
     {
         questMenuPanel.SetActive(false);
+        trackedQuestPanel.SetActive(false);
     }
 
     private void Update()
@@ -41,7 +49,7 @@ public class QuestMenuManager : MonoBehaviour
         questMenuPanel.SetActive(true);
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
-        PlayerController.GetComponent<FirstPersonController>().enabled = false;
+        playerController.GetComponent<FirstPersonController>().enabled = false;
     }
 
     private void Resume() // to powinno byæ w osobnym menagerze stanu gry
@@ -50,6 +58,28 @@ public class QuestMenuManager : MonoBehaviour
         questMenuPanel.SetActive(false);
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
-        PlayerController.GetComponent<FirstPersonController>().enabled = true;
+        playerController.GetComponent<FirstPersonController>().enabled = true;
+    }
+
+    private void TrackQuest(string questId)
+    {
+        trackedQuestPanel.SetActive(true);
+        trackedQuestPanel.GetComponent<TrackedQuestPanel>().TrackQuest(questId);
+    }
+    private void QuestTrackUpdate()
+    {
+        trackedQuestPanel.SetActive(true);
+        trackedQuestPanel.GetComponent<TrackedQuestPanel>().UpdateTracked();
+    }
+
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.questEvents.OnQuestTrack += TrackQuest;
+        GameEventsManager.Instance.questEvents.OnQuestTrackUpdate += QuestTrackUpdate;
+    }
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.questEvents.OnQuestTrack -= TrackQuest;
+        GameEventsManager.Instance.questEvents.OnQuestTrackUpdate -= QuestTrackUpdate;
     }
 }

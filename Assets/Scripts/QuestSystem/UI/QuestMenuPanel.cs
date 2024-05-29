@@ -9,6 +9,7 @@ public class QuestMenuPanel : MonoBehaviour
     public GameObject questListPanel;
     public TMP_Text questInfoPanelTitle;
     public TMP_Text questInfoPanelDescription;
+    public Button questInfoPanelTrackButton;
     public GameObject taskListPanel;
     public GameObject taskListItemPrefab;
 
@@ -43,6 +44,7 @@ public class QuestMenuPanel : MonoBehaviour
         }
         else
         {
+            questInfoPanelTrackButton.gameObject.SetActive(false);
             questInfoPanelTitle.text = "";
             questInfoPanelDescription.text = "";
         }
@@ -52,6 +54,12 @@ public class QuestMenuPanel : MonoBehaviour
     {
         ClearInstantiated(instantiatedTaskListItems);
         Quest quest = QuestManager.Instance.GetQuestById(questId);
+        if(quest.state == QuestState.Active)
+        {
+            questInfoPanelTrackButton.gameObject.SetActive(true);
+            questInfoPanelTrackButton.onClick.RemoveAllListeners();
+            questInfoPanelTrackButton.onClick.AddListener(() => GameEventsManager.Instance.questEvents.QuestTrack(quest.staticData.Id));
+        }
         questInfoPanelTitle.text = quest.staticData.title;
         questInfoPanelDescription.text = quest.staticData.description;
         for (int i = 0; i <= quest.currentTask; i++)

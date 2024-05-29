@@ -7,6 +7,11 @@ public class QuestManager : MonoBehaviour
     private Dictionary<string, Quest> questsDict;
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
 
         questsDict = new Dictionary<string, Quest>();
@@ -71,6 +76,7 @@ public class QuestManager : MonoBehaviour
             GiveRewards(quest);
             QuestChangeState(quest.staticData.Id, QuestState.Completed);
             CheckReqiurements();
+            GameEventsManager.Instance.questEvents.QuestTrackUpdate();
         }
     }
     private void GiveRewards(Quest quest)
@@ -82,6 +88,7 @@ public class QuestManager : MonoBehaviour
     {
         Quest quest = questsDict[questId];
         quest.UpdateTaskData(taskIndex, taskData);
+        GameEventsManager.Instance.questEvents.QuestTrackUpdate();
     }
     private bool RequirementsMet(Quest quest)
     {
