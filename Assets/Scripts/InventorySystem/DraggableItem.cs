@@ -7,7 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 
 [System.Serializable]
-public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public Transform parentAfterDrag;
     [SerializeField]
@@ -40,6 +40,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            OnLeftCLick();
+        }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnRightClick();
@@ -50,7 +54,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    private void OnLeftCLick()
     {
         EquipmentSlot slot;
         if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
@@ -59,14 +63,14 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        EquipmentSlot slot;
-        if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
-        {
-            slot.CloseDescription();
-        }
-    }
+    //public void OnPointerExit(PointerEventData eventData)
+    //{
+    //    EquipmentSlot slot;
+    //    if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
+    //    {
+    //        slot.CloseDescription();
+    //    }
+    //}
 
     private void OnRightClick()
     {

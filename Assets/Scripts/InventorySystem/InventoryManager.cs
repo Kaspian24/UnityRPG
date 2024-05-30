@@ -238,12 +238,14 @@ public class InventoryManager : MonoBehaviour
     {
         InventoryMenu.SetActive(true);
         EquipmentMenu.SetActive(false);
+        CloseDescription();
     }
 
     public void openEquipment()
     {
         InventoryMenu.SetActive(false);
         EquipmentMenu.SetActive(true);
+        CloseDescription();
     }
 
     public void showDescription(Item item)
