@@ -21,6 +21,9 @@ public class FirstPersonController : MonoBehaviour
     private Rigidbody rb;
     Animator animator;
 
+    public GameObject spellObj;
+    public Transform spellPoint;
+
     #region Camera Movement Variables
 
     public Camera playerCamera;
@@ -277,7 +280,7 @@ public class FirstPersonController : MonoBehaviour
 
         #region Sprint
 
-        if(enableSprint)
+        if(enableSprint && !isAiming)
         {
             if(isSprinting)
             {
@@ -395,7 +398,7 @@ public class FirstPersonController : MonoBehaviour
 
             // Checks if player is walking and isGrounded
             // Will allow head bob
-            if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)
+            if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded && !isAiming)
             {
                 isWalking = true;
             }
@@ -482,7 +485,7 @@ public class FirstPersonController : MonoBehaviour
     private void Jump()
     {
         // Adds force to the player rigidbody to jump
-        if (isGrounded)
+        if (isGrounded && !isAiming)
         {
             rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
             isGrounded = false;
@@ -604,6 +607,7 @@ public class FirstPersonController : MonoBehaviour
     public int attackDamage = 1;
     public LayerMask attackLayer;
 
+    public GameObject spell;
     public GameObject hitEffect;
     public AudioClip swordSwing;
     public AudioClip hitSound;
@@ -633,8 +637,10 @@ public class FirstPersonController : MonoBehaviour
     {
         if (!isAiming || !isGrounded || isSprinting || attacking) return;
 
+        Debug.Log("Casting Spell at: " + spellPoint.position);
         attacking = true;
         spellReady = true;
+        spell = Instantiate(spellObj, spellPoint.position, transform.rotation);
 
         ChangeAnimationState(CASTSPELL);
 
@@ -645,8 +651,10 @@ public class FirstPersonController : MonoBehaviour
     {
         if (!spellReady) return;
 
+        Debug.Log("Throwing Spell from: " + spell.transform.position);
         isAiming = false;
         ChangeAnimationState(THROWSPELL);
+        spell.GetComponent<Rigidbody>().AddForce(transform.forward*25f, ForceMode.Impulse);
 
         Invoke(nameof(ResetAttack), attackSpeed);
     }
@@ -877,10 +885,18 @@ public class FirstPersonController : MonoBehaviour
         fpc.bobAmount = EditorGUILayout.Vector3Field(new GUIContent("Bob Amount", "Determines the amount the joint moves in both directions on every axes."), fpc.bobAmount);
         GUI.enabled = true;
 
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+        GUILayout.Label("Spell Setup", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
+        EditorGUILayout.Space();
+
+        fpc.spellPoint = (Transform)EditorGUILayout.ObjectField(new GUIContent("Spell Pont", "Joint object position is moved while head bob is active."), fpc.spellPoint, typeof(Transform), true);
+        fpc.spellObj = (GameObject)EditorGUILayout.ObjectField(new GUIContent("Spell Object", "Joint object position is moved while head bob is active."), fpc.spellObj, typeof(GameObject), true);
+
         #endregion
 
         //Sets any changes from the prefab
-        if(GUI.changed)
+        if (GUI.changed)
         {
             EditorUtility.SetDirty(fpc);
             Undo.RecordObject(fpc, "FPC Change");
