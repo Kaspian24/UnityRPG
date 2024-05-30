@@ -77,7 +77,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartDialogue(TextAsset inkJson)
     {
-        Pause();
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue();
 
         story = new Story(inkJson.text);
 
@@ -153,21 +153,7 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = "";
         ClearInstantiated(instantiatedHistoryItems);
         ClearInstantiated(instantiatedChoices);
-        Resume();
-    }
-
-    private void Pause() // to powinno byæ w osobnym menagerze stanu gry
-    {
-        Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        playerController.GetComponent<FirstPersonController>().enabled = false;
-    }
-
-    private void Resume() // to powinno byæ w osobnym menagerze stanu gry
-    {
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        playerController.GetComponent<FirstPersonController>().enabled = true;
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue();
     }
 
     private void ClearInstantiated(List<GameObject> gameObjects)
