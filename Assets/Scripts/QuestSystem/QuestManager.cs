@@ -76,7 +76,6 @@ public class QuestManager : MonoBehaviour
             GiveRewards(quest);
             QuestChangeState(quest.staticData.Id, QuestState.Completed);
             CheckReqiurements();
-            GameEventsManager.Instance.questEvents.QuestTrackUpdate();
         }
     }
     private void GiveRewards(Quest quest)
@@ -88,7 +87,6 @@ public class QuestManager : MonoBehaviour
     {
         Quest quest = questsDict[questId];
         quest.UpdateTaskData(taskIndex, taskData);
-        GameEventsManager.Instance.questEvents.QuestTrackUpdate();
     }
     private bool RequirementsMet(Quest quest)
     {

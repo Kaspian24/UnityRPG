@@ -12,6 +12,8 @@ public class QuestMenuManager : MonoBehaviour
 
     public GameObject trackedQuestPanel;
 
+    public GameObject finishedQuestPanel;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -26,6 +28,7 @@ public class QuestMenuManager : MonoBehaviour
     {
         questMenuPanel.SetActive(false);
         trackedQuestPanel.SetActive(false);
+        finishedQuestPanel.SetActive(false);
     }
 
     private void Update()
@@ -71,15 +74,33 @@ public class QuestMenuManager : MonoBehaviour
         trackedQuestPanel.SetActive(true);
         trackedQuestPanel.GetComponent<TrackedQuestPanel>().UpdateTracked();
     }
+    private void QuestTrackUpdate(string questId, int taskIndex, TaskData taskData)
+    {
+        QuestTrackUpdate();
+    }
+    private void QuestTrackUpdate(string questId)
+    {
+        QuestTrackUpdate();
+    }
+
+    private void QuestFinished(Quest quest)
+    {
+        finishedQuestPanel.SetActive(true);
+        finishedQuestPanel.GetComponent<FinishedQuestPanel>().AddFinishedQuest(quest);
+    }
 
     private void OnEnable()
     {
         GameEventsManager.Instance.questEvents.OnQuestTrack += TrackQuest;
-        GameEventsManager.Instance.questEvents.OnQuestTrackUpdate += QuestTrackUpdate;
+        GameEventsManager.Instance.questEvents.OnTaskDataChange += QuestTrackUpdate;
+        GameEventsManager.Instance.questEvents.OnTaskComplete += QuestTrackUpdate;
+        GameEventsManager.Instance.questEvents.OnQuestStateChange += QuestFinished;
     }
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.OnQuestTrack -= TrackQuest;
-        GameEventsManager.Instance.questEvents.OnQuestTrackUpdate -= QuestTrackUpdate;
+        GameEventsManager.Instance.questEvents.OnTaskDataChange -= QuestTrackUpdate;
+        GameEventsManager.Instance.questEvents.OnTaskComplete -= QuestTrackUpdate;
+        GameEventsManager.Instance.questEvents.OnQuestStateChange -= QuestFinished;
     }
 }

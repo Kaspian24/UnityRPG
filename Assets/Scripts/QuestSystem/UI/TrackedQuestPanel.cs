@@ -15,20 +15,19 @@ public class TrackedQuestPanel : MonoBehaviour
     public void UpdateTracked()
     {
         ClearInstantiated(instantiatedTaskListItems);
-        if(string.IsNullOrEmpty(questId))
+        Quest quest = null;
+        if (!string.IsNullOrEmpty(questId))
         {
-            gameObject.SetActive(false);
-            return;
+            quest = QuestManager.Instance.GetQuestById(questId);
         }
-        Quest quest = QuestManager.Instance.GetQuestById(questId);
-        if(quest.state != QuestState.Active)
+        if(quest == null || quest.state != QuestState.Active || quest.staticData.secret)
         {
             questId = "";
             quest = null;
             List<Quest> quests = QuestManager.Instance.GetQuestsSortedByLastChanged();
             foreach(Quest questInList  in quests)
             {
-                if(questInList.state == QuestState.Active)
+                if(questInList.state == QuestState.Active && !questInList.staticData.secret)
                 {
                     quest = questInList;
                     questId = quest.staticData.Id;

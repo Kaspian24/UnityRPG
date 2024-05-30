@@ -37,10 +37,4 @@ public class QuestEvents
     {
         OnQuestTrack?.Invoke(questId);
     }
-
-    public event Action OnQuestTrackUpdate;
-    public void QuestTrackUpdate()
-    {
-        OnQuestTrackUpdate?.Invoke();
-    }
 }
