@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
+using Unity.VisualScripting;
 
 [System.Serializable]
-public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Transform parentAfterDrag;
     [SerializeField]
@@ -38,10 +40,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            OnLeftClick();
-        }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnRightClick();
@@ -52,12 +50,21 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    private void OnLeftClick()
+    public void OnPointerEnter(PointerEventData eventData)
     {
         EquipmentSlot slot;
         if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
         {
             slot.ShowDescription(this.Item);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        EquipmentSlot slot;
+        if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
+        {
+            slot.CloseDescription();
         }
     }
 
@@ -86,6 +93,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
         {
             slot.DropItem();
+            slot.CloseDescription();
             Destroy(this.gameObject);
         }
     }

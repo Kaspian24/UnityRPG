@@ -32,8 +32,8 @@ public class PlayerSlot : EquipmentSlot
         if (!IsFull)
         {
             GameObject dropped = eventData.pointerDrag;
-            DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
-            if (slotType == draggableItem.Item.ItemType)
+            DraggableItem draggableItem;
+            if ((draggableItem = dropped.GetComponent<DraggableItem>()) && (slotType == draggableItem.Item.ItemType))
             {
                 draggableItem.parentAfterDrag = transform;
                 AddItem(draggableItem.Item);

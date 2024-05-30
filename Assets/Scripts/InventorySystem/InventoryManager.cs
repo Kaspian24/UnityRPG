@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
@@ -29,13 +30,16 @@ public class InventoryManager : MonoBehaviour
     private InventorySlot[] inventorySlots;
 
     [SerializeField]
-    private EquipmentSlot[] equipmentSlots;
+    private List<EquipmentSlot> equipmentSlots;
 
     [SerializeField]
     private PlayerSlot[] playerSlots;
 
     [SerializeField]
     private GameObject scrollPanel;
+
+    [SerializeField]
+    private GameObject descriptionScrollPanel;
 
     [SerializeField]
     private GameObject slotPrefab;
@@ -78,6 +82,8 @@ public class InventoryManager : MonoBehaviour
 
     private bool inventoryOpen = false;
 
+    private bool descriptionOpen = false;
+
     void Start()
     {
         GameObject item = GameObject.FindGameObjectWithTag("Item");
@@ -96,7 +102,6 @@ public class InventoryManager : MonoBehaviour
             InventoryPanel.SetActive(false);
             InventoryMenu.SetActive(false);
             EquipmentMenu.SetActive(false);
-            uiCamera.enabled = false;
             inventoryOpen = false;
         }
         else if (Input.GetKeyDown(KeyCode.I) && !inventoryOpen)
@@ -104,7 +109,6 @@ public class InventoryManager : MonoBehaviour
             Time.timeScale = 0;
             InventoryPanel.SetActive(true);
             InventoryMenu.SetActive(true);
-            uiCamera.enabled = true;
             inventoryOpen = true;
         }
     }
@@ -112,7 +116,7 @@ public class InventoryManager : MonoBehaviour
     public void AddItem(Item item)
     {
 
-        if (item.ItemType == ItemType.Consumable)
+        if (item.ItemType == ItemType.Consumable || item.ItemType == ItemType.KeyItem)
         {
             for (int i = 0; i < inventorySlots.Length; i++)
             {
@@ -134,7 +138,7 @@ public class InventoryManager : MonoBehaviour
                     inventorySlots[i].AddItem(draggableItem.GetComponent<Item>());
                     break;
                 }
-                if (inventorySlots[i].Item.ItemId == item.ItemId)
+                if (inventorySlots[i].Item.ItemId == item.ItemId && item.ItemType != ItemType.KeyItem)
                 {
                     inventorySlots[i].AddExistingItem(item.Quantity);
                     break;
@@ -143,7 +147,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < equipmentSlots.Length; i++)
+            for (int i = 0; i < equipmentSlots.Count; i++)
             {
                 if (!equipmentSlots[i].IsFull)
                 {
@@ -168,6 +172,11 @@ public class InventoryManager : MonoBehaviour
 
     public bool UseItem(Item item)
     {
+        if(item.ItemType == ItemType.KeyItem)
+        {
+            return false;
+        }
+
         if (HP < MaxHP)
         {
             if ((HP + item.HP) <= MaxHP)
@@ -252,8 +261,17 @@ public class InventoryManager : MonoBehaviour
             {
                 itemDescription.text = item.Description + "\n" + item.PrintStats();
             }
+            RectTransform descriptionRect = itemDescription.GetComponent<RectTransform>();
+            RectTransform panelRect = descriptionScrollPanel.GetComponent<RectTransform>();
+            if (descriptionOpen == false)
+            {
+                
+                panelRect.offsetMin = new Vector2(panelRect.offsetMin.x, panelRect.offsetMin.y - descriptionRect.offsetMin.y -100);
+            }
+
             itemName.enabled = true;
             itemDescription.enabled = true;
+            descriptionOpen = true;
 
         }
         else
@@ -263,16 +281,23 @@ public class InventoryManager : MonoBehaviour
             itemDescription.enabled = false;
         }
         
-        
+    }
+
+    public void CloseDescription()
+    {
+        descriptionPanel.SetActive(false);
     }
 
     public void AddSlots()
     {
         RectTransform rectTransform = scrollPanel.GetComponent<RectTransform>();
         rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, rectTransform.offsetMin.y - 110);
-        for (int i = 0; i < 7; i++)
+        GameObject newSlot; 
+        for (int i = 0; i < 6; i++)
         {
-            Instantiate(slotPrefab, scrollPanel.transform);
+            newSlot = Instantiate(slotPrefab, scrollPanel.transform);
+            equipmentSlots.Add(newSlot.GetComponent<EquipmentSlot>());
+            
         }
     }
     

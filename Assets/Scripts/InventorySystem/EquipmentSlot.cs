@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
+public class EquipmentSlot : MonoBehaviour, IDropHandler
 {
     [SerializeField]
     private Item item;
@@ -90,9 +90,10 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         InventoryManager.showDescription(item);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void CloseDescription()
     {
-        InventoryManager.showDescription(null);
+        InventoryManager.CloseDescription();
     }
+
 
 }

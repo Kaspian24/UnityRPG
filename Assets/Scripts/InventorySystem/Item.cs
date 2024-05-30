@@ -13,6 +13,7 @@ public enum ItemType
     EquipLegs,
     EquipBoots,
     EquipHand,
+    KeyItem,
 }
 
 [System.Serializable]
