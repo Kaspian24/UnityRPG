@@ -9,6 +9,10 @@ public class GameModeManager : MonoBehaviour
 
     public KeyCode questMenuKey = KeyCode.J;
 
+    public KeyCode inventoryMenuKey = KeyCode.I;
+
+    public KeyCode pauseMenuKey = KeyCode.Escape; // nie zaimplementowane
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,18 +37,35 @@ public class GameModeManager : MonoBehaviour
                 {
                     ToggleQuestMenu();
                 }
+                else if (Input.GetKeyDown(inventoryMenuKey))
+                {
+                    ToggleInventoryMenu();
+                }
                 break;
             case GameMode.QuestMenu:
                 if (Input.GetKeyDown(questMenuKey))
                 {
                     ToggleQuestMenu();
                 }
+                else if (Input.GetKeyDown(questMenuKey))
+                {
+                    ToggleQuestMenu();
+                    ToggleInventoryMenu();
+                }
                 break;
             case GameMode.Dialogue:
 
                 break;
             case GameMode.InventoryMenu:
-
+                if (Input.GetKeyDown(inventoryMenuKey))
+                {
+                    ToggleInventoryMenu();
+                }
+                else if (Input.GetKeyDown(questMenuKey))
+                {
+                    ToggleInventoryMenu();
+                    ToggleQuestMenu();
+                }
                 break;
             default:
                 break;
@@ -57,14 +78,13 @@ public class GameModeManager : MonoBehaviour
         {
             currentGameMode = GameMode.Gameplay;
             Resume();
-            GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu();
         }
         else
         {
             currentGameMode = GameMode.QuestMenu;
             Pause();
-            GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu();
         }
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu();
     }
 
     private void ToggleDialogue()
@@ -80,6 +100,21 @@ public class GameModeManager : MonoBehaviour
             Pause();
         }
         GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility();
+    }
+
+    private void ToggleInventoryMenu()
+    {
+        if (currentGameMode == GameMode.InventoryMenu)
+        {
+            currentGameMode = GameMode.Gameplay;
+            Resume();
+        }
+        else
+        {
+            currentGameMode = GameMode.InventoryMenu;
+            Pause();
+        }
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory();
     }
 
     private void Pause()

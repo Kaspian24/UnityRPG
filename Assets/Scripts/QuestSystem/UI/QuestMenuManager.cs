@@ -6,8 +6,6 @@ public class QuestMenuManager : MonoBehaviour
 
     public GameObject questMenuPanel;
 
-    public GameObject playerController;
-
     public GameObject trackedQuestPanel;
 
     public GameObject finishedStartedQuestPanel;

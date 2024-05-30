@@ -22,8 +22,6 @@ public class DialogueManager : MonoBehaviour
 
     private Button continueButtonPrefab;
 
-    public GameObject playerController;
-
     private Story story;
 
     private List<GameObject> instantiatedHistoryItems = new List<GameObject>();

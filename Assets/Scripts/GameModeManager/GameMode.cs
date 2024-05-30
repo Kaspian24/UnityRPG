@@ -4,4 +4,5 @@ public enum GameMode
     QuestMenu,
     Dialogue,
     InventoryMenu,
+    PauseMenu,
 }

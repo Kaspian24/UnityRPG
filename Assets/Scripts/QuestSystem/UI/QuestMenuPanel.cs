@@ -54,7 +54,7 @@ public class QuestMenuPanel : MonoBehaviour
     {
         ClearInstantiated(instantiatedTaskListItems);
         Quest quest = QuestManager.Instance.GetQuestById(questId);
-        if(quest.state == QuestState.Active)
+        if (quest.state == QuestState.Active)
         {
             questInfoPanelTrackButton.gameObject.SetActive(true);
             questInfoPanelTrackButton.onClick.RemoveAllListeners();

@@ -45,7 +45,7 @@ public class TaskTalk : Task
 
     private void Start()
     {
-        for(int i = 0; i < npcsToTalkTo.Length; i++)
+        for (int i = 0; i < npcsToTalkTo.Length; i++)
         {
             string npcName = npcsToTalkTo[i].npcName;
             string conversationTopic = npcsToTalkTo[i].conversationTopic;

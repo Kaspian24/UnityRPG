@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class GameModeEvents
 {
@@ -19,5 +16,10 @@ public class GameModeEvents
     public void ToggleQuestTrackVisibility()
     {
         OnToggleQuestTrackVisibility?.Invoke();
+    }
+    public event Action OnToggleInventory;
+    public void ToggleInventory()
+    {
+        OnToggleInventory?.Invoke();
     }
 }
