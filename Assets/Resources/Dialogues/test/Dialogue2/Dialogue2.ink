@@ -1,6 +1,9 @@
 INCLUDE ../../globals.ink
 
-{ isQuestStartable("Quest2"):
+VAR quest2 = false
+~ quest2 = isQuestStartable("Quest2")
+
+{ quest2:
 -> Quest2Startable
 }
 Nie mamy o czym rozmawiać.

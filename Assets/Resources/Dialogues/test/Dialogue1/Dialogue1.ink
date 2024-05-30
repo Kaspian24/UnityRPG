@@ -1,10 +1,16 @@
 INCLUDE ../../globals.ink
 
-{ isDialogueStartable("NPC1", "zakonczonoZadanie"):
+VAR zakonczonoZadanie = false
+~ zakonczonoZadanie = isDialogueStartable("NPC1", "zakonczonoZadanie")
+
+VAR quest1 = false
+~ quest1 = isQuestStartable("Quest1")
+
+{ zakonczonoZadanie:
 -> Quest1Task2Finish
 }
 
-{ isQuestStartable("Quest1"):
+{ quest1:
 -> Quest1Startable
 }
 Nie mamy o czym rozmawiać.

@@ -1076,6 +1076,79 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2330136199197082503, guid: 12a123b038907254e92e2879370e237a, type: 3}
   m_PrefabInstance: {fileID: 2034688076}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &791250349
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1155306427146552810, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: placeName
+      value: Wrogowie
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916271967025269836, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_Name
+      value: PlaceToVisitBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006138745018167574, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: be5037b7fda97a74490edce5eb0e6c96, type: 3}
 --- !u!1001 &798717104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1477,7 +1550,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inkJson: {fileID: 4900000, guid: 7089cd5774ca23c44bff003282864d33, type: 3}
-  questSO: {fileID: 11400000, guid: f0f578626429540479a336b2d781258f, type: 2}
 --- !u!135 &1374267131
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1597,7 +1669,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inkJson: {fileID: 4900000, guid: 1075d4589ec89814693ca6dc792617dd, type: 3}
-  questSO: {fileID: 11400000, guid: a37a09dfb555a7445a9469b3c268721a, type: 2}
 --- !u!135 &1377219698
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2092,7 +2163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inkJson: {fileID: 4900000, guid: d107d3ec30fece342ba7ea80904ab68b, type: 3}
-  questSO: {fileID: 11400000, guid: 935912ff45ce3f0488073411f016b949, type: 2}
 --- !u!135 &1910876450
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2739,7 +2809,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inkJson: {fileID: 4900000, guid: 30d8c68a4be59dd4da4d3bd806ab5dbb, type: 3}
-  questSO: {fileID: 11400000, guid: 78a5240d40eee9c4a9a28d350604c46d, type: 2}
 --- !u!135 &2063022685
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3116,3 +3185,4 @@ SceneRoots:
   - {fileID: 1352919494}
   - {fileID: 1971097586}
   - {fileID: 1414574378}
+  - {fileID: 791250349}

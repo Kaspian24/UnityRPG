@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f938960435665fd45946d6ae8c3a10dd, type: 3}
+  m_Name: Quest5
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: Quest5
+  title: Szpiegostwo
+  description: "Sprawd\u017A co s\u0142ycha\u0107 u naszych przeciwnik\xF3w"
+  secret: 0
+  questsRequired: []
+  taskPrefabs:
+  - {fileID: 5320733967423195123, guid: 7ef509aed82052a40a382e595cfa4b06, type: 3}
+  gold: 0
+  experience: 0
