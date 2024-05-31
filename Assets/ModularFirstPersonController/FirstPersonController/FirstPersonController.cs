@@ -375,12 +375,16 @@ public class FirstPersonController : MonoBehaviour
         if (Input.GetMouseButton(2))
         {
             isAiming = true;
+            walkSpeed = 0;
+            if (spellDistance < 30)
+                spellDistance += 0.1f;
             CastSpell(); 
         }
 
         if (Input.GetMouseButtonUp(2))
         { 
             isAiming = false;
+            walkSpeed = 5f;
             ThrowSpell(); 
         }
 
@@ -526,7 +530,7 @@ public class FirstPersonController : MonoBehaviour
 
     private void HeadBob()
     {
-        if(isWalking)
+        if(isWalking && !isAiming)
         {
             // Calculates HeadBob speed during sprint
             if(isSprinting)
@@ -612,6 +616,7 @@ public class FirstPersonController : MonoBehaviour
     public AudioClip swordSwing;
     public AudioClip hitSound;
 
+    public float spellDistance = 5f;
     private bool isAiming = false;
     private bool spellReady = false;
     bool attacking = false;
@@ -624,7 +629,7 @@ public class FirstPersonController : MonoBehaviour
         readyToAttack = false;
         attacking = true;
 
-        Invoke(nameof(ResetAttack), attackSpeed);
+        Invoke(nameof(ResetAttack), 1.4f);
         Invoke(nameof(AttackRaycast), attackDelay);
 
         //audioSource.pitch = Random.Range(0.9f, 1.1f);
@@ -637,11 +642,16 @@ public class FirstPersonController : MonoBehaviour
     {
         if (!isAiming || !isGrounded || isSprinting || attacking) return;
 
-        Debug.Log("Casting Spell at: " + spellPoint.position);
         attacking = true;
         spellReady = true;
         spell = Instantiate(spellObj, spellPoint.position, transform.rotation);
-
+        spell.transform.SetParent(spellPoint);
+        Rigidbody spellRb = spell.GetComponent<Rigidbody>();
+        if (spellRb != null)
+        {
+            spellRb.isKinematic = true; // Ustaw jako kinematyczny
+            spellRb.detectCollisions = false;
+        }
         ChangeAnimationState(CASTSPELL);
 
         //Invoke(nameof(ResetAttack), attackSpeed); // Upewnij się, że ResetAttack przywróci domyślne stany
@@ -651,16 +661,24 @@ public class FirstPersonController : MonoBehaviour
     {
         if (!spellReady) return;
 
-        Debug.Log("Throwing Spell from: " + spell.transform.position);
         isAiming = false;
+        spell.transform.SetParent(null);
+        Rigidbody spellRb = spell.GetComponent<Rigidbody>();
+        if (spellRb != null)
+        {
+            spellRb.isKinematic = false; // Ustaw jako nie-kinematyczny
+            spellRb.detectCollisions = true;
+            spellRb.AddForce(transform.forward * spellDistance, ForceMode.Impulse);
+        }
+        spellDistance = 5;
         ChangeAnimationState(THROWSPELL);
-        spell.GetComponent<Rigidbody>().AddForce(transform.forward*25f, ForceMode.Impulse);
 
         Invoke(nameof(ResetAttack), attackSpeed);
     }
 
     void ResetAttack()
     {
+        Debug.Log("Reset");
         spellReady = false;
         attacking = false;
         readyToAttack = true;
