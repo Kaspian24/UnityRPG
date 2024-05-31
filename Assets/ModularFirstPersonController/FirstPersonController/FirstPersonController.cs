@@ -376,6 +376,7 @@ public class FirstPersonController : MonoBehaviour
         {
             isAiming = true;
             walkSpeed = 0;
+            sprintSpeed = 0;
             if (spellDistance < 30)
                 spellDistance += 0.1f;
             CastSpell(); 
@@ -385,6 +386,7 @@ public class FirstPersonController : MonoBehaviour
         { 
             isAiming = false;
             walkSpeed = 5f;
+            sprintSpeed = 7f;
             ThrowSpell(); 
         }
 
@@ -678,7 +680,6 @@ public class FirstPersonController : MonoBehaviour
 
     void ResetAttack()
     {
-        Debug.Log("Reset");
         spellReady = false;
         attacking = false;
         readyToAttack = true;
