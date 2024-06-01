@@ -18,7 +18,7 @@ public class QuestManager : MonoBehaviour
         QuestStaticSO[] questsToLoad = Resources.LoadAll<QuestStaticSO>("Quests"); // Load SO's from location
         foreach (QuestStaticSO questStaticSO in questsToLoad)
         {
-            questsDict.Add(questStaticSO.Id, new Quest(questStaticSO));
+            questsDict.Add(questStaticSO.Id, LoadQuest(questStaticSO));
         }
     }
     private void OnEnable()
@@ -111,5 +111,24 @@ public class QuestManager : MonoBehaviour
     {
         Quest quest = questsDict[questId];
         return quest;
+    }
+
+    public Dictionary<string, QuestData> SaveQuests()
+    {
+        Dictionary<string, QuestData> questsData = new Dictionary<string, QuestData>();
+        foreach (Quest quest in questsDict.Values)
+        {
+            questsData.Add(quest.staticData.Id, quest.GetQuestData());
+        }
+        return questsData;
+    }
+
+    private Quest LoadQuest(QuestStaticSO questStaticSO)
+    {
+        if (SaveManager.Instance.currentSave.questsDataDict.TryGetValue(questStaticSO.Id, out QuestData questData))
+        {
+            return new Quest(questStaticSO, questData);
+        }
+        return new Quest(questStaticSO);
     }
 }

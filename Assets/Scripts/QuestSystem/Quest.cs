@@ -53,4 +53,9 @@ public class Quest
         tasksData[taskIndex] = taskData;
         lastChanged = System.DateTime.Now;
     }
+
+    public QuestData GetQuestData()
+    {
+        return new QuestData(state, currentTask, tasksData, lastChanged);
+    }
 }
