@@ -375,8 +375,6 @@ public class FirstPersonController : MonoBehaviour
         if (Input.GetMouseButton(2))
         {
             isAiming = true;
-            walkSpeed = 0;
-            sprintSpeed = 0;
             if (spellDistance < 30)
                 spellDistance += 0.1f;
             CastSpell(); 
@@ -385,8 +383,6 @@ public class FirstPersonController : MonoBehaviour
         if (Input.GetMouseButtonUp(2))
         { 
             isAiming = false;
-            walkSpeed = 5f;
-            sprintSpeed = 7f;
             ThrowSpell(); 
         }
 
@@ -646,6 +642,9 @@ public class FirstPersonController : MonoBehaviour
 
         attacking = true;
         spellReady = true;
+        walkSpeed = 0;
+        sprintSpeed = 0;
+
         spell = Instantiate(spellObj, spellPoint.position, transform.rotation);
         spell.transform.SetParent(spellPoint);
         Rigidbody spellRb = spell.GetComponent<Rigidbody>();
@@ -664,6 +663,9 @@ public class FirstPersonController : MonoBehaviour
         if (!spellReady) return;
 
         isAiming = false;
+        walkSpeed = 5f;
+        sprintSpeed = 7f;
+
         spell.transform.SetParent(null);
         Rigidbody spellRb = spell.GetComponent<Rigidbody>();
         if (spellRb != null)
