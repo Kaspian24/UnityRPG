@@ -610,6 +610,7 @@ public class FirstPersonController : MonoBehaviour
     public LayerMask attackLayer;
 
     public GameObject spell;
+    public GameObject sword;
     public GameObject hitEffect;
     public AudioClip swordSwing;
     public AudioClip hitSound;
@@ -626,6 +627,9 @@ public class FirstPersonController : MonoBehaviour
 
         readyToAttack = false;
         attacking = true;
+
+        sword = GameObject.FindGameObjectWithTag("Sword");
+        sword.GetComponent<Collider>().enabled = true;
 
         Invoke(nameof(ResetAttack), 1.4f);
         Invoke(nameof(AttackRaycast), attackDelay);
@@ -685,6 +689,7 @@ public class FirstPersonController : MonoBehaviour
         spellReady = false;
         attacking = false;
         readyToAttack = true;
+        sword.GetComponent<Collider>().enabled = false;
     }
 
     void AttackRaycast()

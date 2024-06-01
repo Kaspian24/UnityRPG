@@ -8,6 +8,8 @@ TagManager:
   - Item
   - InventoryCanvas
   - WayPoints
+  - Dragon
+  - Sword
   layers:
   - Default
   - TransparentFX
