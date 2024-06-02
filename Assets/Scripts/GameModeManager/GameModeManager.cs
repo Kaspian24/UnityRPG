@@ -11,7 +11,9 @@ public class GameModeManager : MonoBehaviour
 
     public KeyCode inventoryMenuKey = KeyCode.I;
 
-    public KeyCode pauseMenuKey = KeyCode.Escape; // nie zaimplementowane
+    public KeyCode pauseMenuKey = KeyCode.Escape;
+
+    public GameMode lastGameMode;
 
     private void Awake()
     {
@@ -33,7 +35,11 @@ public class GameModeManager : MonoBehaviour
         switch (currentGameMode)
         {
             case GameMode.Gameplay:
-                if (Input.GetKeyDown(questMenuKey))
+                if (Input.GetKeyDown(pauseMenuKey))
+                {
+                    TogglePauseMenu();
+                }
+                else if (Input.GetKeyDown(questMenuKey))
                 {
                     ToggleQuestMenu();
                 }
@@ -43,7 +49,11 @@ public class GameModeManager : MonoBehaviour
                 }
                 break;
             case GameMode.QuestMenu:
-                if (Input.GetKeyDown(questMenuKey))
+                if (Input.GetKeyDown(pauseMenuKey))
+                {
+                    TogglePauseMenu();
+                }
+                else if (Input.GetKeyDown(questMenuKey))
                 {
                     ToggleQuestMenu();
                 }
@@ -54,10 +64,17 @@ public class GameModeManager : MonoBehaviour
                 }
                 break;
             case GameMode.Dialogue:
-
-                break;
+                if (Input.GetKeyDown(pauseMenuKey))
+                {
+                    TogglePauseMenu();
+                }
+                    break;
             case GameMode.InventoryMenu:
-                if (Input.GetKeyDown(inventoryMenuKey))
+                if (Input.GetKeyDown(pauseMenuKey))
+                {
+                    TogglePauseMenu();
+                }
+                else if (Input.GetKeyDown(inventoryMenuKey))
                 {
                     ToggleInventoryMenu();
                 }
@@ -65,6 +82,12 @@ public class GameModeManager : MonoBehaviour
                 {
                     ToggleInventoryMenu();
                     ToggleQuestMenu();
+                }
+                break;
+            case GameMode.PauseMenu:
+                if(Input.GetKeyDown(pauseMenuKey))
+                {
+                    TogglePauseMenu();
                 }
                 break;
             default:
@@ -115,6 +138,30 @@ public class GameModeManager : MonoBehaviour
             Pause();
         }
         GameEventsManager.Instance.gameModeEvents.ToggleInventory();
+    }
+
+    public void TogglePauseMenu()
+    {
+        if (currentGameMode == GameMode.PauseMenu)
+        {
+            currentGameMode = lastGameMode;
+            if(currentGameMode == GameMode.Gameplay)
+            {
+                Resume();
+            }
+        }
+        else
+        {
+            lastGameMode = currentGameMode;
+            currentGameMode = GameMode.PauseMenu;
+            Pause();
+        }
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu();
+    }
+
+    public void ForceResume()
+    {
+        Resume();
     }
 
     private void Pause()

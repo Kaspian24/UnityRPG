@@ -23,7 +23,10 @@ public class QuestMenuManager : MonoBehaviour
     private void Start()
     {
         questMenuPanel.SetActive(false);
-        trackedQuestPanel.SetActive(false);
+        if(string.IsNullOrEmpty(GetCurrentlyTrackedQuest()))
+        {
+            trackedQuestPanel.SetActive(false);
+        }
         finishedStartedQuestPanel.SetActive(false);
     }
 
@@ -54,6 +57,11 @@ public class QuestMenuManager : MonoBehaviour
     private void ToggleQuestMenu()
     {
         questMenuPanel.SetActive(!questMenuPanel.activeInHierarchy);
+    }
+
+    public string GetCurrentlyTrackedQuest()
+    {
+        return trackedQuestPanel.GetComponent<TrackedQuestPanel>().GetCurrentlyTrackedQuest();
     }
 
     private void OnEnable()

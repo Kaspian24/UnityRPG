@@ -1,16 +1,20 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
 
-    public GameObject playerController;
+    private GameObject playerController;
 
-    public SaveData currentSave;
+    public SaveData currentSave = new SaveData();
 
     private string savesPath = "Assets/Resources/Saves";
+
+    private string sceneName;
 
     private void Awake()
     {
@@ -20,41 +24,66 @@ public class SaveManager : MonoBehaviour
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
 
-        currentSave = new SaveData();
+        sceneName = SceneManager.GetActiveScene().name;
     }
 
     public void Save(string name, bool canOverride)
     {
-        string path = Path.Combine(savesPath, name);
+        Directory.CreateDirectory(savesPath);
+        string path = Path.Combine(savesPath, name + ".json");
         if (File.Exists(path) && !canOverride)
         {
             Debug.Log("Plik zapisu ju¿ istnieje.");
             return;
         }
-        Directory.CreateDirectory(path);
         Dictionary<string, QuestData> questsData = QuestManager.Instance.SaveQuests();
-        currentSave = new SaveData(name, questsData);
-        string currentSaveJson = JsonUtility.ToJson(currentSave);
+        string currentlyTrackedQuest = QuestMenuManager.Instance.GetCurrentlyTrackedQuest();
+        currentSave = new SaveData(name, questsData, playerController.transform.position, playerController.transform.rotation, currentlyTrackedQuest);
+        string currentSaveJson = JsonConvert.SerializeObject(currentSave);
         using StreamWriter sw = new StreamWriter(path);
         sw.Write(currentSaveJson);
     }
 
     public void Load(string name)
     {
-        string path = Path.Combine(savesPath, name);
+        string path = Path.Combine(savesPath, name + ".json");
         if (!File.Exists(path))
         {
             Debug.Log("Plik zapisu nie istnieje.");
             return;
         }
-        currentSave = JsonUtility.FromJson<SaveData>(path);
+        using StreamReader sr = new StreamReader(path);
+        string currentSaveJson = sr.ReadToEnd();
+        currentSave = JsonConvert.DeserializeObject<SaveData>(currentSaveJson);
+        currentSave.enabled = true;
+        SceneManager.LoadScene(sceneName);
     }
 
-    public Dictionary<string, SaveData> GetSaveFiles()
+    private void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Dictionary<string, SaveData> savesDict = new Dictionary<string, SaveData>();
+        if (scene.name != sceneName)
+        {
+            return;
+        }
+        playerController = GameObject.FindGameObjectsWithTag("Player")[0];
+        if (!currentSave.enabled)
+        {
+            return;
+        }
+        GameEventsManager.Instance.questEvents.QuestTrack(currentSave.currentlyTrackedQuest);
+        playerController.transform.SetPositionAndRotation(JsonUtility.FromJson<Vector3>(currentSave.playerControllerPosition), JsonUtility.FromJson<Quaternion>(currentSave.playerControllerRotation));
+        GameModeManager.Instance.ForceResume();
+    }
 
-        return savesDict;
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += SceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= SceneLoaded;
     }
 }

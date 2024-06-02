@@ -22,4 +22,9 @@ public class GameModeEvents
     {
         OnToggleInventory?.Invoke();
     }
+    public event Action OnTogglePauseMenu;
+    public void TogglePauseMenu()
+    {
+        OnTogglePauseMenu?.Invoke();
+    }
 }

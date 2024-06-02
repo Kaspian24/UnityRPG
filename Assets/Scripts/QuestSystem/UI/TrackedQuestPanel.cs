@@ -63,6 +63,11 @@ public class TrackedQuestPanel : MonoBehaviour
         UpdateTracked();
     }
 
+    public string GetCurrentlyTrackedQuest()
+    {
+        return this.questId;
+    }
+
     private void ClearInstantiated(List<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)

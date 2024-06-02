@@ -26,7 +26,7 @@ public class Quest
         state = questData.state;
         currentTask = questData.currentTask;
         tasksData = questData.tasksData;
-        lastChanged = System.DateTime.MinValue;
+        lastChanged = System.DateTime.FromBinary(questData.lastChanged);
     }
     public bool NextTask(Transform parrentTransform)
     {
@@ -56,6 +56,6 @@ public class Quest
 
     public QuestData GetQuestData()
     {
-        return new QuestData(state, currentTask, tasksData, lastChanged);
+        return new QuestData(state, currentTask, tasksData, lastChanged.ToBinary());
     }
 }

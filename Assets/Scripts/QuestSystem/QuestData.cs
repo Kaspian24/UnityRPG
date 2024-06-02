@@ -4,9 +4,9 @@ public class QuestData
     public QuestState state;
     public int currentTask;
     public TaskData[] tasksData;
-    public System.DateTime lastChanged;
+    public long lastChanged;
 
-    public QuestData(QuestState state, int currentTask, TaskData[] tasksData, System.DateTime lastChanged)
+    public QuestData(QuestState state, int currentTask, TaskData[] tasksData, long lastChanged)
     {
         this.state = state;
         this.currentTask = currentTask;
