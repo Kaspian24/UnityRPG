@@ -63,15 +63,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    //public void OnPointerExit(PointerEventData eventData)
-    //{
-    //    EquipmentSlot slot;
-    //    if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
-    //    {
-    //        slot.CloseDescription();
-    //    }
-    //}
-
     private void OnRightClick()
     {
         InventorySlot slot;
@@ -93,6 +84,11 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void OnMiddleClick()
     {
+        if (this.Item.ItemType == ItemType.KeyItem)
+        {
+            return;
+        }
+
         EquipmentSlot slot;
         if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
         {

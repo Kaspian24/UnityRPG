@@ -15,9 +15,8 @@ public enum ItemType
     EquipHand,
     KeyItem,
 }
-
-[System.Serializable]
-public class Item : MonoBehaviour
+[Serializable]
+public class Item
 {
 
     [Header("STATS")]
@@ -51,17 +50,17 @@ public class Item : MonoBehaviour
     [SerializeField]
     private string description;
 
-    public ItemType ItemType { get => itemType; }
-    public int ItemId { get => itemId; }
-    public string ItemName { get => itemName; }
+    public ItemType ItemType { get => itemType; set => itemType = value; }
+    public int ItemId { get => itemId; set => itemId = value; }
+    public string ItemName { get => itemName; set => itemName = value; }
     public int Quantity { get => quantity; set => quantity = value; }
-    public Sprite Sprite { get => sprite; }
-    public string Description { get => description; }
-    public int HP { get => hp; }
-    public int MP { get => mp; }
-    public int STR { get => str; }
-    public int MAG { get => mag; }
-    public int DEF { get => def; }
+    public Sprite Sprite { get => sprite; set => sprite = value; }
+    public string Description { get => description; set => description = value; }
+    public int HP { get => hp; set => hp = value; }
+    public int MP { get => mp; set => mp = value; }
+    public int STR { get => str; set => str = value; }
+    public int MAG { get => mag; set => mag = value; }
+    public int DEF { get => def; set => def = value; }
 
     public void copyItem(Item item)
     {
@@ -83,11 +82,11 @@ public class Item : MonoBehaviour
         string returnedStats = "";
         if(hp != 0)
         {
-            returnedStats += "\nMax HP: " + hp;
+            returnedStats += "\nHP: " + hp;
         }
         if(mp != 0)
         {
-            returnedStats += "\nMax MP: " + mp;
+            returnedStats += "\nMP: " + mp;
         }
         if(str != 0)
         {

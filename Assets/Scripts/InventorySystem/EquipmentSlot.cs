@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipmentSlot : MonoBehaviour, IDropHandler
+public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
     [SerializeField]
     private Item item;
@@ -18,10 +18,14 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler
 
     private InventoryManager inventoryManager;
 
+    [SerializeField]
+    private ItemType[] typeList;
+
     public bool IsFull { get => isFull; set => isFull = value; }
     public GameObject ItemPrefab { get => itemPrefab; set => itemPrefab = value; }
     public InventoryManager InventoryManager { get => inventoryManager; set => inventoryManager = value; }
     public Item Item { get => item; set => item = value; }
+    public ItemType[] TypeList { get => typeList; set => typeList = value; }
 
     private void Start()
     {
@@ -57,11 +61,6 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler
         this.itemPrefab = null;
     }
 
-    public void SwapItems(Item item)
-    {
-        (this.item, item) = (item, this.item);
-    }
-
     public virtual void OnDrop(PointerEventData eventData)
     {
         if (!isFull)
@@ -70,6 +69,10 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler
             DraggableItem draggableItem;
             if(draggableItem = dropped.GetComponent<DraggableItem>())
             {
+                if(!CheckTypeList(draggableItem.Item))
+                {
+                    return;
+                }
                 draggableItem.parentAfterDrag = transform;
                 AddItem(draggableItem.Item);
             }
@@ -79,7 +82,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler
 
     public void DropItem()
     {
-        itemPrefab.GetComponent<Item>().copyItem(this.Item);
+        //itemPrefab.GetComponent<DraggableItem>().Item.copyItem(this.Item);
         Vector3 playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
         Instantiate(ItemPrefab, playerTransform, Quaternion.identity);
         DeleteItem();
@@ -95,5 +98,20 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler
         InventoryManager.CloseDescription();
     }
 
+    public bool CheckTypeList(Item item)
+    {
+        foreach(ItemType type in typeList)
+        {
+            if(item.ItemType == type)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        CloseDescription();
+    }
 }

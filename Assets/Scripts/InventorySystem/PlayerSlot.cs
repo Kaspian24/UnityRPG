@@ -7,10 +7,6 @@ using static UnityEditor.Progress;
 
 public class PlayerSlot : EquipmentSlot
 {
-    [SerializeField]
-    private ItemType slotType;
-
-    public ItemType SlotType { get => slotType;}
 
     private void Update()
     {
@@ -33,7 +29,7 @@ public class PlayerSlot : EquipmentSlot
         {
             GameObject dropped = eventData.pointerDrag;
             DraggableItem draggableItem;
-            if ((draggableItem = dropped.GetComponent<DraggableItem>()) && (slotType == draggableItem.Item.ItemType))
+            if ((draggableItem = dropped.GetComponent<DraggableItem>()) && (CheckTypeList(draggableItem.Item)))
             {
                 draggableItem.parentAfterDrag = transform;
                 AddItem(draggableItem.Item);

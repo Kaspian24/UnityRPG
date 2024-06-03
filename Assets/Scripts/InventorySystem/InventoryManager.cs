@@ -84,12 +84,20 @@ public class InventoryManager : MonoBehaviour
 
     private bool descriptionOpen = false;
 
+    [SerializeField]
+    private GameObject chestPanelPrefab;
+    [SerializeField]
+    private GameObject chestPanel;
+
     void Start()
     {
-        GameObject item = GameObject.FindGameObjectWithTag("Item");
-        Item i = item.GetComponent<Item>();
-        AddItem(i);
-        Destroy(item);
+        GameObject item;
+        if (item = GameObject.FindGameObjectWithTag("Item"))
+        {
+            Item i = item.GetComponent<DraggableItem>().Item;
+            AddItem(i);
+            Destroy(item);
+        }
     }
 
     // Update is called once per frame
@@ -102,6 +110,7 @@ public class InventoryManager : MonoBehaviour
             InventoryPanel.SetActive(false);
             InventoryMenu.SetActive(false);
             EquipmentMenu.SetActive(false);
+            //Destroy(chestPanel);
             inventoryOpen = false;
         }
         else if (Input.GetKeyDown(KeyCode.I) && !inventoryOpen)
@@ -109,6 +118,7 @@ public class InventoryManager : MonoBehaviour
             Time.timeScale = 0;
             InventoryPanel.SetActive(true);
             InventoryMenu.SetActive(true);
+            //chestPanel = Instantiate(chestPanelPrefab, this.gameObject.transform);
             inventoryOpen = true;
         }
     }
@@ -126,16 +136,15 @@ public class InventoryManager : MonoBehaviour
                     GameObject draggableItem = new GameObject("DraggableItem");
                     draggableItem.AddComponent<Image>();
                     draggableItem.AddComponent<DraggableItem>();
-                    draggableItem.AddComponent<Item>();
-                    draggableItem.GetComponent<Item>().copyItem(item);
-                    draggableItem.GetComponent<DraggableItem>().Item = draggableItem.GetComponent<Item>();
+                    draggableItem.GetComponent<DraggableItem>().Item = new Item();
+                    draggableItem.GetComponent<DraggableItem>().Item.copyItem(item);
                     draggableItem.GetComponent<Image>().sprite = item.Sprite;
                     draggableItem.GetComponent<DraggableItem>().parentAfterDrag = inventorySlots[i].transform;
                     draggableItem.GetComponent<DraggableItem>().Image = draggableItem.GetComponent<Image>();
 
                     draggableItem.transform.SetParent(inventorySlots[i].transform);
 
-                    inventorySlots[i].AddItem(draggableItem.GetComponent<Item>());
+                    inventorySlots[i].AddItem(draggableItem.GetComponent<DraggableItem>().Item);
                     break;
                 }
                 if (inventorySlots[i].Item.ItemId == item.ItemId && item.ItemType != ItemType.KeyItem)
@@ -154,16 +163,15 @@ public class InventoryManager : MonoBehaviour
                     GameObject draggableItem = new GameObject("DraggableItem");
                     draggableItem.AddComponent<Image>();
                     draggableItem.AddComponent<DraggableItem>();
-                    draggableItem.AddComponent<Item>();
-                    draggableItem.GetComponent<Item>().copyItem(item);
-                    draggableItem.GetComponent<DraggableItem>().Item = draggableItem.GetComponent<Item>();
+                    draggableItem.GetComponent<DraggableItem>().Item = new Item();
+                    draggableItem.GetComponent<DraggableItem>().Item.copyItem(item);
                     draggableItem.GetComponent<Image>().sprite = item.Sprite;
                     draggableItem.GetComponent<DraggableItem>().parentAfterDrag = equipmentSlots[i].transform;
                     draggableItem.GetComponent<DraggableItem>().Image = draggableItem.GetComponent<Image>();
 
                     draggableItem.transform.SetParent(equipmentSlots[i].transform);
 
-                    equipmentSlots[i].AddItem(draggableItem.GetComponent<Item>());
+                    equipmentSlots[i].AddItem(draggableItem.GetComponent<DraggableItem>().Item);
                     break;
                 }
             }
@@ -256,7 +264,7 @@ public class InventoryManager : MonoBehaviour
             itemName.text = item.ItemName;
             if (item.ItemType == ItemType.Consumable)
             {
-                itemDescription.text = item.Description + "\n\nQuantity: " + item.Quantity;
+                itemDescription.text = item.Description + "\n\nQuantity: " + item.Quantity + "\n" + item.PrintStats();
                 
             }
             else
