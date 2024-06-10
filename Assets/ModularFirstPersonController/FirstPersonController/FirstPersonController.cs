@@ -96,6 +96,11 @@ public class FirstPersonController : MonoBehaviour
     private bool isSprintCooldown = false;
     private float sprintCooldownReset;
 
+    private int playerHP = 100;
+    private bool isTakingDamage = false;
+    private float damageTimer = 0f;
+    public float damageEffectDuration = 0.5f;
+    public float damageBobAmount = 0.1f;
     #endregion
 
     #region Jump
@@ -528,9 +533,23 @@ public class FirstPersonController : MonoBehaviour
 
     private void HeadBob()
     {
-        if(isWalking && !isAiming)
+        if (isTakingDamage)
         {
-            // Calculates HeadBob speed during sprint
+            // Zmniejsza timer obrażeń
+            damageTimer -= Time.deltaTime;
+            if (damageTimer <= 0)
+            {
+                isTakingDamage = false;
+            }
+
+            // Zastosowanie efektu obrażeń
+            float damageOffsetX = Random.Range(-damageBobAmount, damageBobAmount);
+            float damageOffsetY = Random.Range(-damageBobAmount, damageBobAmount);
+            joint.localPosition = new Vector3(jointOriginalPos.x + damageOffsetX, jointOriginalPos.y + damageOffsetY, jointOriginalPos.z);
+        }
+        else if (isWalking && !isAiming)
+        {
+            // Calculates HeadBob speed during sprintssD
             if(isSprinting)
             {
                 timer += Time.deltaTime * (bobSpeed + sprintSpeed);
@@ -568,6 +587,8 @@ public class FirstPersonController : MonoBehaviour
     public const string ATTACK1 = "Attack 1";
     public const string CASTSPELL = "Cast Spell";
     public const string THROWSPELL = "Throw Spell";
+    public const string DEATH = "Death";
+    public const string GETHIT = "GetHit";
 
     string currentAnimationState;
 
@@ -584,7 +605,7 @@ public class FirstPersonController : MonoBehaviour
     void SetAnimations()
     {
         // If player is not attacking
-        if (!attacking && !isAiming)
+        if (!attacking && !isAiming && !isTakingDamage)
         {
             if(isGrounded && isWalking)
             { ChangeAnimationState(WALK); }
@@ -623,7 +644,7 @@ public class FirstPersonController : MonoBehaviour
  
     public void Attack()
     {
-        if (!readyToAttack || attacking) return;
+        if (!readyToAttack || attacking || isTakingDamage) return;
 
         readyToAttack = false;
         attacking = true;
@@ -642,14 +663,14 @@ public class FirstPersonController : MonoBehaviour
 
     private void CastSpell()
     {
-        if (!isAiming || !isGrounded || isSprinting || attacking) return;
+        if (!isAiming || !isGrounded || isSprinting || attacking || isTakingDamage) return;
 
         attacking = true;
         spellReady = true;
         walkSpeed = 0;
         sprintSpeed = 0;
 
-        spell = Instantiate(spellObj, spellPoint.position, transform.rotation);
+        spell = Instantiate(spellObj, spellPoint.position, Quaternion.identity) as GameObject;
         spell.transform.SetParent(spellPoint);
         Rigidbody spellRb = spell.GetComponent<Rigidbody>();
         if (spellRb != null)
@@ -672,11 +693,21 @@ public class FirstPersonController : MonoBehaviour
 
         spell.transform.SetParent(null);
         Rigidbody spellRb = spell.GetComponent<Rigidbody>();
+        Vector3 destination;
+        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+            destination = hit.point;
+        else
+            destination = ray.GetPoint(1000);
+
         if (spellRb != null)
         {
             spellRb.isKinematic = false; // Ustaw jako nie-kinematyczny
             spellRb.detectCollisions = true;
-            spellRb.AddForce(transform.forward * spellDistance, ForceMode.Impulse);
+            //spellRb.AddForce(transform.forward * spellDistance, ForceMode.Impulse);
+            spellRb.velocity = (destination - spellPoint.position).normalized * spellDistance;
         }
         spellDistance = 5;
         ChangeAnimationState(THROWSPELL);
@@ -689,7 +720,37 @@ public class FirstPersonController : MonoBehaviour
         spellReady = false;
         attacking = false;
         readyToAttack = true;
-        sword.GetComponent<Collider>().enabled = false;
+        if(sword)
+            sword.GetComponent<Collider>().enabled = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        isTakingDamage = true;
+        damageTimer = damageEffectDuration;
+
+        walkSpeed = 0;
+        sprintSpeed = 0;
+
+        playerHP -= damage;
+        if (playerHP <= 0)
+        {
+            Debug.Log("Dead");
+            animator.SetTrigger("Death");
+        }
+        else
+        {
+            Debug.Log("Hit");
+            animator.SetTrigger("Damage");
+        }
+        Invoke(nameof(ResetDamage), 0.7f);
+    }
+
+    void ResetDamage()
+    {
+        walkSpeed = 5f;
+        sprintSpeed = 7f;
+        isTakingDamage = false;
     }
 
     void AttackRaycast()

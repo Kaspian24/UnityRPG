@@ -7,7 +7,7 @@ public class BlueDragon : MonoBehaviour
     public int HP = 100;
     public Animator animator;
 
-    public void TakeDammage(int damage)
+    public void TakeDamage(int damage)
     {
         HP -= damage;
         if(HP <= 0 )

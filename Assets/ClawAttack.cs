@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class ClawAttack : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Dragon")
+        if (other.tag == "Player")
         {
             GetComponent<Collider>().enabled = false;
-            other.GetComponent<BlueDragon>().TakeDamage(10);
+            other.GetComponent<FirstPersonController>().TakeDamage(50);
         }
     }
 }

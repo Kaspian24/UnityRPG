@@ -11,7 +11,7 @@ public class Spell : MonoBehaviour
 
         if(other.tag == "Dragon")
         {
-            other.GetComponent<BlueDragon>().TakeDammage(10);
+            other.GetComponent<BlueDragon>().TakeDamage(10);
         }
     }
 
