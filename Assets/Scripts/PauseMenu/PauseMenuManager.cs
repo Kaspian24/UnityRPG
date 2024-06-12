@@ -16,9 +16,9 @@ public class PauseMenuManager : MonoBehaviour
         Instance = this;
     }
 
-    private void TogglePauseMenu()
+    private void TogglePauseMenu(bool state)
     {
-        pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
+        pauseMenuPanel.SetActive(state);
     }
 
     private void OnEnable()

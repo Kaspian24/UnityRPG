@@ -48,15 +48,26 @@ public class QuestMenuManager : MonoBehaviour
     {
         QuestTrackUpdate();
     }
+    private void QuestTrackUpdate(bool state)
+    {
+        if(!state)
+        {
+            trackedQuestPanel.SetActive(false);
+        }
+        else
+        {
+            QuestTrackUpdate();
+        }
+    }
     private void QuestFinishedStarted(Quest quest)
     {
         finishedStartedQuestPanel.SetActive(true);
         finishedStartedQuestPanel.GetComponent<FinishedStartedQuestPanel>().AddFinishedStartedQuest(quest);
     }
 
-    private void ToggleQuestMenu()
+    private void ToggleQuestMenu(bool state)
     {
-        questMenuPanel.SetActive(!questMenuPanel.activeInHierarchy);
+        questMenuPanel.SetActive(state);
     }
 
     public string GetCurrentlyTrackedQuest()

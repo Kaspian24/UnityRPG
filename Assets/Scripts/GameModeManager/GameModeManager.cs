@@ -28,6 +28,7 @@ public class GameModeManager : MonoBehaviour
     private void Start()
     {
         currentGameMode = GameMode.Gameplay;
+        lastGameMode = GameMode.Gameplay;
     }
 
     private void Update()
@@ -37,57 +38,55 @@ public class GameModeManager : MonoBehaviour
             case GameMode.Gameplay:
                 if (Input.GetKeyDown(pauseMenuKey))
                 {
-                    TogglePauseMenu();
+                    SwitchToPauseMenu();
                 }
                 else if (Input.GetKeyDown(questMenuKey))
                 {
-                    ToggleQuestMenu();
+                    SwitchToQuestMenu();
                 }
                 else if (Input.GetKeyDown(inventoryMenuKey))
                 {
-                    ToggleInventoryMenu();
+                    SwitchToInventoryMenu();
                 }
                 break;
             case GameMode.QuestMenu:
                 if (Input.GetKeyDown(pauseMenuKey))
                 {
-                    TogglePauseMenu();
+                    SwitchToPauseMenu();
                 }
                 else if (Input.GetKeyDown(questMenuKey))
                 {
-                    ToggleQuestMenu();
+                    SwitchToGameplay();
                 }
-                else if (Input.GetKeyDown(questMenuKey))
+                else if (Input.GetKeyDown(inventoryMenuKey))
                 {
-                    ToggleQuestMenu();
-                    ToggleInventoryMenu();
+                    SwitchToInventoryMenu();
                 }
                 break;
             case GameMode.Dialogue:
                 if (Input.GetKeyDown(pauseMenuKey))
                 {
-                    TogglePauseMenu();
+                    SwitchToPauseMenu();
                 }
-                    break;
+                break;
             case GameMode.InventoryMenu:
                 if (Input.GetKeyDown(pauseMenuKey))
                 {
-                    TogglePauseMenu();
+                    SwitchToPauseMenu();
                 }
                 else if (Input.GetKeyDown(inventoryMenuKey))
                 {
-                    ToggleInventoryMenu();
+                    SwitchToGameplay();
                 }
                 else if (Input.GetKeyDown(questMenuKey))
                 {
-                    ToggleInventoryMenu();
-                    ToggleQuestMenu();
+                    SwitchToQuestMenu();
                 }
                 break;
             case GameMode.PauseMenu:
-                if(Input.GetKeyDown(pauseMenuKey))
+                if (Input.GetKeyDown(pauseMenuKey))
                 {
-                    TogglePauseMenu();
+                    SwitchToLastGameMode();
                 }
                 break;
             default:
@@ -95,68 +94,102 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
-    private void ToggleQuestMenu()
+    private void SwitchToGameplay()
     {
-        if (currentGameMode == GameMode.QuestMenu)
-        {
-            currentGameMode = GameMode.Gameplay;
-            Resume();
-        }
-        else
-        {
-            currentGameMode = GameMode.QuestMenu;
-            Pause();
-        }
-        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu();
+        currentGameMode = GameMode.Gameplay;
+        Resume();
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(true);
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(true);
     }
 
-    private void ToggleDialogue()
+    private void SwitchToQuestMenu()
     {
-        if (currentGameMode == GameMode.Dialogue)
-        {
-            currentGameMode = GameMode.Gameplay;
-            Resume();
-        }
-        else
-        {
-            currentGameMode = GameMode.Dialogue;
-            Pause();
-        }
-        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility();
+        currentGameMode = GameMode.QuestMenu;
+        Pause();
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(true);
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
     }
 
-    private void ToggleInventoryMenu()
+    private void SwitchToPauseMenu()
     {
-        if (currentGameMode == GameMode.InventoryMenu)
-        {
-            currentGameMode = GameMode.Gameplay;
-            Resume();
-        }
-        else
-        {
-            currentGameMode = GameMode.InventoryMenu;
-            Pause();
-        }
-        GameEventsManager.Instance.gameModeEvents.ToggleInventory();
+        lastGameMode = currentGameMode;
+        currentGameMode = GameMode.PauseMenu;
+        Pause();
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(true);
+        GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
     }
 
-    public void TogglePauseMenu()
+    private void SwitchToDialogue()
     {
-        if (currentGameMode == GameMode.PauseMenu)
+        currentGameMode = GameMode.Dialogue;
+        Pause();
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue(true);
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+    }
+
+    private void SwitchToInventoryMenu()
+    {
+        currentGameMode = GameMode.InventoryMenu;
+        Pause();
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory(true);
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+    }
+
+    public void SwitchToLastGameMode()
+    {
+        (lastGameMode, currentGameMode) = (currentGameMode, lastGameMode);
+        switch (currentGameMode)
         {
-            currentGameMode = lastGameMode;
-            if(currentGameMode == GameMode.Gameplay)
-            {
-                Resume();
-            }
+            case GameMode.Gameplay:
+                SwitchToGameplay();
+                break;
+            case GameMode.QuestMenu:
+                SwitchToQuestMenu();
+                break;
+            case GameMode.Dialogue:
+                SwitchToDialogue();
+                break;
+            case GameMode.InventoryMenu:
+                SwitchToInventoryMenu();
+                break;
+            case GameMode.PauseMenu:
+                SwitchToGameplay();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void ToggleDialogue(bool state)
+    {
+        if (state)
+        {
+            SwitchToDialogue();
         }
         else
         {
-            lastGameMode = currentGameMode;
-            currentGameMode = GameMode.PauseMenu;
-            Pause();
+            SwitchToGameplay();
         }
-        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu();
     }
 
     public void ForceResume()
@@ -180,11 +213,11 @@ public class GameModeManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEventsManager.Instance.gameModeEvents.OnToggleDialogue += ToggleDialogue;
+        GameEventsManager.Instance.gameModeEvents.OnDialogueStartEnd += ToggleDialogue;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.Instance.gameModeEvents.OnToggleDialogue -= ToggleDialogue;
+        GameEventsManager.Instance.gameModeEvents.OnDialogueStartEnd -= ToggleDialogue;
     }
 }

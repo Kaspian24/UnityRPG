@@ -67,21 +67,25 @@ public class DialogueManager : MonoBehaviour
     {
         GameEventsManager.Instance.dialogueEvents.OnEnableTopic += EnableTopic;
         GameEventsManager.Instance.dialogueEvents.OnDisableTopic += DisableTopic;
+
+        GameEventsManager.Instance.gameModeEvents.OnToggleDialogue += ToggleDialogue;
     }
     private void OnDisable()
     {
         GameEventsManager.Instance.dialogueEvents.OnEnableTopic -= EnableTopic;
         GameEventsManager.Instance.dialogueEvents.OnDisableTopic -= DisableTopic;
+
+        GameEventsManager.Instance.gameModeEvents.OnToggleDialogue -= ToggleDialogue;
     }
     public void StartDialogue(TextAsset inkJson)
     {
-        GameEventsManager.Instance.gameModeEvents.ToggleDialogue();
+        GameEventsManager.Instance.gameModeEvents.DialogueStartEnd(true);
 
         story = new Story(inkJson.text);
 
         BindExternalFunctions();
 
-        dialoguePanel.SetActive(true);
+        ToggleDialogue(true);
 
         if (story.canContinue)
         {
@@ -147,11 +151,11 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
-        dialoguePanel.SetActive(false);
+        ToggleDialogue(false);
         dialogueText.text = "";
         ClearInstantiated(instantiatedHistoryItems);
         ClearInstantiated(instantiatedChoices);
-        GameEventsManager.Instance.gameModeEvents.ToggleDialogue();
+        GameEventsManager.Instance.gameModeEvents.DialogueStartEnd(false);
     }
 
     private void ClearInstantiated(List<GameObject> gameObjects)
@@ -193,5 +197,10 @@ public class DialogueManager : MonoBehaviour
     public void MakeChoice(int choiceIndex)
     {
         story.ChooseChoiceIndex(choiceIndex);
+    }
+
+    public void ToggleDialogue(bool state)
+    {
+        dialoguePanel.SetActive(state);
     }
 }

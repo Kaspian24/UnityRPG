@@ -2,29 +2,40 @@ using System;
 
 public class GameModeEvents
 {
-    public event Action OnToggleQuestMenu;
-    public void ToggleQuestMenu()
+    public event Action<bool> OnToggleQuestMenu;
+    public void ToggleQuestMenu(bool state)
     {
-        OnToggleQuestMenu?.Invoke();
+        OnToggleQuestMenu?.Invoke(state);
     }
-    public event Action OnToggleDialogue;
-    public void ToggleDialogue()
+    public event Action<bool> OnToggleDialogue;
+    public void ToggleDialogue(bool state)
     {
-        OnToggleDialogue?.Invoke();
+        OnToggleDialogue?.Invoke(state);
     }
-    public event Action OnToggleQuestTrackVisibility;
-    public void ToggleQuestTrackVisibility()
+    public event Action<bool> OnToggleQuestTrackVisibility;
+    public void ToggleQuestTrackVisibility(bool state)
     {
-        OnToggleQuestTrackVisibility?.Invoke();
+        OnToggleQuestTrackVisibility?.Invoke(state);
     }
-    public event Action OnToggleInventory;
-    public void ToggleInventory()
+    public event Action<bool> OnToggleInventory;
+    public void ToggleInventory(bool state)
     {
-        OnToggleInventory?.Invoke();
+        OnToggleInventory?.Invoke(state);
     }
-    public event Action OnTogglePauseMenu;
-    public void TogglePauseMenu()
+    public event Action<bool> OnTogglePauseMenu;
+    public void TogglePauseMenu(bool state)
     {
-        OnTogglePauseMenu?.Invoke();
+        OnTogglePauseMenu?.Invoke(state);
+    }
+    public event Action<bool> OnToggleMiniMap;
+    public void ToggleMiniMap(bool state)
+    {
+        OnToggleMiniMap?.Invoke(state);
+    }
+
+    public event Action<bool> OnDialogueStartEnd;
+    public void DialogueStartEnd(bool state)
+    {
+        OnDialogueStartEnd?.Invoke(state);
     }
 }
