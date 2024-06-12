@@ -24,9 +24,6 @@ public class InventoryManager : MonoBehaviour
     private GameObject InventoryPanel;
 
     [SerializeField]
-    private Camera uiCamera;
-
-    [SerializeField]
     private InventorySlot[] inventorySlots;
 
     [SerializeField]
@@ -46,6 +43,13 @@ public class InventoryManager : MonoBehaviour
 
     [Header("STATS")]
     [SerializeField]
+    private int LEVEL;
+    [SerializeField]
+    private int EXP;
+    [SerializeField]
+    private int EXPTOLV;
+
+    [SerializeField]
     private int HP;
     [SerializeField]
     private int MaxHP;
@@ -60,18 +64,21 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private int DEF;
 
+    [SerializeField]
+    private int money;
+
 
     [Header("UI ELEMENTS")]
     [SerializeField]
-    private TextMeshProUGUI HpText; 
+    private TextMeshProUGUI LevelText;
     [SerializeField]
-    private TextMeshProUGUI MpText;
+    private TextMeshProUGUI ExpText;
+
     [SerializeField]
-    private TextMeshProUGUI StrText;
+    private TextMeshProUGUI StatsText;
+
     [SerializeField]
-    private TextMeshProUGUI MagText;
-    [SerializeField]
-    private TextMeshProUGUI DefText;
+    private TextMeshProUGUI MoneyText;
 
     [SerializeField]
     private GameObject descriptionPanel;
@@ -88,16 +95,22 @@ public class InventoryManager : MonoBehaviour
     private GameObject chestPanelPrefab;
     [SerializeField]
     private GameObject chestPanel;
+    [SerializeField]
+    private GameObject moneyPanel;
+
 
     void Start()
     {
-        GameObject item;
-        if (item = GameObject.FindGameObjectWithTag("Item"))
-        {
-            Item i = item.GetComponent<DraggableItem>().Item;
-            AddItem(i);
-            Destroy(item);
-        }
+        UpdateStats();
+        UpdateMoney(money);
+
+        //GameObject item;
+        //if (item = GameObject.FindGameObjectWithTag("Item"))
+        //{
+        //    Item i = item.GetComponent<DraggableItem>().Item;
+        //    AddItem(i);
+        //    Destroy(item);
+        //}
     }
 
     // Update is called once per frame
@@ -110,6 +123,7 @@ public class InventoryManager : MonoBehaviour
             InventoryPanel.SetActive(false);
             InventoryMenu.SetActive(false);
             EquipmentMenu.SetActive(false);
+            moneyPanel.SetActive(false);
             //Destroy(chestPanel);
             inventoryOpen = false;
         }
@@ -118,6 +132,7 @@ public class InventoryManager : MonoBehaviour
             Time.timeScale = 0;
             InventoryPanel.SetActive(true);
             InventoryMenu.SetActive(true);
+            moneyPanel.SetActive(true);
             //chestPanel = Instantiate(chestPanelPrefab, this.gameObject.transform);
             inventoryOpen = true;
         }
@@ -207,11 +222,14 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateStats()
     {
-        HpText.text = "HP - " + HP.ToString() + "/" + MaxHP.ToString();
-        MpText.text = "MP - " + MP.ToString() + "/" + MaxMP.ToString();
-        StrText.text = "STR - " + STR.ToString();
-        MagText.text = "MAG - " + MAG.ToString();
-        DefText.text = "DEF - " + DEF.ToString();
+        LevelText.text = "LEVEL - " + LEVEL.ToString();
+        ExpText.text = "EXP - " + EXP.ToString() + "/" + EXPTOLV.ToString();
+
+        StatsText.text = "HP - " + HP.ToString() + "/" + MaxHP.ToString()
+            + "\n" + "MP - " + MP.ToString() + "/" + MaxMP.ToString()
+            + "\n" + "STR - " + STR.ToString()
+            + "\n" + "MAG - " + MAG.ToString()
+            + "\n" + "DEF - " + DEF.ToString();
     }
 
     public void UpdateStats(Item item, bool equipped)
@@ -233,11 +251,11 @@ public class InventoryManager : MonoBehaviour
             DEF -= item.DEF;
         }
 
-        HpText.text = "HP - " + HP.ToString() + "/" + MaxHP.ToString();
-        MpText.text = "MP - " + MP.ToString() + "/" + MaxMP.ToString();
-        StrText.text = "STR - " + STR.ToString();
-        MagText.text = "MAG - " + MAG.ToString();
-        DefText.text = "DEF - " + DEF.ToString();
+        StatsText.text = "HP - " + HP.ToString() + "/" + MaxHP.ToString()
+            + "\n" + "MP - " + MP.ToString() + "/" + MaxMP.ToString()
+            + "\n" + "STR - " + STR.ToString()
+            + "\n" + "MAG - " + MAG.ToString()
+            + "\n" + "DEF - " + DEF.ToString();
 
 
     }
@@ -309,6 +327,33 @@ public class InventoryManager : MonoBehaviour
             equipmentSlots.Add(newSlot.GetComponent<EquipmentSlot>());
             
         }
+    }
+
+    public void LevelUp()
+    {
+        float baseEXP = 100;
+        float exponent = 1.5f;
+        System.Random random = new System.Random();
+
+        if(EXP == EXPTOLV)
+        {
+            LEVEL += 1;
+            MaxHP += random.Next(10, 21);
+            MaxMP += random.Next(10, 21);
+            STR += random.Next(1, 4);
+            MAG += random.Next(1, 4);
+            DEF += random.Next(1, 4);
+
+            EXPTOLV = (int)Math.Floor(baseEXP * (Math.Pow(LEVEL, exponent)));
+
+            UpdateStats();
+        }
+    }
+
+    private void UpdateMoney(int amount)
+    {
+        money += amount;
+        MoneyText.text = money.ToString();
     }
     
 
