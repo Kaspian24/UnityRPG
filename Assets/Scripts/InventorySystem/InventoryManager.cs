@@ -116,26 +116,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I) && inventoryOpen)
-        {
-            Time.timeScale = 1;
-            descriptionPanel.SetActive(false);
-            InventoryPanel.SetActive(false);
-            InventoryMenu.SetActive(false);
-            EquipmentMenu.SetActive(false);
-            moneyPanel.SetActive(false);
-            //Destroy(chestPanel);
-            inventoryOpen = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.I) && !inventoryOpen)
-        {
-            Time.timeScale = 0;
-            InventoryPanel.SetActive(true);
-            InventoryMenu.SetActive(true);
-            moneyPanel.SetActive(true);
-            //chestPanel = Instantiate(chestPanelPrefab, this.gameObject.transform);
-            inventoryOpen = true;
-        }
+
     }
 
     public void AddItem(Item item)
@@ -355,6 +336,27 @@ public class InventoryManager : MonoBehaviour
         money += amount;
         MoneyText.text = money.ToString();
     }
+
+    private void ToggleInventoryMenu(bool state)
+    {
+            InventoryPanel.SetActive(state);
+            InventoryMenu.SetActive(state);
+            moneyPanel.SetActive(state);
+            descriptionPanel.SetActive(false);
+            EquipmentMenu.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.gameModeEvents.OnToggleInventory += ToggleInventoryMenu;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.gameModeEvents.OnToggleInventory -= ToggleInventoryMenu;
+    }
+
     
+
 
 }
