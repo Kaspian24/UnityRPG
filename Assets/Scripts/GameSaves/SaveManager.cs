@@ -10,9 +10,14 @@ public class SaveManager : MonoBehaviour
 
     private GameObject playerController;
 
+    [HideInInspector]
     public SaveData currentSave = new SaveData();
 
-    private string savesPath = "Assets/Resources/Saves";
+    public string savesPath = "Assets/Resources/Saves";
+
+    public Object gameScene;
+
+    public Object menuScene;
 
     private string sceneName;
 
@@ -26,7 +31,7 @@ public class SaveManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        sceneName = SceneManager.GetActiveScene().name;
+        sceneName = gameScene.name;
     }
 
     public void Save(string name, bool canOverride)
@@ -40,7 +45,9 @@ public class SaveManager : MonoBehaviour
         }
         Dictionary<string, QuestData> questsData = QuestManager.Instance.SaveQuests();
         string currentlyTrackedQuest = QuestMenuManager.Instance.GetCurrentlyTrackedQuest();
-        currentSave = new SaveData(name, questsData, playerController.transform.position, playerController.transform.rotation, currentlyTrackedQuest);
+        long currentTime = System.DateTime.Now.ToBinary();
+        playerController = GameObject.FindGameObjectsWithTag("Player")[0];
+        currentSave = new SaveData(name, questsData, playerController.transform.position, playerController.transform.rotation, currentlyTrackedQuest, currentTime);
         string currentSaveJson = JsonConvert.SerializeObject(currentSave);
         using StreamWriter sw = new StreamWriter(path);
         sw.Write(currentSaveJson);
@@ -59,6 +66,17 @@ public class SaveManager : MonoBehaviour
         currentSave = JsonConvert.DeserializeObject<SaveData>(currentSaveJson);
         currentSave.enabled = true;
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void Delete(string name)
+    {
+        string path = Path.Combine(savesPath, name + ".json");
+        if (!File.Exists(path))
+        {
+            Debug.Log("Plik zapisu nie istnieje.");
+            return;
+        }
+        File.Delete(path);
     }
 
     private void SceneLoaded(Scene scene, LoadSceneMode mode)

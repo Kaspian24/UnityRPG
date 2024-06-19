@@ -15,6 +15,8 @@ public class GameModeManager : MonoBehaviour
 
     public GameMode lastGameMode;
 
+    public bool playerAlive;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,6 +31,7 @@ public class GameModeManager : MonoBehaviour
     {
         currentGameMode = GameMode.Gameplay;
         lastGameMode = GameMode.Gameplay;
+        playerAlive = true;
     }
 
     private void Update()
@@ -89,6 +92,18 @@ public class GameModeManager : MonoBehaviour
                     SwitchToLastGameMode();
                 }
                 break;
+            case GameMode.LoadMenu:
+                if (Input.GetKeyDown(pauseMenuKey))
+                {
+                    SwitchToLastGameMode();
+                }
+                break;
+            case GameMode.SaveMenu:
+                if (Input.GetKeyDown(pauseMenuKey))
+                {
+                    SwitchToLastGameMode();
+                }
+                break;
             default:
                 break;
         }
@@ -104,6 +119,8 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
         GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(true);
+        GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
     }
 
     private void SwitchToQuestMenu()
@@ -116,6 +133,8 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
         GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
     }
 
     private void SwitchToPauseMenu()
@@ -129,6 +148,8 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
         GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(true);
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
     }
 
     private void SwitchToDialogue()
@@ -141,6 +162,8 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
         GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
     }
 
     private void SwitchToInventoryMenu()
@@ -153,6 +176,36 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleInventory(true);
         GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+    }
+
+    private void SwitchToLoadMenu()
+    {
+        currentGameMode = GameMode.LoadMenu;
+        Pause();
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(true);
+        GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+    }
+
+    private void SwitchToSaveMenu()
+    {
+        currentGameMode = GameMode.SaveMenu;
+        Pause();
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(true);
     }
 
     public void SwitchToLastGameMode()
@@ -161,7 +214,10 @@ public class GameModeManager : MonoBehaviour
         switch (currentGameMode)
         {
             case GameMode.Gameplay:
-                SwitchToGameplay();
+                if(playerAlive)
+                {
+                    SwitchToGameplay();
+                }
                 break;
             case GameMode.QuestMenu:
                 SwitchToQuestMenu();
@@ -192,6 +248,30 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    private void ToggleLoadMenu(bool state)
+    {
+        if (state)
+        {
+            SwitchToLoadMenu();
+        }
+        else
+        {
+            SwitchToLastGameMode();
+        }
+    }
+
+    private void ToggleSaveMenu(bool state)
+    {
+        if (state)
+        {
+            SwitchToSaveMenu();
+        }
+        else
+        {
+            SwitchToLastGameMode();
+        }
+    }
+
     public void ForceResume()
     {
         Resume();
@@ -214,10 +294,14 @@ public class GameModeManager : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.Instance.gameModeEvents.OnDialogueStartEnd += ToggleDialogue;
+        GameEventsManager.Instance.gameModeEvents.OnLoadMenuOnOff += ToggleLoadMenu;
+        GameEventsManager.Instance.gameModeEvents.OnSaveMenuOnOff += ToggleSaveMenu;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.gameModeEvents.OnDialogueStartEnd -= ToggleDialogue;
+        GameEventsManager.Instance.gameModeEvents.OnLoadMenuOnOff -= ToggleLoadMenu;
+        GameEventsManager.Instance.gameModeEvents.OnSaveMenuOnOff -= ToggleSaveMenu;
     }
 }

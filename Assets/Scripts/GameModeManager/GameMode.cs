@@ -5,4 +5,6 @@ public enum GameMode
     Dialogue,
     InventoryMenu,
     PauseMenu,
+    SaveMenu,
+    LoadMenu,
 }
