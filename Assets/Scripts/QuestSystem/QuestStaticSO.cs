@@ -1,5 +1,12 @@
 using UnityEngine;
 
+[System.Serializable]
+public class RewardItemData
+{
+    public int amount;
+    public string name;
+}
+
 [CreateAssetMenu(fileName = "QuestStaticSO", menuName = "Quests/QuestStaticSO", order = 1)]
 public class QuestStaticSO : ScriptableObject
 {
@@ -21,7 +28,7 @@ public class QuestStaticSO : ScriptableObject
     [Header("Rewards")]
     public int gold;
     public int experience;
-    //public List<Tuple<int, Item>> items;
+    public RewardItemData[] items;
 
     private void OnValidate() // Enforces that the id and file name is the same as Id
     {

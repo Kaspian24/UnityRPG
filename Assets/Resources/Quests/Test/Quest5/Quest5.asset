@@ -21,3 +21,4 @@ MonoBehaviour:
   - {fileID: 5320733967423195123, guid: 7ef509aed82052a40a382e595cfa4b06, type: 3}
   gold: 0
   experience: 0
+  items: []

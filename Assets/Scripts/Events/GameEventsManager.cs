@@ -10,6 +10,8 @@ public class GameEventsManager : MonoBehaviour
 
     public GameModeEvents gameModeEvents;
 
+    public PlayerEvents playerEvents;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -24,5 +26,7 @@ public class GameEventsManager : MonoBehaviour
         dialogueEvents = new DialogueEvents();
 
         gameModeEvents = new GameModeEvents();
+
+        playerEvents = new PlayerEvents();
     }
 }

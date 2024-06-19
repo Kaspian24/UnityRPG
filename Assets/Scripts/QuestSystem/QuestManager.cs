@@ -80,8 +80,12 @@ public class QuestManager : MonoBehaviour
     }
     private void GiveRewards(Quest quest)
     {
-        // ToDo when there's player stats and inventory
-        Debug.Log("Given Reward");
+        GameEventsManager.Instance.playerEvents.ExpAdd(quest.staticData.experience);
+        GameEventsManager.Instance.playerEvents.GoldAdd(quest.staticData.gold);
+        foreach (RewardItemData item in quest.staticData.items)
+        {
+            GameEventsManager.Instance.playerEvents.ItemAdd(item.amount, item.name);
+        }
     }
     private void TaskDataChange(string questId, int taskIndex, TaskData taskData)
     {
