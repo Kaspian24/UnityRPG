@@ -8,12 +8,14 @@ public class PauseMenuPanel : MonoBehaviour
     public Button saveButton;
 
     public Button loadButton;
+
+    public Button mainMenuButton;
+
     private void Awake()
     {
         resumeButton.onClick.AddListener(() => GameModeManager.Instance.SwitchToLastGameMode());
         saveButton.onClick.AddListener(() => GameEventsManager.Instance.gameModeEvents.SaveMenuOnOff(true));
         loadButton.onClick.AddListener(() => GameEventsManager.Instance.gameModeEvents.LoadMenuOnOff(true));
-        //        saveButton.onClick.AddListener(() => SaveManager.Instance.Save("save1", true));
-        //        loadButton.onClick.AddListener(() => SaveManager.Instance.Load("save1"));
+        mainMenuButton.onClick.AddListener(() => SaveManager.Instance.MainMenu());
     }
 }

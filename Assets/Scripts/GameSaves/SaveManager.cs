@@ -19,7 +19,9 @@ public class SaveManager : MonoBehaviour
 
     public Object menuScene;
 
-    private string sceneName;
+    private string gameSceneName;
+
+    private string menuSceneName;
 
     private void Awake()
     {
@@ -31,7 +33,8 @@ public class SaveManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        sceneName = gameScene.name;
+        gameSceneName = gameScene.name;
+        menuSceneName = menuScene.name;
     }
 
     public void Save(string name, bool canOverride)
@@ -65,7 +68,7 @@ public class SaveManager : MonoBehaviour
         string currentSaveJson = sr.ReadToEnd();
         currentSave = JsonConvert.DeserializeObject<SaveData>(currentSaveJson);
         currentSave.enabled = true;
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(gameSceneName);
     }
 
     public void Delete(string name)
@@ -79,9 +82,20 @@ public class SaveManager : MonoBehaviour
         File.Delete(path);
     }
 
+    public void NewGame()
+    {
+        currentSave = new SaveData();
+        SceneManager.LoadScene(gameSceneName);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(menuSceneName);
+    }
+
     private void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != sceneName)
+        if (scene.name != gameSceneName)
         {
             return;
         }
