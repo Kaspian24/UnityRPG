@@ -97,6 +97,10 @@ public class InventoryManager : MonoBehaviour
     private GameObject chestPanel;
     [SerializeField]
     private GameObject moneyPanel;
+    [SerializeField]
+    private GameObject levelUpPanel;
+    [SerializeField]
+    private TextMeshProUGUI levelUpText;
 
 
     void Start()
@@ -116,7 +120,10 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(EXP == EXPTOLV)
+        {
+            LevelUp();
+        }
     }
 
     public void AddItem(Item item)
@@ -297,6 +304,11 @@ public class InventoryManager : MonoBehaviour
         descriptionPanel.SetActive(false);
     }
 
+    public void CloseLevelUp()
+    {
+        levelUpPanel.SetActive(false);
+    }
+
     public void AddSlots()
     {
         RectTransform rectTransform = scrollPanel.GetComponent<RectTransform>();
@@ -312,20 +324,44 @@ public class InventoryManager : MonoBehaviour
 
     public void LevelUp()
     {
+
         float baseEXP = 100;
         float exponent = 1.5f;
         System.Random random = new System.Random();
+        int tmp;
+        levelUpText.text = "";
 
         if(EXP == EXPTOLV)
         {
             LEVEL += 1;
-            MaxHP += random.Next(10, 21);
-            MaxMP += random.Next(10, 21);
-            STR += random.Next(1, 4);
-            MAG += random.Next(1, 4);
-            DEF += random.Next(1, 4);
 
+            levelUpText.text += "Level: " + LEVEL.ToString() + "\n";
+
+            tmp = random.Next(10, 21);
+            MaxHP += tmp;
+            levelUpText.text += "Max HP +" + tmp.ToString() + "\n"; ;
+
+            tmp = random.Next(10, 21);
+            MaxMP += tmp;
+            levelUpText.text += "Max MP +" + tmp.ToString() + "\n"; ;
+
+            tmp = random.Next(1, 5);
+            STR += tmp;
+            levelUpText.text += "STR +" + tmp.ToString() + "\n"; ;
+
+            tmp = random.Next(1, 5);
+            MAG += tmp;
+            levelUpText.text += "MAG +" + tmp.ToString() + "\n"; ;
+
+            tmp = random.Next(1, 5);
+            DEF += tmp;
+            levelUpText.text += "DEF +" + tmp.ToString() + "\n"; ;
+
+            EXP = 0;
             EXPTOLV = (int)Math.Floor(baseEXP * (Math.Pow(LEVEL, exponent)));
+
+            levelUpPanel.SetActive(true);
+
 
             UpdateStats();
         }
@@ -342,8 +378,10 @@ public class InventoryManager : MonoBehaviour
             InventoryPanel.SetActive(state);
             InventoryMenu.SetActive(state);
             moneyPanel.SetActive(state);
+            levelUpPanel.SetActive(false);
             descriptionPanel.SetActive(false);
             EquipmentMenu.SetActive(false);
+            
     }
 
     private void OnEnable()
