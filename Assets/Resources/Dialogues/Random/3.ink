@@ -1,0 +1,1 @@
+Chyba pójdę dzisiaj na ryby.

@@ -1,5 +1,6 @@
 using Ink.Runtime;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +30,8 @@ public class DialogueManager : MonoBehaviour
     private List<GameObject> instantiatedChoices = new List<GameObject>();
 
     private HashSet<(string, string)> enabledTopics = new HashSet<(string, string)>();
+
+    private string randomDialoguesPath = "Assets/Resources/Dialogues/Random";
 
     private void Start()
     {
@@ -96,6 +99,19 @@ public class DialogueManager : MonoBehaviour
         {
             EndDialogue();
         }
+    }
+
+    public void StartRandomDialogue(string dialoguesPath = "")
+    {
+        if(string.IsNullOrEmpty(dialoguesPath))
+        {
+            dialoguesPath = randomDialoguesPath;
+        }
+        string[] randomDialoguesFiles = Directory.GetFiles(dialoguesPath, "*.json");
+        string randomDialogueFile = randomDialoguesFiles[Random.Range(0, randomDialoguesFiles.Length)];
+        randomDialogueFile = randomDialogueFile.Substring(randomDialogueFile.IndexOf("Resources/") + "Resources/".Length).Replace(".json", "");
+        TextAsset randomDialogue = Resources.Load<TextAsset>(randomDialogueFile);
+        StartDialogue(randomDialogue);
     }
 
     private void BindExternalFunctions()

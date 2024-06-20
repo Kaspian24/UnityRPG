@@ -1,0 +1,1 @@
+A co jeżeli to wszystko to symulacja?

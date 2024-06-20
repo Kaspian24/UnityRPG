@@ -7,6 +7,8 @@ public class QuestGiver : MonoBehaviour
     [SerializeField]
     private TextAsset inkJson;
 
+    public bool randomNPC = false;
+
     private void Awake()
     {
         GetComponent<Collider>().enabled = true;
@@ -17,6 +19,11 @@ public class QuestGiver : MonoBehaviour
     {
         if(!other.CompareTag("Player"))
         {
+            return;
+        }
+        if (randomNPC)
+        {
+            DialogueManager.Instance.StartRandomDialogue();
             return;
         }
         DialogueManager.Instance.StartDialogue(inkJson);

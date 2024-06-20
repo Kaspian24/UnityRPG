@@ -969,6 +969,7 @@ MonoBehaviour:
   resumeButton: {fileID: 7972419486485584740}
   saveButton: {fileID: 5934144673828919572}
   loadButton: {fileID: 4041882872248547618}
+  mainMenuButton: {fileID: 1174452778178793797}
 --- !u!1 &2943867012771971156
 GameObject:
   m_ObjectHideFlags: 0
