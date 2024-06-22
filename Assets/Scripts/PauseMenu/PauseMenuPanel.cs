@@ -5,8 +5,6 @@ public class PauseMenuPanel : MonoBehaviour
 {
     public Button resumeButton;
 
-    public Button saveButton;
-
     public Button loadButton;
 
     public Button mainMenuButton;
@@ -14,7 +12,6 @@ public class PauseMenuPanel : MonoBehaviour
     private void Awake()
     {
         resumeButton.onClick.AddListener(() => GameModeManager.Instance.SwitchToLastGameMode());
-        saveButton.onClick.AddListener(() => GameEventsManager.Instance.gameModeEvents.SaveMenuOnOff(true));
         loadButton.onClick.AddListener(() => GameEventsManager.Instance.gameModeEvents.LoadMenuOnOff(true));
         mainMenuButton.onClick.AddListener(() => SaveManager.Instance.MainMenu());
     }

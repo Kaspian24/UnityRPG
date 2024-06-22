@@ -231,6 +231,12 @@ public class GameModeManager : MonoBehaviour
             case GameMode.PauseMenu:
                 SwitchToGameplay();
                 break;
+            case GameMode.LoadMenu:
+                SwitchToGameplay();
+                break;
+            case GameMode.SaveMenu:
+                SwitchToGameplay();
+                break;
             default:
                 break;
         }
