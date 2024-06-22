@@ -31,6 +31,5 @@ public class DialoguePanel : MonoBehaviour
         yield return new WaitForEndOfFrame();
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 0f;
-        Canvas.ForceUpdateCanvases();
     }
 }

@@ -33,6 +33,12 @@ public class DialogueManager : MonoBehaviour
 
     private string randomDialoguesPath = "Assets/Resources/Dialogues/Random";
 
+    private bool madeChoice;
+
+    public Color playerColor = Color.blue;
+
+    public Color npcColor = Color.white;
+
     private void Start()
     {
         dialoguePanel.SetActive(false);
@@ -82,6 +88,10 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartDialogue(TextAsset inkJson)
     {
+        madeChoice = false;
+
+        dialogueText.color = npcColor;
+
         GameEventsManager.Instance.gameModeEvents.DialogueStartEnd(true);
 
         story = new Story(inkJson.text);
@@ -155,8 +165,21 @@ public class DialogueManager : MonoBehaviour
             ClearInstantiated(instantiatedChoices);
             TextMeshProUGUI dialogueHistoryItem = Instantiate(dialogueHistoryItemPrefab, dialogueHistory.transform);
             dialogueHistoryItem.text = story.currentText;
+            if(dialogueText.color == playerColor)
+            {
+                dialogueHistoryItem.color = playerColor;
+            }
             instantiatedHistoryItems.Add(dialogueHistoryItem.gameObject);
             dialogueText.text = story.Continue();
+            if(madeChoice)
+            {
+                dialogueText.color = playerColor;
+                madeChoice = false;
+            }
+            else
+            {
+                dialogueText.color = npcColor;
+            }
             DisplayChoices();
         }
         else
@@ -213,6 +236,7 @@ public class DialogueManager : MonoBehaviour
 
     public void MakeChoice(int choiceIndex)
     {
+        madeChoice = true;
         story.ChooseChoiceIndex(choiceIndex);
     }
 
