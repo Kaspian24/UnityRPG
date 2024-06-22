@@ -9,6 +9,7 @@ public class LoadMenuPanel : MonoBehaviour
 {
     public GameObject saveListPanel;
     public GameObject saveListPanelItemPrefab;
+    public Button backButton;
 
     private List<SaveData> saveDataList = new List<SaveData>();
     private List<GameObject> instantiatedSaveListItems = new List<GameObject>();
@@ -18,6 +19,7 @@ public class LoadMenuPanel : MonoBehaviour
     private void Awake()
     {
         savesPath = SaveManager.Instance.savesPath;
+        backButton.onClick.AddListener(() => { GameModeManager.Instance.SwitchToLastGameMode(); });
     }
 
     private void ClearInstantiated(List<GameObject> gameObjects)

@@ -37,14 +37,14 @@ public class SaveManager : MonoBehaviour
         menuSceneName = menuScene.name;
     }
 
-    public void Save(string name, bool canOverride)
+    public bool Save(string name, bool canOverride)
     {
         Directory.CreateDirectory(savesPath);
         string path = Path.Combine(savesPath, name + ".json");
         if (File.Exists(path) && !canOverride)
         {
             Debug.Log("Plik zapisu ju¿ istnieje.");
-            return;
+            return false;
         }
         Dictionary<string, QuestData> questsData = QuestManager.Instance.SaveQuests();
         string currentlyTrackedQuest = QuestMenuManager.Instance.GetCurrentlyTrackedQuest();
@@ -54,6 +54,7 @@ public class SaveManager : MonoBehaviour
         string currentSaveJson = JsonConvert.SerializeObject(currentSave);
         using StreamWriter sw = new StreamWriter(path);
         sw.Write(currentSaveJson);
+        return true;
     }
 
     public void Load(string name)

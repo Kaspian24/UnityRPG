@@ -13,7 +13,7 @@ public class SaveListPanelItem : MonoBehaviour
     {
         saveName.text = name;
         saveDate.text = System.DateTime.FromBinary(date).ToLocalTime().ToString();
-        saveButton.onClick.AddListener(() => { SaveManager.Instance.Save(name, true); GameEventsManager.Instance.gameModeEvents.ReloadSaveMenu(); });
+        saveButton.onClick.AddListener(() => { _ = SaveManager.Instance.Save(name, true); GameEventsManager.Instance.gameModeEvents.ReloadSaveMenu(); });
         deleteButton.onClick.AddListener(() => { SaveManager.Instance.Delete(name); GameEventsManager.Instance.gameModeEvents.ReloadSaveMenu(); });
     }
 

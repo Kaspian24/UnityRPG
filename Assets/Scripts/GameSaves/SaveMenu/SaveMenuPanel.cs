@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -11,16 +12,31 @@ public class SaveMenuPanel : MonoBehaviour
     public Button newSaveButton;
     public GameObject saveListPanel;
     public GameObject saveListPanelItemPrefab;
+    public Button backButton;
 
     private List<SaveData> saveDataList = new List<SaveData>();
     private List<GameObject> instantiatedSaveListItems = new List<GameObject>();
 
     private string savesPath;
+    private Color saveInputDefaultColor;
 
     private void Awake()
     {
         savesPath = SaveManager.Instance.savesPath;
-        newSaveButton.onClick.AddListener(() => { SaveManager.Instance.Save(newSaveInput.text, false); ReloadSaveMenu(); });
+        saveInputDefaultColor = newSaveInput.textComponent.color;
+        newSaveButton.onClick.AddListener(() =>
+        {
+            if (!SaveManager.Instance.Save(newSaveInput.text, false))
+            {
+                newSaveInput.textComponent.color = Color.red;
+            }
+            ReloadSaveMenu();
+        });
+        backButton.onClick.AddListener(() => { GameModeManager.Instance.SwitchToLastGameMode(); });
+        newSaveInput.onValueChanged.AddListener((string text) =>
+        {
+            newSaveInput.textComponent.color = saveInputDefaultColor;
+        });
     }
 
     private void ClearInstantiated(List<GameObject> gameObjects)
