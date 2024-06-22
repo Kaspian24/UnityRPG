@@ -208,6 +208,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
         instantiatedChoices[0].GetComponent<Button>().Select();
+        dialoguePanel.GetComponent<DialoguePanel>().ScrollToBottom();
     }
 
     public void MakeChoice(int choiceIndex)

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 [System.Serializable]
@@ -66,7 +67,7 @@ public class TaskTalk : Task
     }
     private void UpdateState()
     {
-        string state = JsonUtility.ToJson(npcsTalkedTo);
+        string state = JsonConvert.SerializeObject(npcsTalkedTo);
         (string, bool)[] log = new (string, bool)[npcsToTalkTo.Length];
         bool completed = true;
         for (int i = 0; i < log.Length; i++)
@@ -88,7 +89,7 @@ public class TaskTalk : Task
     }
     protected override void SetTaskState(string state)
     {
-        npcsTalkedTo = JsonUtility.FromJson<bool[]>(state);
+        npcsTalkedTo = JsonConvert.DeserializeObject<bool[]>(state);
         UpdateState();
     }
 }

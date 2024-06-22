@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 [System.Serializable]
@@ -60,7 +61,7 @@ public class TaskGoTo : Task
     }
     private void UpdateState()
     {
-        string state = JsonUtility.ToJson(placesVisited);
+        string state = JsonConvert.SerializeObject(placesVisited);
         (string, bool)[] log = new (string, bool)[placesToVisit.Length];
         bool completed = true;
         for (int i = 0; i < log.Length; i++)
@@ -81,7 +82,7 @@ public class TaskGoTo : Task
     }
     protected override void SetTaskState(string state)
     {
-        placesVisited = JsonUtility.FromJson<bool[]>(state);
+        placesVisited = JsonConvert.DeserializeObject<bool[]>(state);
         UpdateState();
     }
 }

@@ -28,6 +28,11 @@ Siódma linia
 Ósma linia
 Dziewiąta linia
 Dziesiąta linia
+Kolejna bardzo długa linia dialogowa bo chcę sprawdzić czy działa scroll
+Kolejna bardzo długa linia dialogowa bo chcę sprawdzić czy działa scroll
+Kolejna bardzo długa linia dialogowa bo chcę sprawdzić czy działa scroll
+Kolejna bardzo długa linia dialogowa bo chcę sprawdzić czy działa scroll
+Kolejna bardzo długa linia dialogowa bo chcę sprawdzić czy działa scroll
 -> DONE
 
 == nieWiem ==

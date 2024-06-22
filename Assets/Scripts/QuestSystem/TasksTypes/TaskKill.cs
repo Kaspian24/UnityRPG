@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 [System.Serializable]
@@ -52,7 +53,7 @@ public class TaskKill : Task
     }
     private void UpdateState()
     {
-        string state = JsonUtility.ToJson(enemiesKilled);
+        string state = JsonConvert.SerializeObject(enemiesKilled);
         (string, bool)[] log = new (string, bool)[enemiesToKill.Length];
         bool completed = true;
         for (int i = 0; i < log.Length; i++)
@@ -75,7 +76,7 @@ public class TaskKill : Task
     }
     protected override void SetTaskState(string state)
     {
-        enemiesKilled = JsonUtility.FromJson<int[]>(state);
+        enemiesKilled = JsonConvert.DeserializeObject<int[]>(state);
         UpdateState();
     }
 }

@@ -5,6 +5,7 @@ public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
     private Dictionary<string, Quest> questsDict;
+    public bool loading = true;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -40,9 +41,14 @@ public class QuestManager : MonoBehaviour
 
         foreach (Quest quest in questsDict.Values)
         {
+            if(quest.state == QuestState.Active)
+            {
+                _ = quest.InstantiateTask(transform);
+            }
             // inform about all quests states on start
             GameEventsManager.Instance.questEvents.QuestStateChange(quest);
         }
+        loading = false;
     }
     private void CheckReqiurements()
     {

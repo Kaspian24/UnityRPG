@@ -23,7 +23,7 @@ public class QuestMenuManager : MonoBehaviour
     private void Start()
     {
         questMenuPanel.SetActive(false);
-        if(string.IsNullOrEmpty(GetCurrentlyTrackedQuest()))
+        if (string.IsNullOrEmpty(GetCurrentlyTrackedQuest()))
         {
             trackedQuestPanel.SetActive(false);
         }
@@ -50,7 +50,7 @@ public class QuestMenuManager : MonoBehaviour
     }
     private void QuestTrackUpdate(bool state)
     {
-        if(!state)
+        if (!state)
         {
             trackedQuestPanel.SetActive(false);
         }
@@ -61,6 +61,10 @@ public class QuestMenuManager : MonoBehaviour
     }
     private void QuestFinishedStarted(Quest quest)
     {
+        if (QuestManager.Instance.loading)
+        {
+            return;
+        }
         finishedStartedQuestPanel.SetActive(true);
         finishedStartedQuestPanel.GetComponent<FinishedStartedQuestPanel>().AddFinishedStartedQuest(quest);
     }
