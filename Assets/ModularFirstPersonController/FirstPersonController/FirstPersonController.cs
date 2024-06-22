@@ -16,6 +16,11 @@ using UnityEditor;
     using System.Net;
 #endif
 
+interface IInteractable
+{
+    public void Interact();
+}
+
 public class FirstPersonController : MonoBehaviour
 {
     private Rigidbody rb;
@@ -23,6 +28,10 @@ public class FirstPersonController : MonoBehaviour
 
     public GameObject spellObj;
     public Transform spellPoint;
+
+    public Transform interactorSource;
+    public float interactRange = 2f;
+    public KeyCode interactKey = KeyCode.E;
 
     #region Camera Movement Variables
 
@@ -392,6 +401,27 @@ public class FirstPersonController : MonoBehaviour
         }
 
         SetAnimations();
+
+        Ray r = new Ray(interactorSource.position, interactorSource.forward);
+        if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange))
+        {
+            if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+            {
+                GameEventsManager.Instance.gameModeEvents.ToggleInterractInfo(true);
+                if (Input.GetKeyDown(interactKey))
+                {
+                    interactObj.Interact();
+                }
+            }
+            else
+            {
+                GameEventsManager.Instance.gameModeEvents.ToggleInterractInfo(false);
+            }
+        }
+        else
+        {
+            GameEventsManager.Instance.gameModeEvents.ToggleInterractInfo(false);
+        }
     }
 
     void FixedUpdate()
@@ -772,6 +802,21 @@ public class FirstPersonController : MonoBehaviour
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
     }
+
+    void ToggleCrosshair(bool state)
+    {
+        crosshairObject.gameObject.SetActive(state);
+    }
+
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.gameModeEvents.OnToggleCrosshair += ToggleCrosshair;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.gameModeEvents.OnToggleCrosshair -= ToggleCrosshair;
+    }
 }
 
 
@@ -979,6 +1024,12 @@ public class FirstPersonController : MonoBehaviour
 
         fpc.spellPoint = (Transform)EditorGUILayout.ObjectField(new GUIContent("Spell Pont", "Joint object position is moved while head bob is active."), fpc.spellPoint, typeof(Transform), true);
         fpc.spellObj = (GameObject)EditorGUILayout.ObjectField(new GUIContent("Spell Object", "Joint object position is moved while head bob is active."), fpc.spellObj, typeof(GameObject), true);
+
+        GUILayout.Label("Interact Setup", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
+        EditorGUILayout.Space();
+
+        fpc.interactorSource = (Transform)EditorGUILayout.ObjectField(new GUIContent("Interactor Source", "Position from which interaction ray is casted."), fpc.interactorSource, typeof(Transform), true);
+        fpc.interactRange = EditorGUILayout.Slider(new GUIContent("Interact Range", "Determines the range of player interaction."), fpc.interactRange, 0, 5);
 
         #endregion
 

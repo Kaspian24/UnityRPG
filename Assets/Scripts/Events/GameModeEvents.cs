@@ -42,6 +42,16 @@ public class GameModeEvents
     {
         OnToggleSaveMenu?.Invoke(state);
     }
+    public event Action<bool> OnToggleCrosshair;
+    public void ToggleCrosshair(bool state)
+    {
+        OnToggleCrosshair?.Invoke(state);
+    }
+    public event Action<bool> OnToggleInterractInfo;
+    public void ToggleInterractInfo(bool state)
+    {
+        OnToggleInterractInfo?.Invoke(state);
+    }
 
     public event Action<bool> OnDialogueStartEnd;
     public void DialogueStartEnd(bool state)

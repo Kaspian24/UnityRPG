@@ -281,6 +281,8 @@ public class GameModeManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
+        GameEventsManager.Instance.gameModeEvents.ToggleCrosshair(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleInterractInfo(false);
         playerController.GetComponent<FirstPersonController>().enabled = false;
     }
 
@@ -289,6 +291,7 @@ public class GameModeManager : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         playerController.GetComponent<FirstPersonController>().enabled = true;
+        GameEventsManager.Instance.gameModeEvents.ToggleCrosshair(true);
     }
 
     private void OnEnable()
