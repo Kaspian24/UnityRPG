@@ -36,7 +36,7 @@ public class Item
     private ItemType itemType;
 
     [SerializeField]
-    private int itemId;
+    private string itemId;
 
     [SerializeField]
     private string itemName;
@@ -51,7 +51,7 @@ public class Item
     private string description;
 
     public ItemType ItemType { get => itemType; set => itemType = value; }
-    public int ItemId { get => itemId; set => itemId = value; }
+    public string ItemId { get => itemId; set => itemId = value; }
     public string ItemName { get => itemName; set => itemName = value; }
     public int Quantity { get => quantity; set => quantity = value; }
     public Sprite Sprite { get => sprite; set => sprite = value; }

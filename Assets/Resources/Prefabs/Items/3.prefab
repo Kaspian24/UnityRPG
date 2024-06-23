@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5580724514274353572}
   - component: {fileID: 1420861792802867756}
   - component: {fileID: 1937089511211155548}
-  - component: {fileID: 1849133810806831508}
   - component: {fileID: 4030896782050227806}
+  - component: {fileID: -146882122899019814}
   m_Layer: 0
   m_Name: 3
   m_TagString: Item
@@ -107,32 +107,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1849133810806831508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2325610681443044831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa5fb27d71f4ab24d876cab181b2a4eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentAfterDrag: {fileID: 0}
-  image: {fileID: 0}
-  item:
-    hp: 0
-    mp: 0
-    str: 0
-    mag: 0
-    def: 0
-    itemType: 7
-    itemId: 3
-    itemName: Key Item
-    quantity: 1
-    sprite: {fileID: 21300000, guid: e76b30749d6bac4489c3ccf1ccb2c8fc, type: 3}
-    description: A special key item. You can't throw it away
 --- !u!54 &4030896782050227806
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -160,3 +134,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-146882122899019814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2325610681443044831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c08c6804d8b74f468df9c379c02bef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item:
+    hp: 0
+    mp: 0
+    str: 0
+    mag: 0
+    def: 0
+    itemType: 7
+    itemId: 3
+    itemName: Key Item
+    quantity: 1
+    sprite: {fileID: 21300000, guid: e76b30749d6bac4489c3ccf1ccb2c8fc, type: 3}
+    description: A special key item. You can't throw it away

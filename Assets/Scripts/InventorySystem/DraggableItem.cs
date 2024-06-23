@@ -94,7 +94,14 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             slot.DropItem();
             slot.CloseDescription();
-            Destroy(this.gameObject);
+            if (Item.Quantity < 2)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Item.Quantity--;
+            }
         }
     }
 

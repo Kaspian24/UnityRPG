@@ -42,4 +42,33 @@ public class InventorySlot : EquipmentSlot
         return false;
     }
 
+    public override void OnDrop(PointerEventData eventData)
+    {
+        GameObject dropped = eventData.pointerDrag;
+        DraggableItem draggableItem;
+        if (draggableItem = dropped.GetComponent<DraggableItem>())
+        {
+            if (!IsFull)
+            {
+            
+                if (!CheckTypeList(draggableItem.Item))
+                {
+                    return;
+                }
+                draggableItem.parentAfterDrag = transform;
+                AddItem(draggableItem.Item);
+            }
+            else
+            {
+                if (draggableItem.Item.ItemId == this.Item.ItemId)
+                {
+                    AddExistingItem(draggableItem.Item.Quantity);
+                    Destroy(dropped);
+                }
+            }
+        }
+        
+    }
+
+
 }

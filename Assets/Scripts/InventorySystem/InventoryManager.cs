@@ -9,6 +9,8 @@ using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -136,16 +138,7 @@ public class InventoryManager : MonoBehaviour
                 if (!inventorySlots[i].IsFull)
                 {
 
-                    GameObject draggableItem = new GameObject("DraggableItem");
-                    draggableItem.AddComponent<Image>();
-                    draggableItem.AddComponent<DraggableItem>();
-                    draggableItem.GetComponent<DraggableItem>().Item = new Item();
-                    draggableItem.GetComponent<DraggableItem>().Item.copyItem(item);
-                    draggableItem.GetComponent<Image>().sprite = item.Sprite;
-                    draggableItem.GetComponent<DraggableItem>().parentAfterDrag = inventorySlots[i].transform;
-                    draggableItem.GetComponent<DraggableItem>().Image = draggableItem.GetComponent<Image>();
-
-                    draggableItem.transform.SetParent(inventorySlots[i].transform);
+                    GameObject draggableItem = createNewDraggableItem(item, inventorySlots[i].transform);
 
                     inventorySlots[i].AddItem(draggableItem.GetComponent<DraggableItem>().Item);
                     break;
@@ -163,22 +156,27 @@ public class InventoryManager : MonoBehaviour
             {
                 if (!equipmentSlots[i].IsFull)
                 {
-                    GameObject draggableItem = new GameObject("DraggableItem");
-                    draggableItem.AddComponent<Image>();
-                    draggableItem.AddComponent<DraggableItem>();
-                    draggableItem.GetComponent<DraggableItem>().Item = new Item();
-                    draggableItem.GetComponent<DraggableItem>().Item.copyItem(item);
-                    draggableItem.GetComponent<Image>().sprite = item.Sprite;
-                    draggableItem.GetComponent<DraggableItem>().parentAfterDrag = equipmentSlots[i].transform;
-                    draggableItem.GetComponent<DraggableItem>().Image = draggableItem.GetComponent<Image>();
-
-                    draggableItem.transform.SetParent(equipmentSlots[i].transform);
-
+                    GameObject draggableItem = createNewDraggableItem(item, equipmentSlots[i].transform);
                     equipmentSlots[i].AddItem(draggableItem.GetComponent<DraggableItem>().Item);
                     break;
                 }
             }
         }
+    }
+
+    public GameObject createNewDraggableItem(Item item, Transform transform)
+    {
+        GameObject draggableItem = new GameObject("DraggableItem");
+        draggableItem.AddComponent<Image>();
+        draggableItem.AddComponent<DraggableItem>();
+        draggableItem.GetComponent<DraggableItem>().Item = new Item();
+        draggableItem.GetComponent<DraggableItem>().Item.copyItem(item);
+        draggableItem.GetComponent<Image>().sprite = item.Sprite;
+        draggableItem.GetComponent<DraggableItem>().parentAfterDrag = transform;
+        draggableItem.GetComponent<DraggableItem>().Image = draggableItem.GetComponent<Image>();
+
+        draggableItem.transform.SetParent(transform);
+        return draggableItem;
     }
 
     public bool UseItem(Item item)
@@ -394,6 +392,78 @@ public class InventoryManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.OnToggleInventory -= ToggleInventoryMenu;
     }
 
+    //Metoda zapisuj¹ca przedmioty w ekwipunku
+    public List<KeyValuePair<string, int>>SaveItems()
+    {
+        List<KeyValuePair<string, int>> items = new List<KeyValuePair<string, int>>();
+        for(int i = 0; i < equipmentSlots.Count; i++)
+        {
+            if (equipmentSlots[i].IsFull)
+            {
+                items.Add(new KeyValuePair<string, int>(equipmentSlots[i].Item.ItemId, equipmentSlots[i].Item.Quantity));
+            }
+        }
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (inventorySlots[i].IsFull)
+            {
+                items.Add(new KeyValuePair<string, int>(inventorySlots[i].Item.ItemId, inventorySlots[i].Item.Quantity));
+            }
+        }
+        return items;
+    }
+
+    //Metoda zapisuj¹ca wyekwipowane przedmioty
+    public List<KeyValuePair<string, string>>SaveEquippedItems()
+    {
+        List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
+        for(int i = 0; i < playerSlots.Length; i++)
+        {
+            if (playerSlots[i].IsFull)
+            {
+                items.Add(new KeyValuePair<string, string>(playerSlots[i].Item.ItemId, playerSlots[i].TypeList[0].ToString()));
+            }
+
+        }
+        return items;
+    }
+
+    //Metoda wczytuj¹ca przedmioty do ekwipunku
+    public void LoadItems(List<KeyValuePair<string, int>> items)
+    {
+        foreach(KeyValuePair<string, int> entry in items)
+        {
+            GameObject tempObject = Resources.Load("Prefabs/Items/" + entry.Key) as GameObject;
+            Item tempItem = tempObject.GetComponent<SceneItem>().Item;
+            Item i = new Item();
+            i.copyItem(tempItem);
+            i.Quantity = entry.Value;
+            AddItem(i);
+        }
+    }
+
+    //Metoda wczytuj¹ca wyekwipowane przedmioty
+    public void LoadEquippedItems(List<KeyValuePair<string, string>> items)
+    {
+        foreach (KeyValuePair<string, string> entry in items)
+        {
+            GameObject tempObject = Resources.Load("Prefabs/Items/" + entry.Key) as GameObject;
+            Item tempItem = tempObject.GetComponent<SceneItem>().Item;
+            Item i = new Item();
+            i.copyItem(tempItem);
+            for(int j = 0; j < playerSlots.Length; j++)
+            {
+                if(entry.Value == playerSlots[j].TypeList[0].ToString())
+                {
+                    GameObject tempDrag = createNewDraggableItem(i, playerSlots[j].transform);
+                    playerSlots[j].AddItem(tempDrag.GetComponent<DraggableItem>().Item);
+
+                }
+            }
+        }
+
+    }
+ 
     
 
 

@@ -10,7 +10,15 @@ using static UnityEditor.Progress;
 
 public class ChestController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private GameObject chestPanel;
+    [SerializeField]
+    private GameObject chestPanelPrefab;
+
+    [SerializeField]
+    private GameObject button;
+
+    private string currentId;
 
     [Serializable]
     private class ItemData
@@ -22,7 +30,7 @@ public class ChestController : MonoBehaviour
         public int def;
 
         public ItemType itemType;
-        public int itemId;
+        public string itemId;
         public string itemName;
         public int quantity;
         public string spriteId;
@@ -40,11 +48,10 @@ public class ChestController : MonoBehaviour
 
     void Start()
     {
-        //TODO String z nazw¹ pliku bêdzie przekazywany z obiektu na scenie
-        FromJson("0");
+        //button.GetComponent<Button>().SetLis
     }
 
-    public void ToJson()
+    public void ToJson(string currentId)
     {
         ItemList itemList = new ItemList();
 
@@ -58,13 +65,13 @@ public class ChestController : MonoBehaviour
 
         string json = JsonUtility.ToJson(itemList);
 
-        File.WriteAllText("Assets/Resources/Prefabs/InventorySystem/ChestJsons/0.json", json);
-        AssetDatabase.ImportAsset("Assets/Resources/Prefabs/InventorySystem/ChestJsons/0.json");
+        File.WriteAllText("Assets/Resources/Prefabs/InventorySystem/ChestJsons/"+currentId+".json", json);
+        AssetDatabase.ImportAsset("Assets/Resources/Prefabs/InventorySystem/ChestJsons/"+currentId+".json");
     }
 
     public void FromJson(string id)
     {
-        String json = File.ReadAllText("Assets/Resources/Prefabs/InventorySystem/ChestJsons/0.json");
+        String json = File.ReadAllText("Assets/Resources/Prefabs/InventorySystem/ChestJsons/" +id+ ".json");
         ItemList itemList = JsonUtility.FromJson<ItemList>(json);
         for (int i = 0; i < itemList.items.Count; i++)
         {
@@ -123,14 +130,30 @@ public class ChestController : MonoBehaviour
         return newItem;
     }
 
-    public void TestJson()
+    public void OpenChest(string id)
     {
-        Destroy(this.gameObject);
+        chestPanel = Instantiate(chestPanelPrefab, this.gameObject.transform);
+        button.transform.SetAsLastSibling();
+        chestPanel.SetActive(true);
+        button.SetActive(true);
+        equipmentSlots = chestPanel.transform.GetComponentsInChildren<EquipmentSlot>();
+
+        FromJson(id);
+        currentId = id;
+
+    }
+
+    public void CloseChest()
+    {
+        button.SetActive(false);
+        ToJson(currentId);
+        Destroy(chestPanel);
     }
 
     private void OnDestroy()
     {
-        ToJson();
+        
     }
+
 
 }

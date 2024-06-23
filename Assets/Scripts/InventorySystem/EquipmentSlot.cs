@@ -85,7 +85,10 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         //itemPrefab.GetComponent<DraggableItem>().Item.copyItem(this.Item);
         Vector3 playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
         Instantiate(ItemPrefab, playerTransform, Quaternion.identity);
-        DeleteItem();
+        if (Item.Quantity < 2)
+        {
+            DeleteItem();
+        }
     }
 
     public void ShowDescription(Item item)
