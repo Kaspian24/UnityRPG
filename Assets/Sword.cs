@@ -11,5 +11,10 @@ public class Sword : MonoBehaviour
             GetComponent<Collider>().enabled = false;
             other.GetComponent<BlueDragon>().TakeDamage(10);
         }
+        if (other.tag == "Skeleton")
+        {
+            GetComponent<Collider>().enabled = false;
+            other.GetComponent<SkeletonScript>().TakeDamage(10);
+        }
     }
 }

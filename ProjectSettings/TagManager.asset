@@ -12,6 +12,8 @@ TagManager:
   - Sword
   - DragonHand
   - ChestController
+  - Skeleton
+  - SkeletonSword
   layers:
   - Default
   - TransparentFX
