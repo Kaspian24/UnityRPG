@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 [System.Serializable]
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+    public Transform parentBeforeDrag;
     public Transform parentAfterDrag;
     [SerializeField]
     private Image image;
@@ -25,6 +26,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
         Image.raycastTarget = false;
+        parentBeforeDrag = parentAfterDrag;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -36,6 +38,14 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         Image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+        if(parentAfterDrag.name == "PlayerSlot (4)")
+        {
+            OnEquip();
+        }
+        if (parentBeforeDrag.name == "PlayerSlot (4)")
+        {
+            OnUnequip();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -102,6 +112,36 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             {
                 Item.Quantity--;
             }
+        }
+    }
+
+    private void OnEquip()
+    {
+        if (this.Item.ItemType != ItemType.EquipHand)
+        {
+            return;
+        }
+
+        EquipmentSlot slot;
+        if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
+        {
+            slot.EquipItem();
+            slot.CloseDescription();
+        }
+    }
+
+    private void OnUnequip()
+    {
+        if (this.Item.ItemType != ItemType.EquipHand)
+        {
+            return;
+        }
+
+        EquipmentSlot slot;
+        if (slot = parentAfterDrag.GetComponent<EquipmentSlot>())
+        {
+            slot.UnequipItem();
+            slot.CloseDescription();
         }
     }
 

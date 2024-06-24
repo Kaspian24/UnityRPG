@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ using static UnityEditor.Progress;
 
 public class PlayerSlot : EquipmentSlot
 {
+    //public GameObject weapon;
+    public Transform weaponPoint;
 
     private void Update()
     {

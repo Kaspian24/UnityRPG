@@ -384,7 +384,11 @@ public class FirstPersonController : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(0) )
-        { Attack(); }
+        {
+            sword = GameObject.FindGameObjectWithTag("Sword");
+            if (sword == null) return;
+            Attack(); 
+        }
 
         if (Input.GetMouseButton(2))
         {
@@ -680,7 +684,11 @@ public class FirstPersonController : MonoBehaviour
         attacking = true;
 
         sword = GameObject.FindGameObjectWithTag("Sword");
+        if(sword == null) return;
+
         sword.GetComponent<Collider>().enabled = true;
+        sword.GetComponent<Collider>().isTrigger = true;
+        sword.GetComponent<Rigidbody>().detectCollisions = true;
 
         Invoke(nameof(ResetAttack), 1.4f);
         Invoke(nameof(AttackRaycast), attackDelay);
