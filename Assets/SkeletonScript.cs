@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class SkeletonScript : MonoBehaviour
 {
-    public int HP = 20;
+    public int HP = 40;
     public Animator animator;
 
     public void TakeDamage(int damage)
     {
         int randomNumber = Random.Range(1, 3);
         HP -= damage;
+        Debug.Log(damage);
         if (HP <= 0)
         {
             if (randomNumber == 1)

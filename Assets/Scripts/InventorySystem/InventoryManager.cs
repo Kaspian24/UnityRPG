@@ -109,6 +109,7 @@ public class InventoryManager : MonoBehaviour
     {
         UpdateStats();
         UpdateMoney(money);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().UpdateStats(HP, MaxHP, MP, MaxMP, STR, MAG, DEF);
 
         //GameObject item;
         //if (item = GameObject.FindGameObjectWithTag("Item"))
@@ -230,6 +231,8 @@ public class InventoryManager : MonoBehaviour
             + "\n" + "STR - " + STR.ToString()
             + "\n" + "MAG - " + MAG.ToString()
             + "\n" + "DEF - " + DEF.ToString();
+
+        GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().UpdateStats(HP, MaxHP, MP, MaxMP, STR, MAG, DEF);
     }
 
     public void UpdateStats(Item item, bool equipped)
@@ -257,7 +260,29 @@ public class InventoryManager : MonoBehaviour
             + "\n" + "MAG - " + MAG.ToString()
             + "\n" + "DEF - " + DEF.ToString();
 
+        GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().UpdateStats(HP, MaxHP, MP, MaxMP, STR, MAG, DEF);
+    }
 
+    public void UpdateHP(int hp)
+    {
+        HP = hp;
+
+        StatsText.text = "HP - " + HP.ToString() + "/" + MaxHP.ToString()
+            + "\n" + "MP - " + MP.ToString() + "/" + MaxMP.ToString()
+            + "\n" + "STR - " + STR.ToString()
+            + "\n" + "MAG - " + MAG.ToString()
+            + "\n" + "DEF - " + DEF.ToString();
+    }
+
+    public void UpdateMP(int mp)
+    {
+        MP = mp;
+
+        StatsText.text = "HP - " + HP.ToString() + "/" + MaxHP.ToString()
+            + "\n" + "MP - " + MP.ToString() + "/" + MaxMP.ToString()
+            + "\n" + "STR - " + STR.ToString()
+            + "\n" + "MAG - " + MAG.ToString()
+            + "\n" + "DEF - " + DEF.ToString();
     }
 
     public void openInventory()

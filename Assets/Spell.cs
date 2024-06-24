@@ -15,17 +15,19 @@ public class Spell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        int damage = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().getMagic();
+
         if (other.tag == "Dragon")
         {
             col.enabled = false;
-            other.GetComponent<BlueDragon>().TakeDamage(10);
+            other.GetComponent<BlueDragon>().TakeDamage(damage);
             StopSpell();
             Destroy(gameObject, 3);
         }
         else if (other.tag == "Skeleton")
         {
             col.enabled = false;
-            other.GetComponent<SkeletonScript>().TakeDamage(10);
+            other.GetComponent<SkeletonScript>().TakeDamage(damage);
             StopSpell();
             Destroy(gameObject, 0.75f);
         }

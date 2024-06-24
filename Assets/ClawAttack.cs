@@ -9,7 +9,7 @@ public class ClawAttack : MonoBehaviour
         if (other.tag == "Player")
         {
             GetComponent<Collider>().enabled = false;
-            other.GetComponent<FirstPersonController>().TakeDamage(50);
+            other.GetComponent<FirstPersonController>().TakeDamage(20);
         }
     }
 }

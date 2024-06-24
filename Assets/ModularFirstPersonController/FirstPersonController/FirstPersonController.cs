@@ -23,6 +23,15 @@ interface IInteractable
 
 public class FirstPersonController : MonoBehaviour
 {
+
+    private int HP;
+    private int MaxHP;
+    private int MP;
+    private int MaxMP;
+    private int STR;
+    private int MAG;
+    private int DEF;
+
     private Rigidbody rb;
     Animator animator;
 
@@ -105,7 +114,6 @@ public class FirstPersonController : MonoBehaviour
     private bool isSprintCooldown = false;
     private float sprintCooldownReset;
 
-    private int playerHP = 100;
     private bool isTakingDamage = false;
     private float damageTimer = 0f;
     public float damageEffectDuration = 0.5f;
@@ -216,6 +224,27 @@ public class FirstPersonController : MonoBehaviour
         }
 
         #endregion
+    }
+
+    public void UpdateStats(int hp, int maxHp, int mp, int maxMp, int str, int mag, int def)
+    {
+        HP = hp;
+        MaxHP = maxHp;
+        MP = mp;
+        MaxMP = maxMp;
+        STR = str;
+        MAG = mag;
+        DEF = def;
+    }
+
+    public int getStrenght()
+    {
+        return STR;
+    }
+
+    public int getMagic()
+    {
+        return MAG;
     }
 
     float camRotation;
@@ -389,16 +418,17 @@ public class FirstPersonController : MonoBehaviour
             if (hand.transform.childCount == 0) return;
             sword = hand.transform.GetChild(0).gameObject;
             if (sword == null) return;
-            Attack(sword); 
+            if (sword.tag == "Spellbook") return;
+            Attack(sword);
         }
-
-        if (Input.GetMouseButton(2))
+        
+        if (Input.GetMouseButton(0))
         {
             GameObject hand = GameObject.FindGameObjectWithTag("PlayerHand");
             if (hand.transform.childCount == 0) return;
             sword = hand.transform.GetChild(0).gameObject;
             if (sword == null) return;
-            if (sword.tag == "Spellbook")
+            if (sword.tag == "Spellbook" && MP > 0)
             {
                 isAiming = true;
                 if (spellDistance < 30)
@@ -407,10 +437,10 @@ public class FirstPersonController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(2))
-        { 
+        if (Input.GetMouseButtonUp(0))
+        {
             isAiming = false;
-            ThrowSpell(); 
+            ThrowSpell();
         }
 
         SetAnimations();
@@ -737,6 +767,8 @@ public class FirstPersonController : MonoBehaviour
         isAiming = false;
         walkSpeed = 5f;
         sprintSpeed = 7f;
+        MP--;
+        GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().UpdateMP(MP);
 
         spell.transform.SetParent(null);
         Rigidbody spellRb = spell.GetComponent<Rigidbody>();
@@ -779,16 +811,18 @@ public class FirstPersonController : MonoBehaviour
         walkSpeed = 0;
         sprintSpeed = 0;
 
-        playerHP -= damage;
-        if (playerHP <= 0)
+        HP -= damage;
+        if (HP <= 0)
         {
             Debug.Log("Dead");
             animator.SetTrigger("Death");
+            GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().UpdateHP(HP);
         }
         else
         {
             Debug.Log("Hit");
             animator.SetTrigger("Damage");
+            GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().UpdateHP(HP);
         }
         Invoke(nameof(ResetDamage), 0.7f);
     }
