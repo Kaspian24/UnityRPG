@@ -181,12 +181,12 @@ public class InventoryManager : MonoBehaviour
 
     public bool UseItem(Item item)
     {
-        if(item.ItemType == ItemType.KeyItem)
+        if(item.ItemType != ItemType.Consumable)
         {
             return false;
         }
 
-        if (HP < MaxHP)
+        if(item.HP > 0 && HP < MaxHP)
         {
             if ((HP + item.HP) <= MaxHP)
             {
@@ -199,6 +199,20 @@ public class InventoryManager : MonoBehaviour
             UpdateStats();
             return true;
         }
+        else if (item.MP > 0 && MP < MaxMP)
+        {
+            if ((MP + item.MP) <= MaxMP)
+            {
+                MP += item.MP;
+            }
+            else
+            {
+                MP = MaxMP;
+            }
+            UpdateStats();
+            return true;
+        }
+
         else
         {
             return false;
