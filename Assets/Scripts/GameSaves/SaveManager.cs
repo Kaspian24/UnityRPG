@@ -48,9 +48,11 @@ public class SaveManager : MonoBehaviour
         }
         Dictionary<string, QuestData> questsData = QuestManager.Instance.SaveQuests();
         string currentlyTrackedQuest = QuestMenuManager.Instance.GetCurrentlyTrackedQuest();
+        List<KeyValuePair<string, int>> items = GameObject.FindGameObjectsWithTag("InventoryCanvas")[0].GetComponent<InventoryManager>().SaveItems();
+        List<KeyValuePair<string, string>> equippedItems = GameObject.FindGameObjectsWithTag("InventoryCanvas")[0].GetComponent<InventoryManager>().SaveEquippedItems();
         long currentTime = System.DateTime.Now.ToBinary();
         playerController = GameObject.FindGameObjectsWithTag("Player")[0];
-        currentSave = new SaveData(name, questsData, playerController.transform.position, playerController.transform.rotation, currentlyTrackedQuest, currentTime);
+        currentSave = new SaveData(name, questsData, playerController.transform.position, playerController.transform.rotation, currentlyTrackedQuest, items, equippedItems, currentTime);
         string currentSaveJson = JsonConvert.SerializeObject(currentSave);
         using StreamWriter sw = new StreamWriter(path);
         sw.Write(currentSaveJson);

@@ -37,7 +37,7 @@ Najbliższy oddział znajduje się za lasem za moim domem.
 
 == DialogSzkielety ==
 Widzę że udało Ci się uporać z kilkoma szkieletami.
-Myślę jednak, że powinieneś zdobyć więcej doświadczenia nim zawalczysz ze zmokiem.
+Myślę jednak, że powinieneś zdobyć więcej doświadczenia nim zawalczysz ze smokiem.
 Nie będę Cię jednak powstrzymywał, smok znajduje się na łące za pojedynczym domem w pobliżu jeziora.
 Powodzenia!
 ~topicTalkedAbout("Szef", "Szkielety")

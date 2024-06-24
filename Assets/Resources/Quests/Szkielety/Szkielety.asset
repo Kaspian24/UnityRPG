@@ -16,7 +16,8 @@ MonoBehaviour:
   title: "Szkielety atakuj\u0105"
   description: "Szef wioski skar\u017Cy\u0142 si\u0119 na atakuj\u0105ce wiosk\u0119
     szkielety. Powinienem pom\xF3c mieszka\u0144com os\u0142abiaj\u0105c oddzia\u0142y
-    szkielet\xF3w."
+    szkielet\xF3w. Dowiedzia\u0142e\u015B si\u0119 \u017Ce najbli\u017Cszy odzdzia\u0142
+    szkielet\xF3w znajduje si\u0119 za lasem za domem szefa wioski."
   secret: 0
   questsRequired: []
   taskPrefabs:
