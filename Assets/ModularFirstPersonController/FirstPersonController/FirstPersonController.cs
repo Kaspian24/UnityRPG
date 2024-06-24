@@ -385,9 +385,11 @@ public class FirstPersonController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) )
         {
-            sword = GameObject.FindGameObjectWithTag("Sword");
+            GameObject hand = GameObject.FindGameObjectWithTag("PlayerHand");
+            if (hand.transform.childCount == 0) return;
+            sword = hand.transform.GetChild(0).gameObject;
             if (sword == null) return;
-            Attack(); 
+            Attack(sword); 
         }
 
         if (Input.GetMouseButton(2))
@@ -676,7 +678,7 @@ public class FirstPersonController : MonoBehaviour
     bool attacking = false;
     bool readyToAttack = true;
  
-    public void Attack()
+    public void Attack(GameObject sword)
     {
         if (!readyToAttack || attacking || isTakingDamage) return;
 
