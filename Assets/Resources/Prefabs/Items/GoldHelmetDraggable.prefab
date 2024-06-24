@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6147946175927890240}
   - component: {fileID: 8299482996600064200}
   m_Layer: 0
-  m_Name: AppleDraggable
+  m_Name: GoldHelmetDraggable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a9e842822f0f8ec498f76e3bbc12f807, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 03237ac710ee8e646a07e1ab0b8a7c06, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -92,14 +92,14 @@ MonoBehaviour:
   parentAfterDrag: {fileID: 0}
   image: {fileID: 6147946175927890240}
   item:
-    hp: 10
+    hp: 0
     mp: 0
     str: 0
     mag: 0
-    def: 0
-    itemType: 1
-    itemId: 2
-    itemName: Apple
-    quantity: 2
-    sprite: {fileID: 21300000, guid: a9e842822f0f8ec498f76e3bbc12f807, type: 3}
-    description: A fresh apple
+    def: 10
+    itemType: 2
+    itemId: 9
+    itemName: Gold Helmet
+    quantity: 1
+    sprite: {fileID: 21300000, guid: 03237ac710ee8e646a07e1ab0b8a7c06, type: 3}
+    description: Adds a lot of protection

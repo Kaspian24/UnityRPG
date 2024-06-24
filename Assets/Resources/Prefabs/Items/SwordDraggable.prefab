@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 789e518168d493d4396ec984b1b5bcb3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e618b895391114241ac138c790127fc1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -100,5 +100,5 @@ MonoBehaviour:
     itemId: 1
     itemName: Sword
     quantity: 1
-    sprite: {fileID: 21300000, guid: 789e518168d493d4396ec984b1b5bcb3, type: 3}
+    sprite: {fileID: 21300000, guid: e618b895391114241ac138c790127fc1, type: 3}
     description: Just a normal sword

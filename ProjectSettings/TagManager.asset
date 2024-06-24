@@ -15,6 +15,7 @@ TagManager:
   - Skeleton
   - SkeletonSword
   - PlayerHand
+  - Spellbook
   layers:
   - Default
   - TransparentFX

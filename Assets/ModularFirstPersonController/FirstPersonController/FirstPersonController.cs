@@ -394,10 +394,17 @@ public class FirstPersonController : MonoBehaviour
 
         if (Input.GetMouseButton(2))
         {
-            isAiming = true;
-            if (spellDistance < 30)
-                spellDistance += 0.1f;
-            CastSpell(); 
+            GameObject hand = GameObject.FindGameObjectWithTag("PlayerHand");
+            if (hand.transform.childCount == 0) return;
+            sword = hand.transform.GetChild(0).gameObject;
+            if (sword == null) return;
+            if (sword.tag == "Spellbook")
+            {
+                isAiming = true;
+                if (spellDistance < 30)
+                    spellDistance += 0.1f;
+                CastSpell();
+            }
         }
 
         if (Input.GetMouseButtonUp(2))

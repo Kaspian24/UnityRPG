@@ -75,11 +75,18 @@ public class PlayerSlot : EquipmentSlot
         weaponSlot.GetComponent<Rigidbody>().isKinematic = true;
         weaponSlot.GetComponent<Rigidbody>().detectCollisions = false;
         weaponSlot.GetComponent<Collider>().enabled = false;
+        if(weaponSlot.tag == "Spellbook")
+        {
+            weaponSlot.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 
     public void UnequipItem()
     {
         GameObject weapon = GameObject.FindGameObjectWithTag("PlayerHand");
-        Destroy(weapon.transform.GetChild(0).gameObject);
+        if (weapon.transform.childCount != 0)
+        {
+            Destroy(weapon.transform.GetChild(0).gameObject);
+        }
     }
 }
