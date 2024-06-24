@@ -11,7 +11,7 @@ public class PrintMessage : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (GameModeManager.Instance.currentGameMode == GameMode.Gameplay && Input.GetKeyDown(KeyCode.Z))
         {
             Vector3 playerWorldPosition = GetPlayerPosition();
             GameObject newMarker = Instantiate(markerPrefab);

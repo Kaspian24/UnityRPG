@@ -1345,13 +1345,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 256800497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e971d773d990fb24dbae5b0d3fbb2ce3, type: 3}
+  m_Script: {fileID: 11500000, guid: 82dd6f600c5ca024d99b578195196f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  markerPrefab: {fileID: 3363177527486726700, guid: a070dc91923e3a640bdeb1ac5f23dcda, type: 3}
-  minimapImage: {fileID: 507249944}
-  minimapCamera: {fileID: 896269973}
-  initial: 1
+  minimapPanel: {fileID: 1275192843}
 --- !u!4 &256990232 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: ed920bad5318ee347ad3e34dd82e273f, type: 3}
