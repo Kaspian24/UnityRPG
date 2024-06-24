@@ -32,6 +32,7 @@ public class GameModeManager : MonoBehaviour
         currentGameMode = GameMode.Gameplay;
         lastGameMode = GameMode.Gameplay;
         playerAlive = true;
+        Time.timeScale = 1f;
     }
 
     private void Update()

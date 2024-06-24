@@ -13,6 +13,8 @@ public class BlueDragon : MonoBehaviour
         if(HP <= 0 )
         {
             animator.SetTrigger("Die");
+            GameEventsManager.Instance.questEvents.EnemyDeath("BlueDragon");
+            GameEventsManager.Instance.playerEvents.ExpAdd(100);
             GetComponent<Collider>().enabled = false;
         }
         else

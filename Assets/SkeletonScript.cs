@@ -23,7 +23,8 @@ public class SkeletonScript : MonoBehaviour
                 animator.SetTrigger("Die2");
                 Destroy(gameObject, 2);
             }
-
+            GameEventsManager.Instance.questEvents.EnemyDeath("Skeleton");
+            GameEventsManager.Instance.playerEvents.ExpAdd(10);
             GetComponent<Collider>().enabled = false;
         }   
     }

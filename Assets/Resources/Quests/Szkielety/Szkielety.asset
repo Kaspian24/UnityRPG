@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f938960435665fd45946d6ae8c3a10dd, type: 3}
+  m_Name: Szkielety
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: Szkielety
+  title: "Szkielety atakuj\u0105"
+  description: "Szef wioski skar\u017Cy\u0142 si\u0119 na atakuj\u0105ce wiosk\u0119
+    szkielety. Powinienem pom\xF3c mieszka\u0144com os\u0142abiaj\u0105c oddzia\u0142y
+    szkielet\xF3w."
+  secret: 0
+  questsRequired: []
+  taskPrefabs:
+  - {fileID: 8405415056414184754, guid: f84bcc0d470d37c48b9864c07aca709f, type: 3}
+  - {fileID: 113621105209269454, guid: 2ca9641613a520c47bfd0b17b14ddf04, type: 3}
+  gold: 100
+  experience: 70
+  items: []

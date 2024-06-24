@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f938960435665fd45946d6ae8c3a10dd, type: 3}
+  m_Name: Smok
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: Smok
+  title: Smok
+  description: "Szef wioski powiedzia\u0142 ci, \u017Ce smok znajduje si\u0119 na
+    \u0142\u0105ce za pojedynczym domem przy jeziorze. Mo\u017Ce jednak warto lepiej
+    si\u0119 przygotowa\u0107 do tego starcia?"
+  secret: 0
+  questsRequired: []
+  taskPrefabs:
+  - {fileID: 6560833291727597213, guid: 614674500720c7041b3cea7b923e758b, type: 3}
+  gold: 0
+  experience: 500
+  items: []
