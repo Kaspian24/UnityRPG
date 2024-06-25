@@ -20,6 +20,8 @@ public class SaveData
 
     public List<KeyValuePair<string, string>> equippedItems;
 
+    public Dictionary<string, int> stats;
+
     public long saveDate;
 
     [JsonIgnore]
@@ -34,11 +36,12 @@ public class SaveData
         currentlyTrackedQuest = string.Empty;
         items = new List<KeyValuePair<string, int>>();
         equippedItems = new List<KeyValuePair<string, string>>();
+        stats = new Dictionary<string, int>();
         saveDate = 0;
         enabled = false;
     }
 
-    public SaveData(string saveName, Dictionary<string, QuestData> questsDataDict, Vector3 playerControllerPosition, Quaternion playerControllerRotation, string currentlyTrackedQuest, List<KeyValuePair<string, int>> items, List<KeyValuePair<string, string>> equippedItems, long saveDate)
+    public SaveData(string saveName, Dictionary<string, QuestData> questsDataDict, Vector3 playerControllerPosition, Quaternion playerControllerRotation, string currentlyTrackedQuest, List<KeyValuePair<string, int>> items, List<KeyValuePair<string, string>> equippedItems, Dictionary<string, int> stats, long saveDate)
     {
         this.saveName = saveName;
         this.questsDataDict = questsDataDict;
@@ -47,6 +50,7 @@ public class SaveData
         this.currentlyTrackedQuest = currentlyTrackedQuest;
         this.items = items;
         this.equippedItems = equippedItems;
+        this.stats = stats;
         this.saveDate = saveDate;
         enabled = true;
     }
