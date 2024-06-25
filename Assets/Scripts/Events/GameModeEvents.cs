@@ -82,4 +82,10 @@ public class GameModeEvents
     {
         OnReloadLoadMenu?.Invoke();
     }
+
+    public event Action OnDeath;
+    public void Death()
+    {
+        OnDeath?.Invoke();
+    }
 }
