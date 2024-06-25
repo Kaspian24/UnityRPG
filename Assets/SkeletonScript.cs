@@ -6,6 +6,7 @@ public class SkeletonScript : MonoBehaviour
 {
     public int HP = 40;
     public Animator animator;
+    public GameObject sword;
 
     public HealthBar healthBar;
 

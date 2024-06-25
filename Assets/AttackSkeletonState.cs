@@ -12,14 +12,15 @@ public class AttackSkeletonState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        sword = GameObject.FindGameObjectWithTag("SkeletonSword");
-        sword.GetComponent<Collider>().enabled = true;
+        SkeletonScript skeletonController = animator.GetComponent<SkeletonScript>();
+        sword = skeletonController.sword;
+        sword.GetComponent<Collider>().isTrigger = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        sword.GetComponent<Collider>().enabled = true;
+        //sword.GetComponent<Collider>().isTrigger = true;
 
         animator.transform.LookAt(new Vector3(player.position.x, animator.transform.position.y, player.position.z));
         float distance = Vector3.Distance(player.position, animator.transform.position);
@@ -35,7 +36,7 @@ public class AttackSkeletonState : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {   
-        sword.GetComponent<Collider>().enabled = false;
+        sword.GetComponent<Collider>().isTrigger = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

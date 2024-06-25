@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Przeciwnik prefab
-    public float spawnDistance = 100.0f; // Odleg³oœæ, w której przeciwnik siê spawnuje
+    public GameObject enemyPrefab;
+    public float spawnDistance = 100.0f;
     float timer;
 
-    private Transform playerTransform; // Referencja do gracza
-
+    private Transform playerTransform;
     void Start()
     {
         // ZnajdŸ gracza po tagu
@@ -30,7 +29,8 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemies()
     {
-        Vector3 spawnPosition = transform.position + Random.insideUnitSphere * 10;
+        Vector3 randomPosition2D = Random.insideUnitCircle * 20;
+        Vector3 spawnPosition = new Vector3(transform.position.x + randomPosition2D.x, transform.position.y, transform.position.z + randomPosition2D.y);
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         timer = 0;
     }

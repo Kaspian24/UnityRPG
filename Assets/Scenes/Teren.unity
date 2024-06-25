@@ -16323,6 +16323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 40
   animator: {fileID: 2841697146906176439}
+  sword: {fileID: 8694195056383715729}
   healthBar: {fileID: 2019735240}
 --- !u!65 &8846265970484374393
 BoxCollider:

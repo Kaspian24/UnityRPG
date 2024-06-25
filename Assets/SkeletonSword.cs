@@ -12,10 +12,10 @@ public class SkeletonSword : MonoBehaviour
             int damageReduced = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().getDefense();
             int damage = 5 - damageReduced;
 
-            GetComponent<Collider>().enabled = false;
+            GetComponent<Collider>().isTrigger = false;
             other.GetComponent<FirstPersonController>().TakeDamage(damage <= 0 ? 1: damage);
 
-            StartCoroutine(ResetSwordCollider());
+            //StartCoroutine(ResetSwordCollider());
         }
     }
 

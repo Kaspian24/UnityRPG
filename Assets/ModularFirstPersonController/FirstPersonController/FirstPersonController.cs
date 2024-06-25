@@ -433,7 +433,7 @@ public class FirstPersonController : MonoBehaviour
             sword = hand.transform.GetChild(0).gameObject;
             if (sword == null) return;
             if (sword.tag == "Spellbook") return;
-            Attack(sword);
+            Attack();
         }
         
         if (Input.GetMouseButton(0))
@@ -729,7 +729,7 @@ public class FirstPersonController : MonoBehaviour
     bool attacking = false;
     bool readyToAttack = true;
  
-    public void Attack(GameObject sword)
+    public void Attack()
     {
         if (!readyToAttack || attacking || isTakingDamage) return;
 
@@ -737,7 +737,6 @@ public class FirstPersonController : MonoBehaviour
         attacking = true;
         interactRange = 0f;
 
-        sword = GameObject.FindGameObjectWithTag("Sword");
         if(sword == null) return;
 
         sword.GetComponent<Collider>().enabled = true;
