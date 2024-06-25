@@ -17,8 +17,8 @@ public class NpcGenerator : MonoBehaviour
 
     void SpawnNPCs()
     {
-        int count1 = Mathf.CeilToInt(numberOfNPCsToSpawn * 0.1f);
-        int count2 = Mathf.CeilToInt(numberOfNPCsToSpawn * 0.2f);
+        int count1 = Mathf.CeilToInt(numberOfNPCsToSpawn * 0.2f);
+        int count2 = Mathf.CeilToInt(numberOfNPCsToSpawn * 0.1f);
         int count3 = numberOfNPCsToSpawn - count1 - count2;
 
         SpawnUniqueNPCs(npcPrefab1, count1);
