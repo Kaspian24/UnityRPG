@@ -52,6 +52,11 @@ public class GameModeEvents
     {
         OnToggleInterractInfo?.Invoke(state);
     }
+    public event Action<bool> OnToggleDeathMessage;
+    public void ToggleDeathMessage(bool state)
+    {
+        OnToggleDeathMessage?.Invoke(state);
+    }
 
     public event Action<bool> OnDialogueStartEnd;
     public void DialogueStartEnd(bool state)

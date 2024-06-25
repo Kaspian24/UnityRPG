@@ -112,6 +112,11 @@ public class GameModeManager : MonoBehaviour
 
     private void SwitchToGameplay()
     {
+        if (!playerAlive)
+        {
+            SwitchToDeathMessage();
+            return;
+        }
         currentGameMode = GameMode.Gameplay;
         Resume();
         GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
@@ -122,10 +127,16 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(true);
         GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(false);
     }
 
     private void SwitchToQuestMenu()
     {
+        if (!playerAlive)
+        {
+            SwitchToDeathMessage();
+            return;
+        }
         currentGameMode = GameMode.QuestMenu;
         Pause();
         GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(true);
@@ -136,10 +147,16 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
         GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(false);
     }
 
     private void SwitchToPauseMenu()
     {
+        if (!playerAlive)
+        {
+            SwitchToDeathMessage();
+            return;
+        }
         lastGameMode = currentGameMode;
         currentGameMode = GameMode.PauseMenu;
         Pause();
@@ -151,10 +168,16 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
         GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(false);
     }
 
     private void SwitchToDialogue()
     {
+        if (!playerAlive)
+        {
+            SwitchToDeathMessage();
+            return;
+        }
         currentGameMode = GameMode.Dialogue;
         Pause();
         GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
@@ -165,10 +188,16 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
         GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(false);
     }
 
     private void SwitchToInventoryMenu()
     {
+        if (!playerAlive)
+        {
+            SwitchToDeathMessage();
+            return;
+        }
         currentGameMode = GameMode.InventoryMenu;
         Pause();
         GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
@@ -179,10 +208,16 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
         GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(false);
     }
 
     private void SwitchToLoadMenu()
     {
+        if (!playerAlive)
+        {
+            SwitchToDeathMessage();
+            return;
+        }
         currentGameMode = GameMode.LoadMenu;
         Pause();
         GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
@@ -193,10 +228,16 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
         GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(true);
         GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(false);
     }
 
     private void SwitchToSaveMenu()
     {
+        if (!playerAlive)
+        {
+            SwitchToDeathMessage();
+            return;
+        }
         currentGameMode = GameMode.SaveMenu;
         Pause();
         GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
@@ -207,10 +248,32 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
         GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(true);
+        GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(false);
+    }
+
+    private void SwitchToDeathMessage()
+    {
+        currentGameMode = GameMode.Gameplay;
+        Pause();
+        Time.timeScale = 0f;
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDialogue(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleInventory(false);
+        GameEventsManager.Instance.gameModeEvents.TogglePauseMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleMiniMap(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleLoadMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleSaveMenu(false);
+        GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(true);
     }
 
     public void SwitchToLastGameMode()
     {
+        if (!playerAlive)
+        {
+            GameEventsManager.Instance.gameModeEvents.ToggleDeathMessage(true);
+            return;
+        }
         (lastGameMode, currentGameMode) = (currentGameMode, lastGameMode);
         switch (currentGameMode)
         {
