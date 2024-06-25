@@ -113,6 +113,11 @@ public class InventoryManager : MonoBehaviour
         UpdateMoney(GOLD);
         GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().UpdateStats(HP, MaxHP, MP, MaxMP, STR, MAG, DEF);
 
+        if (playerSlots[4].IsFull)
+        {
+            playerSlots[4].EquipItem();
+        }
+
     }
 
     // Update is called once per frame
@@ -143,7 +148,7 @@ public class InventoryManager : MonoBehaviour
 
                     inventorySlots[i].AddItem(draggableItem.GetComponent<DraggableItem>().Item);
                     draggableItem.transform.localScale = new Vector3(-draggableItem.transform.localScale.x,
-                        draggableItem.transform.localScale.y, draggableItem.transform.localScale.z);
+                        -draggableItem.transform.localScale.y, -draggableItem.transform.localScale.z);
                     draggableItem.transform.localScale = new Vector3(2.78f, 2.78f, 2.78f);
                     return true;
                 }
@@ -160,7 +165,7 @@ public class InventoryManager : MonoBehaviour
                     GameObject draggableItem = createNewDraggableItem(item, equipmentSlots[i].transform);
                     equipmentSlots[i].AddItem(draggableItem.GetComponent<DraggableItem>().Item);
                     draggableItem.transform.localScale = new Vector3(-draggableItem.transform.localScale.x,
-                        draggableItem.transform.localScale.y, draggableItem.transform.localScale.z);
+                        -draggableItem.transform.localScale.y, -draggableItem.transform.localScale.z);
                     draggableItem.transform.localScale = new Vector3(2.78f, 2.78f, 2.78f);
                     return true;
                 }
@@ -499,6 +504,9 @@ public class InventoryManager : MonoBehaviour
                 {
                     GameObject tempDrag = createNewDraggableItem(i, playerSlots[j].transform);
                     playerSlots[j].AddItem(tempDrag.GetComponent<DraggableItem>().Item);
+                    tempDrag.transform.localScale = new Vector3(-tempDrag.transform.localScale.x,
+                       -tempDrag.transform.localScale.y, -tempDrag.transform.localScale.z);
+                    tempDrag.transform.localScale = new Vector3(2.78f, 2.78f, 2.78f);
 
                 }
             }

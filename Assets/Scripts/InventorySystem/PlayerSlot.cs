@@ -65,6 +65,8 @@ public class PlayerSlot : EquipmentSlot
         // Utwórz instancjê prefabrykatu
         GameObject weaponSlot = Instantiate(ItemPrefab);
 
+        weaponSlot.GetComponent<SceneItem>().enabled = false;
+
         // Ustaw rodzica dla nowo utworzonej instancji
         weaponSlot.transform.SetParent(weaponPoint);
 
