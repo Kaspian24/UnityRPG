@@ -5,7 +5,7 @@ public class GameModeManager : MonoBehaviour
 
     public GameObject playerController;
 
-    public GameMode currentGameMode;
+    public GameMode currentGameMode = GameMode.Gameplay;
 
     public KeyCode questMenuKey = KeyCode.J;
 
@@ -13,9 +13,9 @@ public class GameModeManager : MonoBehaviour
 
     public KeyCode pauseMenuKey = KeyCode.Escape;
 
-    public GameMode lastGameMode;
+    public GameMode lastGameMode = GameMode.Gameplay;
 
-    public bool playerAlive;
+    private bool playerAlive = true;
 
     private void Awake()
     {
@@ -29,9 +29,6 @@ public class GameModeManager : MonoBehaviour
 
     private void Start()
     {
-        currentGameMode = GameMode.Gameplay;
-        lastGameMode = GameMode.Gameplay;
-        playerAlive = true;
         Time.timeScale = 1f;
     }
 
@@ -364,11 +361,17 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleCrosshair(true);
     }
 
+    private void Death()
+    {
+        playerAlive = false;
+    }
+
     private void OnEnable()
     {
         GameEventsManager.Instance.gameModeEvents.OnDialogueStartEnd += ToggleDialogue;
         GameEventsManager.Instance.gameModeEvents.OnLoadMenuOnOff += ToggleLoadMenu;
         GameEventsManager.Instance.gameModeEvents.OnSaveMenuOnOff += ToggleSaveMenu;
+        GameEventsManager.Instance.gameModeEvents.OnDeath += Death;
     }
 
     private void OnDisable()
@@ -376,5 +379,6 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.OnDialogueStartEnd -= ToggleDialogue;
         GameEventsManager.Instance.gameModeEvents.OnLoadMenuOnOff -= ToggleLoadMenu;
         GameEventsManager.Instance.gameModeEvents.OnSaveMenuOnOff -= ToggleSaveMenu;
+        GameEventsManager.Instance.gameModeEvents.OnDeath -= Death;
     }
 }
