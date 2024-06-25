@@ -8,8 +8,11 @@ public class ClawAttack : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            int damageReduced = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().getDefense();
+            int damage = 20 - damageReduced;
+
             GetComponent<Collider>().enabled = false;
-            other.GetComponent<FirstPersonController>().TakeDamage(20);
+            other.GetComponent<FirstPersonController>().TakeDamage(damage <= 0 ? 1 : damage);
         }
     }
 }

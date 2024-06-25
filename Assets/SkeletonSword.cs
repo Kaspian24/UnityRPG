@@ -9,8 +9,11 @@ public class SkeletonSword : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            int damageReduced = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().getDefense();
+            int damage = 5 - damageReduced;
+
             GetComponent<Collider>().enabled = false;
-            other.GetComponent<FirstPersonController>().TakeDamage(5);
+            other.GetComponent<FirstPersonController>().TakeDamage(damage <= 0 ? 1: damage);
 
             StartCoroutine(ResetSwordCollider());
         }

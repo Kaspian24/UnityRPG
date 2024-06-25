@@ -7,11 +7,20 @@ public class SkeletonScript : MonoBehaviour
     public int HP = 40;
     public Animator animator;
 
+    public HealthBar healthBar;
+
+    public void Start()
+    {
+        healthBar.setMaxHealth(HP);
+        healthBar.setHealth(HP);
+    }
+
     public void TakeDamage(int damage)
     {
         int randomNumber = Random.Range(1, 3);
         HP -= damage;
-        Debug.Log(damage);
+        healthBar.setHealth(HP);
+
         if (HP <= 0)
         {
             if (randomNumber == 1)
@@ -27,6 +36,7 @@ public class SkeletonScript : MonoBehaviour
             GameEventsManager.Instance.questEvents.EnemyDeath("Skeleton");
             GameEventsManager.Instance.playerEvents.ExpAdd(10);
             GetComponent<Collider>().enabled = false;
+            healthBar.gameObject.SetActive(false);
         }   
     }
 }

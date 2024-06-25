@@ -38,6 +38,8 @@ public class FirstPersonController : MonoBehaviour
     public GameObject spellObj;
     public Transform spellPoint;
 
+    public HealthBar healthBar;
+
     public Transform interactorSource;
     public float interactRange = 2f;
     public KeyCode interactKey = KeyCode.E;
@@ -235,6 +237,9 @@ public class FirstPersonController : MonoBehaviour
         STR = str;
         MAG = mag;
         DEF = def;
+
+        healthBar.setMaxHealth(MaxHP);
+        healthBar.setHealth(HP);
     }
 
     public int getStrenght()
@@ -245,6 +250,11 @@ public class FirstPersonController : MonoBehaviour
     public int getMagic()
     {
         return MAG;
+    }
+
+    public int getDefense()
+    {
+        return DEF/10;
     }
 
     float camRotation;
@@ -721,6 +731,7 @@ public class FirstPersonController : MonoBehaviour
 
         readyToAttack = false;
         attacking = true;
+        interactRange = 0f;
 
         sword = GameObject.FindGameObjectWithTag("Sword");
         if(sword == null) return;
@@ -799,7 +810,8 @@ public class FirstPersonController : MonoBehaviour
         spellReady = false;
         attacking = false;
         readyToAttack = true;
-        if(sword)
+        interactRange = 2f;
+        if (sword)
             sword.GetComponent<Collider>().enabled = false;
     }
 
@@ -812,15 +824,15 @@ public class FirstPersonController : MonoBehaviour
         sprintSpeed = 0;
 
         HP -= damage;
+
+        healthBar.setHealth(HP);
         if (HP <= 0)
         {
-            Debug.Log("Dead");
             animator.SetTrigger("Death");
             GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().UpdateHP(HP);
         }
         else
         {
-            Debug.Log("Hit");
             animator.SetTrigger("Damage");
             GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().UpdateHP(HP);
         }
@@ -1082,6 +1094,8 @@ public class FirstPersonController : MonoBehaviour
         fpc.interactorSource = (Transform)EditorGUILayout.ObjectField(new GUIContent("Interactor Source", "Position from which interaction ray is casted."), fpc.interactorSource, typeof(Transform), true);
         fpc.interactRange = EditorGUILayout.Slider(new GUIContent("Interact Range", "Determines the range of player interaction."), fpc.interactRange, 0, 5);
 
+
+        fpc.healthBar = (HealthBar)EditorGUILayout.ObjectField(new GUIContent("Health Bar", ""), fpc.healthBar, typeof(HealthBar), true);
         #endregion
 
         //Sets any changes from the prefab
