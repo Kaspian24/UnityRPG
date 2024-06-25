@@ -252,7 +252,7 @@ public class GameModeManager : MonoBehaviour
     {
         currentGameMode = GameMode.Gameplay;
         Pause();
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         GameEventsManager.Instance.gameModeEvents.ToggleQuestMenu(false);
         GameEventsManager.Instance.gameModeEvents.ToggleQuestTrackVisibility(false);
         GameEventsManager.Instance.gameModeEvents.ToggleDialogue(false);
@@ -364,6 +364,7 @@ public class GameModeManager : MonoBehaviour
     private void Death()
     {
         playerAlive = false;
+        SwitchToDeathMessage();
     }
 
     private void OnEnable()
