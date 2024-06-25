@@ -38,6 +38,8 @@ public class DeathMessagePanel : MonoBehaviour
         panelImage.color = new Color(panelImage.color.r, panelImage.color.g, panelImage.color.b, 1f);
         text.color = new Color(text.color.r, text.color.g, text.color.b, 1f);
 
+        yield return new WaitForSecondsRealtime(2f);
+
         SaveManager.Instance.MainMenu();
 
     }
