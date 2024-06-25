@@ -67,7 +67,7 @@ public class InventoryManager : MonoBehaviour
     private int DEF;
 
     [SerializeField]
-    private int money;
+    private int GOLD;
 
 
     [Header("UI ELEMENTS")]
@@ -107,17 +107,13 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
+        LoadItems(SaveManager.Instance.currentSave.items);
+        LoadEquippedItems(SaveManager.Instance.currentSave.equippedItems);
+
         UpdateStats();
-        UpdateMoney(money);
+        UpdateMoney(GOLD);
         GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().UpdateStats(HP, MaxHP, MP, MaxMP, STR, MAG, DEF);
 
-        //GameObject item;
-        //if (item = GameObject.FindGameObjectWithTag("Item"))
-        //{
-        //    Item i = item.GetComponent<DraggableItem>().Item;
-        //    AddItem(i);
-        //    Destroy(item);
-        //}
     }
 
     // Update is called once per frame
@@ -142,6 +138,10 @@ public class InventoryManager : MonoBehaviour
                     GameObject draggableItem = createNewDraggableItem(item, inventorySlots[i].transform);
 
                     inventorySlots[i].AddItem(draggableItem.GetComponent<DraggableItem>().Item);
+                    draggableItem.transform.localScale = new Vector3(-draggableItem.transform.localScale.x,
+                        draggableItem.transform.localScale.y, draggableItem.transform.localScale.z);
+                    draggableItem.transform.localScale = new Vector3(2.78f, 2.78f, 2.78f);
+                    //LayoutRebuilder.ForceRebuildLayoutImmediate(inventorySlots[i].GetComponent<RectTransform>());
                     break;
                 }
                 if (inventorySlots[i].Item.ItemId == item.ItemId && item.ItemType != ItemType.KeyItem)
@@ -159,6 +159,9 @@ public class InventoryManager : MonoBehaviour
                 {
                     GameObject draggableItem = createNewDraggableItem(item, equipmentSlots[i].transform);
                     equipmentSlots[i].AddItem(draggableItem.GetComponent<DraggableItem>().Item);
+                    draggableItem.transform.localScale = new Vector3(-draggableItem.transform.localScale.x,
+                        draggableItem.transform.localScale.y, draggableItem.transform.localScale.z);
+                    draggableItem.transform.localScale = new Vector3(2.78f, 2.78f, 2.78f);
                     break;
                 }
             }
@@ -175,7 +178,6 @@ public class InventoryManager : MonoBehaviour
         draggableItem.GetComponent<Image>().sprite = item.Sprite;
         draggableItem.GetComponent<DraggableItem>().parentAfterDrag = transform;
         draggableItem.GetComponent<DraggableItem>().Image = draggableItem.GetComponent<Image>();
-
         draggableItem.transform.SetParent(transform);
         return draggableItem;
     }
@@ -406,8 +408,8 @@ public class InventoryManager : MonoBehaviour
 
     private void UpdateMoney(int amount)
     {
-        money += amount;
-        MoneyText.text = money.ToString();
+        GOLD += amount;
+        MoneyText.text = GOLD.ToString();
     }
 
     private void ToggleInventoryMenu(bool state)
@@ -501,6 +503,71 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+    }
+
+    public Dictionary<string, int>saveStats()
+    {
+        Dictionary<string, int> stats = new Dictionary<string, int>();
+
+        stats.Add("LEVEL", LEVEL);
+        stats.Add("EXP", EXP);
+        stats.Add("EXPTOLV", EXPTOLV);
+        stats.Add("GOLD", GOLD);
+
+        stats.Add("HP", HP);
+        stats.Add("MaxHP", MaxHP);
+        stats.Add("MP", MP);
+        stats.Add("MaxMP", MaxMP);
+        stats.Add("STR", STR);
+        stats.Add("MAG", MAG);
+        stats.Add("DEF", DEF);
+
+        return stats;
+    }
+
+    public void loadStats(Dictionary<string, int> stats)
+    {
+        foreach(KeyValuePair<string, int> item in stats)
+        {
+            switch(item.Key)
+            {
+                case "LEVEL":
+                    LEVEL = item.Value;
+                    break;
+                case "EXP":
+                    EXP = item.Value;
+                    break;
+                case "EXPTOLV":
+                    EXPTOLV = item.Value;
+                    break;
+                case "GOLD":
+                    GOLD = item.Value;
+                    break;
+                case "HP":
+                    HP = item.Value;
+                    break;
+                case "MaxHP":
+                    MaxHP = item.Value;
+                    break;
+                case "MP":
+                    MP = item.Value;
+                    break;
+                case "MaxMP":
+                    MaxMP = item.Value;
+                    break;
+                case "STR":
+                    STR = item.Value;
+                    break;
+                case "MAG":
+                    MAG = item.Value;
+                    break;
+                case "DEF":
+                    DEF = item.Value;
+                    break;
+
+
+            }
+        }
     }
  
     

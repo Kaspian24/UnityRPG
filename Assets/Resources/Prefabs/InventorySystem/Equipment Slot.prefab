@@ -113,6 +113,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2bf8546367d6f4f90c6e1f325b927e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item:
+    hp: 0
+    mp: 0
+    str: 0
+    mag: 0
+    def: 0
+    itemType: 0
+    itemId: 
+    itemName: 
+    quantity: 0
+    sprite: {fileID: 0}
+    description: 
   isFull: 0
   itemPrefab: {fileID: 0}
+  typeList: 
