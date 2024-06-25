@@ -89,8 +89,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI itemDescription;
 
-    private bool inventoryOpen = false;
-
     private bool descriptionOpen = false;
 
     [SerializeField]
@@ -109,6 +107,7 @@ public class InventoryManager : MonoBehaviour
     {
         LoadItems(SaveManager.Instance.currentSave.items);
         LoadEquippedItems(SaveManager.Instance.currentSave.equippedItems);
+        loadStats(SaveManager.Instance.currentSave.stats);
 
         UpdateStats();
         UpdateMoney(GOLD);
@@ -125,13 +124,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItem(Item item)
+    public bool AddItem(Item item)
     {
 
         if (item.ItemType == ItemType.Consumable || item.ItemType == ItemType.KeyItem)
         {
             for (int i = 0; i < inventorySlots.Length; i++)
             {
+                if (inventorySlots[i].IsFull && inventorySlots[i].Item.ItemId == item.ItemId)
+                {
+                    inventorySlots[i].AddExistingItem(item.Quantity);
+                    return true;
+                }
                 if (!inventorySlots[i].IsFull)
                 {
 
@@ -141,15 +145,11 @@ public class InventoryManager : MonoBehaviour
                     draggableItem.transform.localScale = new Vector3(-draggableItem.transform.localScale.x,
                         draggableItem.transform.localScale.y, draggableItem.transform.localScale.z);
                     draggableItem.transform.localScale = new Vector3(2.78f, 2.78f, 2.78f);
-                    //LayoutRebuilder.ForceRebuildLayoutImmediate(inventorySlots[i].GetComponent<RectTransform>());
-                    break;
+                    return true;
                 }
-                if (inventorySlots[i].Item.ItemId == item.ItemId && item.ItemType != ItemType.KeyItem)
-                {
-                    inventorySlots[i].AddExistingItem(item.Quantity);
-                    break;
-                }
+
             }
+            return false;
         }
         else
         {
@@ -162,9 +162,10 @@ public class InventoryManager : MonoBehaviour
                     draggableItem.transform.localScale = new Vector3(-draggableItem.transform.localScale.x,
                         draggableItem.transform.localScale.y, draggableItem.transform.localScale.z);
                     draggableItem.transform.localScale = new Vector3(2.78f, 2.78f, 2.78f);
-                    break;
+                    return true;
                 }
             }
+            return false;
         }
     }
 

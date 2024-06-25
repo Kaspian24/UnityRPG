@@ -5766,6 +5766,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 594868375680296853, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cb13d8c8e9152d54b98cdf32d7a2804f, type: 3}
     - target: {fileID: 792226939839978534, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
       propertyPath: weaponPoint
       value: 
@@ -5978,6 +5982,10 @@ PrefabInstance:
       propertyPath: item.description
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2870889380135991099, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cb13d8c8e9152d54b98cdf32d7a2804f, type: 3}
     - target: {fileID: 3112057047242668538, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

@@ -12,8 +12,10 @@ public class SceneItem : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().AddItem(Item);
-        Destroy(this.gameObject);
+        if (GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().AddItem(Item))
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 }
