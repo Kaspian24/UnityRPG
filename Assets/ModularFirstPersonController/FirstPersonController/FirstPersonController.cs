@@ -39,6 +39,7 @@ public class FirstPersonController : MonoBehaviour
     public Transform spellPoint;
 
     public HealthBar healthBar;
+    public HealthBar mannaBar;
 
     public Transform interactorSource;
     public float interactRange = 2f;
@@ -240,6 +241,9 @@ public class FirstPersonController : MonoBehaviour
 
         healthBar.setMaxHealth(MaxHP);
         healthBar.setHealth(HP);
+
+        mannaBar.setMaxHealth(MaxMP);
+        mannaBar.setHealth(MP);
     }
 
     public int getStrenght()
@@ -779,6 +783,7 @@ public class FirstPersonController : MonoBehaviour
         walkSpeed = 5f;
         sprintSpeed = 7f;
         MP--;
+        mannaBar.setHealth(MP);
         GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().UpdateMP(MP);
 
         spell.transform.SetParent(null);
@@ -830,6 +835,7 @@ public class FirstPersonController : MonoBehaviour
         {
             animator.SetTrigger("Death");
             GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>().UpdateHP(HP);
+            GameEventsManager.Instance.gameModeEvents.Death();
         }
         else
         {
@@ -1096,6 +1102,7 @@ public class FirstPersonController : MonoBehaviour
 
 
         fpc.healthBar = (HealthBar)EditorGUILayout.ObjectField(new GUIContent("Health Bar", ""), fpc.healthBar, typeof(HealthBar), true);
+        fpc.mannaBar = (HealthBar)EditorGUILayout.ObjectField(new GUIContent("Manna Bar", ""), fpc.mannaBar, typeof(HealthBar), true);
         #endregion
 
         //Sets any changes from the prefab

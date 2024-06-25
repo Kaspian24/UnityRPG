@@ -22,7 +22,7 @@ public class Spell : MonoBehaviour
             col.enabled = false;
             other.GetComponent<BlueDragon>().TakeDamage(damage);
             StopSpell();
-            Destroy(gameObject, 3);
+            Destroy(gameObject, 1);
         }
         else if (other.tag == "Skeleton")
         {
@@ -31,9 +31,14 @@ public class Spell : MonoBehaviour
             StopSpell();
             Destroy(gameObject, 0.75f);
         }
+        else if (other.tag == "Player")
+        {
+        }
         else
         {
-            Destroy(gameObject, 3);
+            col.enabled = false;
+            StopSpell();
+            Destroy(gameObject, 1);
         }
     }
 
