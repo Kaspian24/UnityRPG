@@ -31,7 +31,7 @@ public class DialogueManager : MonoBehaviour
 
     private HashSet<(string, string)> enabledTopics = new HashSet<(string, string)>();
 
-    private string randomDialoguesPath = "Assets/Resources/Dialogues/Random";
+    TextAsset[] randomDialogues;
 
     private bool madeChoice;
 
@@ -73,6 +73,8 @@ public class DialogueManager : MonoBehaviour
         continueButtonPrefab = dialoguePanel.GetComponent<DialoguePanel>().continueButtonPrefab;
 
         enabledTopics = SaveManager.Instance.currentSave.enabledTopics;
+
+        randomDialogues = Resources.LoadAll<TextAsset>("Dialogues/Random");
     }
     private void OnEnable()
     {
@@ -115,14 +117,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartRandomDialogue(string dialoguesPath = "")
     {
-        if(string.IsNullOrEmpty(dialoguesPath))
-        {
-            dialoguesPath = randomDialoguesPath;
-        }
-        string[] randomDialoguesFiles = Directory.GetFiles(dialoguesPath, "*.json");
-        string randomDialogueFile = randomDialoguesFiles[Random.Range(0, randomDialoguesFiles.Length)];
-        randomDialogueFile = randomDialogueFile.Substring(randomDialogueFile.IndexOf("Resources/") + "Resources/".Length).Replace(".json", "");
-        TextAsset randomDialogue = Resources.Load<TextAsset>(randomDialogueFile);
+        TextAsset randomDialogue = randomDialogues[Random.Range(0, randomDialogues.Length)];
         StartDialogue(randomDialogue);
     }
 
