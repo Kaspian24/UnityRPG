@@ -26,4 +26,4 @@ MonoBehaviour:
   experience: 10
   items:
   - amount: 3
-    name: Apple
+    sceneItem: {fileID: 0}
