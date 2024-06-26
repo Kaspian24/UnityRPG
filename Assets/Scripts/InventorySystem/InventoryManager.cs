@@ -115,7 +115,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EXP == EXPTOLV)
+        if (EXP >= EXPTOLV)
         {
             LevelUp();
         }
