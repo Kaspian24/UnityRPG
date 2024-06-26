@@ -343,7 +343,12 @@ public class InventoryManager : MonoBehaviour
 
     public void CloseLevelUp()
     {
-        levelUpPanel.SetActive(false);
+        GameEventsManager.Instance.gameModeEvents.LevelUpMessageOnOff(false);
+    }
+
+    public void ToggleLevelUp(bool state)
+    {
+        levelUpPanel.SetActive(state);
     }
 
     public void AddSlots()
@@ -362,6 +367,7 @@ public class InventoryManager : MonoBehaviour
     public void AddExp(int amount)
     {
         EXP += amount;
+        ExpText.text = "EXP - " + EXP.ToString() + "/" + EXPTOLV.ToString();
     }
 
     public void LevelUp()
@@ -404,7 +410,7 @@ public class InventoryManager : MonoBehaviour
             EXP = EXP - EXPTOLV;
             EXPTOLV = (int)Math.Floor(baseEXP * (Math.Pow(LEVEL, exponent)));
 
-            levelUpPanel.SetActive(true);
+            GameEventsManager.Instance.gameModeEvents.LevelUpMessageOnOff(true);
 
             UpdateStats();
         }
@@ -421,20 +427,34 @@ public class InventoryManager : MonoBehaviour
         InventoryPanel.SetActive(state);
         InventoryMenu.SetActive(state);
         moneyPanel.SetActive(state);
-        levelUpPanel.SetActive(false);
         descriptionPanel.SetActive(false);
         EquipmentMenu.SetActive(false);
 
     }
 
+    private void ItemAddEvenHandler(Item item)
+    {
+        _ = AddItem(item);
+    }
+
     private void OnEnable()
     {
         GameEventsManager.Instance.gameModeEvents.OnToggleInventory += ToggleInventoryMenu;
+        GameEventsManager.Instance.gameModeEvents.OnToggleLevelUpMessage += ToggleLevelUp;
+
+        GameEventsManager.Instance.playerEvents.OnGoldAdd += UpdateMoney;
+        GameEventsManager.Instance.playerEvents.OnExpAdd += AddExp;
+        GameEventsManager.Instance.playerEvents.OnItemAdd += ItemAddEvenHandler;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.gameModeEvents.OnToggleInventory -= ToggleInventoryMenu;
+        GameEventsManager.Instance.gameModeEvents.OnToggleLevelUpMessage -= ToggleLevelUp;
+
+        GameEventsManager.Instance.playerEvents.OnGoldAdd -= UpdateMoney;
+        GameEventsManager.Instance.playerEvents.OnExpAdd -= AddExp;
+        GameEventsManager.Instance.playerEvents.OnItemAdd -= ItemAddEvenHandler;
     }
 
     //Metoda zapisuj¹ca przedmioty w ekwipunku

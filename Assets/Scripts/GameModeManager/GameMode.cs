@@ -8,4 +8,5 @@ public enum GameMode
     SaveMenu,
     LoadMenu,
     GameFinishedMessage,
+    LevelUpMessage,
 }

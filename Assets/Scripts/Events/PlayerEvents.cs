@@ -19,10 +19,4 @@ public class PlayerEvents
     {
         OnItemAdd?.Invoke(item);
     }
-
-    public event Action OnLevelGained; // subscribe to this to react on level gained
-    public void LevelGained() // call this to notify about gaining a level
-    {
-        OnLevelGained?.Invoke();
-    }
 }
