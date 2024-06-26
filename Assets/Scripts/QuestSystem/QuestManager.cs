@@ -27,14 +27,12 @@ public class QuestManager : MonoBehaviour
         GameEventsManager.Instance.questEvents.OnQuestStart += QuestStart;
         GameEventsManager.Instance.questEvents.OnTaskComplete += TaskComplete;
         GameEventsManager.Instance.questEvents.OnTaskDataChange += TaskDataChange;
-        GameEventsManager.Instance.questEvents.OnQuestInavailable += QuestInavailable;
     }
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.OnQuestStart -= QuestStart;
         GameEventsManager.Instance.questEvents.OnTaskComplete -= TaskComplete;
         GameEventsManager.Instance.questEvents.OnTaskDataChange -= TaskDataChange;
-        GameEventsManager.Instance.questEvents.OnQuestInavailable -= QuestInavailable;
     }
     private void Start()
     {
@@ -56,7 +54,15 @@ public class QuestManager : MonoBehaviour
     {
         foreach (Quest quest in questsDict.Values)
         {
-            if (quest.state == QuestState.CannotStart && RequirementsMet(quest))
+            if(quest.state == QuestState.Unavailable || quest.state == QuestState.Completed)
+            {
+                continue;
+            }
+            if(AntiRequirementsMet(quest))
+            {
+                QuestChangeState(quest.staticData.Id, QuestState.Unavailable);
+            }
+            else if (quest.state == QuestState.CannotStart && RequirementsMet(quest))
             {
                 QuestChangeState(quest.staticData.Id, QuestState.CanStart);
             }
@@ -66,6 +72,10 @@ public class QuestManager : MonoBehaviour
     {
         Quest quest = questsDict[id];
         quest.state = questState;
+        if(questState == QuestState.Unavailable)
+        {
+            QuestUnavailable(id);
+        }
         GameEventsManager.Instance.questEvents.QuestStateChange(quest);
     }
     private void QuestStart(string questId)
@@ -112,6 +122,18 @@ public class QuestManager : MonoBehaviour
         return true;
     }
 
+    private bool AntiRequirementsMet(Quest quest)
+    {
+        foreach (AntiRequirementData antiRequirement in quest.staticData.antiRequirements)
+        {
+            if(questsDict[antiRequirement.quest.Id].state == antiRequirement.state)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Quest> GetQuestsSortedByLastChanged()
     {
         List<Quest> questsList = new(questsDict.Values);
@@ -144,13 +166,9 @@ public class QuestManager : MonoBehaviour
         return new Quest(questStaticSO);
     }
 
-    private void QuestInavailable(string questId)
+    private void QuestUnavailable(string questId)
     {
         Quest quest = questsDict[questId];
-        if(quest.state != QuestState.Completed && quest.state != QuestState.Inavailable)
-        {
-            quest.DestroyCurrentTask();
-            QuestChangeState(quest.staticData.Id, QuestState.Inavailable);
-        }
+        quest.DestroyCurrentTask();
     }
 }

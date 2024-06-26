@@ -18,6 +18,7 @@ MonoBehaviour:
     wiosk\u0119 przy jeziorze. Mo\u017Ce warto do niej zajrze\u0107."
   secret: 0
   questsRequired: []
+  antiRequirements: []
   taskPrefabs:
   - {fileID: 1817016282107140330, guid: 189be9e2e4a78c64ea1374a9978d1e35, type: 3}
   - {fileID: 756308439264660248, guid: 0106340726b284a45a22f80af5ae6d7a, type: 3}

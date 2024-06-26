@@ -7,6 +7,13 @@ public class RewardItemData
     public string name;
 }
 
+[System.Serializable]
+public class AntiRequirementData
+{
+    public QuestStaticSO quest;
+    public QuestState state;
+}
+
 [CreateAssetMenu(fileName = "QuestStaticSO", menuName = "Quests/QuestStaticSO", order = 1)]
 public class QuestStaticSO : ScriptableObject
 {
@@ -21,6 +28,7 @@ public class QuestStaticSO : ScriptableObject
 
     [Header("Requirements")]
     public QuestStaticSO[] questsRequired;
+    public AntiRequirementData[] antiRequirements;
 
     [Header("Tasks")]
     public GameObject[] taskPrefabs;

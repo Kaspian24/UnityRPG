@@ -16,6 +16,10 @@ public abstract class Task : MonoBehaviour
             SetTaskState(taskState);
         }
     }
+    public void DestroyTask()
+    {
+        Destroy(gameObject);
+    }
     protected void Complete()
     {
         if (!isCompleted)

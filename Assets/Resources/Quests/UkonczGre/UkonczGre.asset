@@ -19,6 +19,7 @@ MonoBehaviour:
   secret: 1
   questsRequired:
   - {fileID: 11400000, guid: 8533b47ebf367a9448bd9fe569b84d4f, type: 2}
+  antiRequirements: []
   taskPrefabs:
   - {fileID: 7454630714674667449, guid: 6e90bbd0e3660d64783ddc2555f5ac76, type: 3}
   gold: 0

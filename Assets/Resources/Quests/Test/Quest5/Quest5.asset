@@ -17,6 +17,7 @@ MonoBehaviour:
   description: "Sprawd\u017A co s\u0142ycha\u0107 u naszych przeciwnik\xF3w"
   secret: 0
   questsRequired: []
+  antiRequirements: []
   taskPrefabs:
   - {fileID: 5320733967423195123, guid: 7ef509aed82052a40a382e595cfa4b06, type: 3}
   gold: 0

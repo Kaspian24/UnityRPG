@@ -19,6 +19,9 @@ MonoBehaviour:
     si\u0119 przygotowa\u0107 do tego starcia?"
   secret: 0
   questsRequired: []
+  antiRequirements:
+  - quest: {fileID: 11400000, guid: 40816b1d944d2b848ac17fc7cccc347f, type: 2}
+    state: 3
   taskPrefabs:
   - {fileID: 6560833291727597213, guid: 614674500720c7041b3cea7b923e758b, type: 3}
   - {fileID: 7842449595008171204, guid: fe3416670830e5b4a8dfad2b2eadcfa6, type: 3}

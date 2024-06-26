@@ -17,6 +17,7 @@ MonoBehaviour:
   description: "Pomaranczowi nam zagra\u017Caj\u0105, trzeba ich powstrzyma\u0107!"
   secret: 0
   questsRequired: []
+  antiRequirements: []
   taskPrefabs:
   - {fileID: 2303963359138416276, guid: dd4ccb57cc129bd46a07fa35f55c83f1, type: 3}
   - {fileID: 8366170729878670563, guid: a6c138a30aeb012439e765f8d72f9625, type: 3}

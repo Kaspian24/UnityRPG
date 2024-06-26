@@ -8,7 +8,7 @@ public class Quest
     public TaskData[] tasksData;
     public System.DateTime lastChanged;
 
-    private GameObject instantiatedTask;
+    private Task instantiatedTask;
 
     public Quest(QuestStaticSO questStaticSO)
     {
@@ -46,7 +46,7 @@ public class Quest
             GameObject taskPrefab = staticData.taskPrefabs[currentTask];
             Task task = Object.Instantiate<GameObject>(taskPrefab, parrentTransform).GetComponent<Task>();
             task.InitializeTask(staticData.Id, currentTask, tasksData[currentTask].state);
-            instantiatedTask = task.gameObject;
+            instantiatedTask = task;
             return true;
         }
         return false;
@@ -66,7 +66,7 @@ public class Quest
     {
         if(instantiatedTask != null)
         {
-            Object.Destroy(instantiatedTask);
+            instantiatedTask.DestroyTask();
             instantiatedTask = null;
         }
     }

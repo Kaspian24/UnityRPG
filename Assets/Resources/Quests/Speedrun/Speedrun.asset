@@ -17,6 +17,9 @@ MonoBehaviour:
   description: "Pokona\u0142e\u015B smoka przed otrzymaniem zlecenia."
   secret: 1
   questsRequired: []
+  antiRequirements:
+  - quest: {fileID: 11400000, guid: 8533b47ebf367a9448bd9fe569b84d4f, type: 2}
+    state: 2
   taskPrefabs:
   - {fileID: 5506721593360731070, guid: 9ab03b3496c0c8644b2dddd3e62602d8, type: 3}
   gold: 500

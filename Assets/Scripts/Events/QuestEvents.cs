@@ -49,10 +49,4 @@ public class QuestEvents
     {
         OnEnablePlaceToVisit?.Invoke(placeName);
     }
-
-    public event Action<string> OnQuestInavailable;
-    public void QuestInavailable(string questId)
-    {
-        OnQuestInavailable?.Invoke(questId);
-    }
 }

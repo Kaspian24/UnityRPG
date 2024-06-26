@@ -21,6 +21,10 @@ public class QuestMenuPanel : MonoBehaviour
         List<Quest> questList = QuestManager.Instance.GetQuestsSortedByLastChanged();
         foreach (Quest quest in questList)
         {
+            if (quest.state == QuestState.Unavailable)
+            {
+                continue;
+            }
             if (quest.state < QuestState.Active)
             {
                 continue;

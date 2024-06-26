@@ -229,6 +229,7 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.GameFinishedMessage;
         Pause();
         TogglePanels(TogglablePanels.ToggleGameFinishedMessage);
@@ -321,6 +322,9 @@ public class GameModeManager : MonoBehaviour
                 SwitchToGameplay();
                 break;
             case GameMode.SaveMenu:
+                SwitchToGameplay();
+                break;
+            case GameMode.GameFinishedMessage:
                 SwitchToGameplay();
                 break;
             default:

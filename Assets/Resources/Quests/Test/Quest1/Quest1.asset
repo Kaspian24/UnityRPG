@@ -17,6 +17,7 @@ MonoBehaviour:
   description: "Czerwoni nam zagra\u017Caj\u0105, trzeba ich powstrzyma\u0107!"
   secret: 0
   questsRequired: []
+  antiRequirements: []
   taskPrefabs:
   - {fileID: 2585358507067876231, guid: d9e74110d118e07448ee8ac3c8cf445f, type: 3}
   - {fileID: 4256718430480155899, guid: a8f84406613c99549be285616d3060f6, type: 3}

@@ -4,5 +4,5 @@ public enum QuestState
     CanStart,
     Active,
     Completed,
-    Inavailable
+    Unavailable
 }

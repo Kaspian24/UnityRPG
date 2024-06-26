@@ -20,6 +20,7 @@ MonoBehaviour:
     szkielet\xF3w znajduje si\u0119 za lasem za domem szefa wioski."
   secret: 0
   questsRequired: []
+  antiRequirements: []
   taskPrefabs:
   - {fileID: 8405415056414184754, guid: f84bcc0d470d37c48b9864c07aca709f, type: 3}
   - {fileID: 113621105209269454, guid: 2ca9641613a520c47bfd0b17b14ddf04, type: 3}
