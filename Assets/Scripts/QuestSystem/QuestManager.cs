@@ -27,12 +27,14 @@ public class QuestManager : MonoBehaviour
         GameEventsManager.Instance.questEvents.OnQuestStart += QuestStart;
         GameEventsManager.Instance.questEvents.OnTaskComplete += TaskComplete;
         GameEventsManager.Instance.questEvents.OnTaskDataChange += TaskDataChange;
+        GameEventsManager.Instance.questEvents.OnQuestInavailable += QuestInavailable;
     }
     private void OnDisable()
     {
         GameEventsManager.Instance.questEvents.OnQuestStart -= QuestStart;
         GameEventsManager.Instance.questEvents.OnTaskComplete -= TaskComplete;
         GameEventsManager.Instance.questEvents.OnTaskDataChange -= TaskDataChange;
+        GameEventsManager.Instance.questEvents.OnQuestInavailable -= QuestInavailable;
     }
     private void Start()
     {
@@ -140,5 +142,15 @@ public class QuestManager : MonoBehaviour
             return new Quest(questStaticSO, questData);
         }
         return new Quest(questStaticSO);
+    }
+
+    private void QuestInavailable(string questId)
+    {
+        Quest quest = questsDict[questId];
+        if(quest.state != QuestState.Completed && quest.state != QuestState.Inavailable)
+        {
+            quest.DestroyCurrentTask();
+            QuestChangeState(quest.staticData.Id, QuestState.Inavailable);
+        }
     }
 }

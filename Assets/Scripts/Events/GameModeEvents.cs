@@ -58,6 +58,11 @@ public class GameModeEvents
     {
         OnToggleDeathMessage?.Invoke(state);
     }
+    public event Action<bool> OnToggleGameFinishedMessage;
+    public void ToggleGameFinishedMessage(bool state)
+    {
+        OnToggleGameFinishedMessage?.Invoke(state);
+    }
 
     public event Action<bool> OnDialogueStartEnd;
     public void DialogueStartEnd(bool state)
@@ -93,5 +98,11 @@ public class GameModeEvents
     public void Death()
     {
         OnDeath?.Invoke();
+    }
+
+    public event Action<bool> OnGameFinishedMessageOnOff;
+    public void GameFinishedMessageOnOff(bool state)
+    {
+        OnGameFinishedMessageOnOff?.Invoke(state);
     }
 }

@@ -71,6 +71,8 @@ public class DialogueManager : MonoBehaviour
         dialogueChoicePrefab = dialoguePanel.GetComponent<DialoguePanel>().dialogueChoicePrefab;
 
         continueButtonPrefab = dialoguePanel.GetComponent<DialoguePanel>().continueButtonPrefab;
+
+        enabledTopics = SaveManager.Instance.currentSave.enabledTopics;
     }
     private void OnEnable()
     {
@@ -243,5 +245,10 @@ public class DialogueManager : MonoBehaviour
     public void ToggleDialogue(bool state)
     {
         dialoguePanel.SetActive(state);
+    }
+
+    public HashSet<(string, string)> SaveEnabledTopics()
+    {
+        return enabledTopics;
     }
 }

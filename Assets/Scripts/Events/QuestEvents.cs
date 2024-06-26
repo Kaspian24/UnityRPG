@@ -37,14 +37,22 @@ public class QuestEvents
     {
         OnQuestTrack?.Invoke(questId);
     }
+
     public event Action<string> OnPlaceVisited;
     public void PlaceVisited(string placeName)
     {
         OnPlaceVisited?.Invoke(placeName);
     }
+
     public event Action<string> OnEnablePlaceToVisit;
     public void EnablePlaceToVisit(string placeName)
     {
         OnEnablePlaceToVisit?.Invoke(placeName);
+    }
+
+    public event Action<string> OnQuestInavailable;
+    public void QuestInavailable(string questId)
+    {
+        OnQuestInavailable?.Invoke(questId);
     }
 }

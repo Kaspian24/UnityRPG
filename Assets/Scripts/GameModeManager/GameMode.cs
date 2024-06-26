@@ -7,4 +7,5 @@ public enum GameMode
     PauseMenu,
     SaveMenu,
     LoadMenu,
+    GameFinishedMessage,
 }

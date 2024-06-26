@@ -10,18 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f938960435665fd45946d6ae8c3a10dd, type: 3}
-  m_Name: Smok
+  m_Name: Speedrun
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Smok
-  title: Smok
-  description: "Szef wioski powiedzia\u0142 ci, \u017Ce smok znajduje si\u0119 na
-    \u0142\u0105ce za pojedynczym domem przy jeziorze. Mo\u017Ce jednak warto lepiej
-    si\u0119 przygotowa\u0107 do tego starcia?"
-  secret: 0
+  <Id>k__BackingField: Speedrun
+  title: Speedrun
+  description: "Pokona\u0142e\u015B smoka przed otrzymaniem zlecenia."
+  secret: 1
   questsRequired: []
   taskPrefabs:
-  - {fileID: 6560833291727597213, guid: 614674500720c7041b3cea7b923e758b, type: 3}
-  - {fileID: 7842449595008171204, guid: fe3416670830e5b4a8dfad2b2eadcfa6, type: 3}
+  - {fileID: 5506721593360731070, guid: 9ab03b3496c0c8644b2dddd3e62602d8, type: 3}
   gold: 500
   experience: 500
   items: []

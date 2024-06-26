@@ -6,12 +6,22 @@ VAR wezwanie = false
 VAR szkielety = false
 ~ szkielety = isDialogueStartable("Szef", "Szkielety")
 
+VAR speedrun = false
+~ speedrun = isDialogueStartable("Szef", "Speedrun")
+
+VAR smok = false
+~ smok = isDialogueStartable("Szef", "Smok")
+
 { wezwanie:
 -> DialogWezwanie
 }
 
 { szkielety:
 -> DialogSzkielety
+}
+
+{ smok:
+-> DialogSmok
 }
 
 Nie mamy o czym rozmawiać.
@@ -39,8 +49,29 @@ Najbliższy oddział znajduje się za lasem za moim domem.
 Widzę że udało Ci się uporać z kilkoma szkieletami.
 Myślę jednak, że powinieneś zdobyć więcej doświadczenia nim zawalczysz ze smokiem.
 Nie będę Cię jednak powstrzymywał, smok znajduje się na łące za pojedynczym domem w pobliżu jeziora.
-Powodzenia!
+{ speedrun:
+ -> DialogSpeedrun
+}
 ~topicTalkedAbout("Szef", "Szkielety")
 ~disableTopic("Szef", "Szkielety")
 ~startQuest("Smok")
+Powodzenia!
+-> DONE
+
+== DialogSpeedrun ==
++ już go pokonałem
+Co?!
+~topicTalkedAbout("Szef", "Speedrun")
+~disableTopic("Szef", "Speedrun")
+~topicTalkedAbout("Szef", "Szkielety")
+~disableTopic("Szef", "Szkielety")
+~startQuest("UkonczGre")
+Jesteś prawdziwym bohaterem!
+-> DONE
+
+== DialogSmok ==
++ udało mi się pokonać smoka
+~topicTalkedAbout("Szef", "Smok")
+~disableTopic("Szef", "Smok")
+Jesteś prawdziwym bohaterem!
 -> DONE

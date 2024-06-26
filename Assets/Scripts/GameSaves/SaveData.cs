@@ -22,6 +22,8 @@ public class SaveData
 
     public Dictionary<string, int> stats;
 
+    public HashSet<(string, string)> enabledTopics;
+
     public long saveDate;
 
     [JsonIgnore]
@@ -37,11 +39,12 @@ public class SaveData
         items = new List<KeyValuePair<string, int>>();
         equippedItems = new List<KeyValuePair<string, string>>();
         stats = new Dictionary<string, int>();
+        enabledTopics = new HashSet<(string, string)>();
         saveDate = 0;
         enabled = false;
     }
 
-    public SaveData(string saveName, Dictionary<string, QuestData> questsDataDict, Vector3 playerControllerPosition, Quaternion playerControllerRotation, string currentlyTrackedQuest, List<KeyValuePair<string, int>> items, List<KeyValuePair<string, string>> equippedItems, Dictionary<string, int> stats, long saveDate)
+    public SaveData(string saveName, Dictionary<string, QuestData> questsDataDict, Vector3 playerControllerPosition, Quaternion playerControllerRotation, string currentlyTrackedQuest, List<KeyValuePair<string, int>> items, List<KeyValuePair<string, string>> equippedItems, Dictionary<string, int> stats, HashSet<(string, string)> enabledTopics, long saveDate)
     {
         this.saveName = saveName;
         this.questsDataDict = questsDataDict;
@@ -51,6 +54,7 @@ public class SaveData
         this.items = items;
         this.equippedItems = equippedItems;
         this.stats = stats;
+        this.enabledTopics = enabledTopics;
         this.saveDate = saveDate;
         enabled = true;
     }

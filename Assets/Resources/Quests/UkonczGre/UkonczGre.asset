@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f938960435665fd45946d6ae8c3a10dd, type: 3}
+  m_Name: UkonczGre
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: UkonczGre
+  title: "Uko\u0144cz gr\u0119"
+  description: "Uda\u0142o ci si\u0119 uko\u0144czy\u0107 cel g\u0142\xF3wny gry!
+    Mo\u017Cesz kontynuowa\u0107 eksploracj\u0119 \u015Bwiata."
+  secret: 1
+  questsRequired:
+  - {fileID: 11400000, guid: 8533b47ebf367a9448bd9fe569b84d4f, type: 2}
+  taskPrefabs:
+  - {fileID: 7454630714674667449, guid: 6e90bbd0e3660d64783ddc2555f5ac76, type: 3}
+  gold: 0
+  experience: 0
+  items: []
