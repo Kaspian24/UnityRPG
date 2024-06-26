@@ -359,6 +359,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void AddExp(int amount)
+    {
+        EXP += amount;
+    }
+
     public void LevelUp()
     {
 
@@ -368,7 +373,7 @@ public class InventoryManager : MonoBehaviour
         int tmp;
         levelUpText.text = "";
 
-        if (EXP == EXPTOLV)
+        if (EXP >= EXPTOLV)
         {
             LEVEL += 1;
 
@@ -394,11 +399,12 @@ public class InventoryManager : MonoBehaviour
             DEF += tmp;
             levelUpText.text += "DEF +" + tmp.ToString() + "\n"; ;
 
-            EXP = 0;
+
+
+            EXP = EXP - EXPTOLV;
             EXPTOLV = (int)Math.Floor(baseEXP * (Math.Pow(LEVEL, exponent)));
 
             levelUpPanel.SetActive(true);
-
 
             UpdateStats();
         }
