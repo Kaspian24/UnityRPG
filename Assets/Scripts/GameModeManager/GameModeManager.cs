@@ -16,6 +16,7 @@ public class GameModeManager : MonoBehaviour
         ToggleSaveMenu,
         ToggleDeathMessage,
         ToggleGameFinishedMessage,
+        ToggleLevelUpMessage,
     }
     public static GameModeManager Instance { get; private set; }
 
@@ -235,6 +236,18 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleGameFinishedMessage);
     }
 
+    private void SwitchToLevelUpMessage()
+    {
+        if (!playerAlive)
+        {
+            SwitchToDeathMessage();
+            return;
+        }
+        currentGameMode = GameMode.LevelUpMessage;
+        Pause();
+        TogglePanels(TogglablePanels.ToggleLevelUpMessage);
+    }
+
     private void TogglePanels(params TogglablePanels[] panels)
     {
         var allPanels = Enum.GetValues(typeof(TogglablePanels)).Cast<TogglablePanels>();
@@ -286,6 +299,11 @@ public class GameModeManager : MonoBehaviour
                 break;
             case TogglablePanels.ToggleGameFinishedMessage:
                 GameEventsManager.Instance.gameModeEvents.ToggleGameFinishedMessage(state);
+                break;
+            case TogglablePanels.ToggleLevelUpMessage:
+                GameEventsManager.Instance.gameModeEvents.ToggleLevelUpMessage(state);
+                break;
+            default:
                 break;
         }
     }
@@ -380,6 +398,18 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    private void ToggleLevelUpMessage(bool state)
+    {
+        if (state)
+        {
+            SwitchToLevelUpMessage();
+        }
+        else
+        {
+            SwitchToLastGameMode();
+        }
+    }
+
     public void ForceResume()
     {
         Resume();
@@ -415,6 +445,7 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.OnSaveMenuOnOff += ToggleSaveMenu;
         GameEventsManager.Instance.gameModeEvents.OnDeath += Death;
         GameEventsManager.Instance.gameModeEvents.OnGameFinishedMessageOnOff += ToggleGameFinishedMessage;
+        GameEventsManager.Instance.gameModeEvents.OnLevelUpMessageOnOff += ToggleLevelUpMessage;
     }
 
     private void OnDisable()
@@ -424,5 +455,6 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.OnSaveMenuOnOff -= ToggleSaveMenu;
         GameEventsManager.Instance.gameModeEvents.OnDeath -= Death;
         GameEventsManager.Instance.gameModeEvents.OnGameFinishedMessageOnOff -= ToggleGameFinishedMessage;
+        GameEventsManager.Instance.gameModeEvents.OnLevelUpMessageOnOff -= ToggleLevelUpMessage;
     }
 }

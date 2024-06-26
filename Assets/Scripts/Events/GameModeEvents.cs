@@ -63,6 +63,11 @@ public class GameModeEvents
     {
         OnToggleGameFinishedMessage?.Invoke(state);
     }
+    public event Action<bool> OnToggleLevelUpMessage;
+    public void ToggleLevelUpMessage(bool state)
+    {
+        OnToggleLevelUpMessage?.Invoke(state);
+    }
 
     public event Action<bool> OnDialogueStartEnd;
     public void DialogueStartEnd(bool state)
@@ -104,5 +109,11 @@ public class GameModeEvents
     public void GameFinishedMessageOnOff(bool state)
     {
         OnGameFinishedMessageOnOff?.Invoke(state);
+    }
+
+    public event Action<bool> OnLevelUpMessageOnOff;
+    public void LevelUpMessageOnOff(bool state)
+    {
+        OnLevelUpMessageOnOff?.Invoke(state);
     }
 }
