@@ -68,6 +68,11 @@ public class GameModeEvents
     {
         OnToggleLevelUpMessage?.Invoke(state);
     }
+    public event Action<bool> OnToggleUIBars;
+    public void ToggleUIBars(bool state)
+    {
+        OnToggleUIBars?.Invoke(state);
+    }
 
     public event Action<bool> OnDialogueStartEnd;
     public void DialogueStartEnd(bool state)

@@ -5719,7 +5719,7 @@ PrefabInstance:
     - target: {fileID: 1785829848921594953, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
       propertyPath: levelUpPanel
       value: 
-      objectReference: {fileID: 1092359433}
+      objectReference: {fileID: 827864698}
     - target: {fileID: 1790398937705828077, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -6614,6 +6614,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
+--- !u!1 &827864698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8120763276889934795, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
+  m_PrefabInstance: {fileID: 827864697}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &835696603 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b67d2b761d3397348831d776dbb33e03, type: 3}
@@ -9076,11 +9081,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4208458315195486, guid: c96016c34e7be62488e588470988ef5b, type: 3}
   m_PrefabInstance: {fileID: 1281409737}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1092359433 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1860664043542978271, guid: 6d6a90f0c91867b47945e1666cf8b338, type: 3}
-  m_PrefabInstance: {fileID: 827864697}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1093997661
 PrefabInstance:

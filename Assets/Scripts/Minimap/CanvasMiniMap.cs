@@ -10,6 +10,9 @@ public class CanvasMiniMap : MonoBehaviour
     private void ToggleMinimap(bool state)
     {
         minimapPanel.SetActive(state);
+    }
+    private void ToggleUIBars(bool state)
+    {
         manaBarPanel.SetActive(state);
         healthBarPanel.SetActive(state);
     }
@@ -17,10 +20,12 @@ public class CanvasMiniMap : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.Instance.gameModeEvents.OnToggleMiniMap += ToggleMinimap;
+        GameEventsManager.Instance.gameModeEvents.OnToggleUIBars += ToggleUIBars;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.gameModeEvents.OnToggleMiniMap -= ToggleMinimap;
+        GameEventsManager.Instance.gameModeEvents.OnToggleUIBars -= ToggleUIBars;
     }
 }

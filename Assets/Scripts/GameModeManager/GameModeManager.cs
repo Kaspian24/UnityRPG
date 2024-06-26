@@ -17,6 +17,7 @@ public class GameModeManager : MonoBehaviour
         ToggleDeathMessage,
         ToggleGameFinishedMessage,
         ToggleLevelUpMessage,
+        ToggleUIBars,
     }
     public static GameModeManager Instance { get; private set; }
 
@@ -139,7 +140,7 @@ public class GameModeManager : MonoBehaviour
         }
         currentGameMode = GameMode.Gameplay;
         Resume();
-        TogglePanels(TogglablePanels.ToggleQuestTrackVisibility, TogglablePanels.ToggleMiniMap);
+        TogglePanels(TogglablePanels.ToggleQuestTrackVisibility, TogglablePanels.ToggleMiniMap, TogglablePanels.ToggleUIBars);
     }
 
     private void SwitchToQuestMenu()
@@ -188,7 +189,7 @@ public class GameModeManager : MonoBehaviour
         }
         currentGameMode = GameMode.InventoryMenu;
         Pause();
-        TogglePanels(TogglablePanels.ToggleInventory);
+        TogglePanels(TogglablePanels.ToggleInventory, TogglablePanels.ToggleUIBars);
     }
 
     private void SwitchToLoadMenu()
@@ -245,7 +246,7 @@ public class GameModeManager : MonoBehaviour
         }
         currentGameMode = GameMode.LevelUpMessage;
         Pause();
-        TogglePanels(TogglablePanels.ToggleLevelUpMessage);
+        TogglePanels(TogglablePanels.ToggleLevelUpMessage, TogglablePanels.ToggleUIBars);
     }
 
     private void TogglePanels(params TogglablePanels[] panels)
@@ -302,6 +303,9 @@ public class GameModeManager : MonoBehaviour
                 break;
             case TogglablePanels.ToggleLevelUpMessage:
                 GameEventsManager.Instance.gameModeEvents.ToggleLevelUpMessage(state);
+                break;
+            case TogglablePanels.ToggleUIBars:
+                GameEventsManager.Instance.gameModeEvents.ToggleUIBars(state);
                 break;
             default:
                 break;
