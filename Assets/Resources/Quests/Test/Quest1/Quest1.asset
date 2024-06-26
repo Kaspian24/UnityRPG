@@ -25,4 +25,4 @@ MonoBehaviour:
   experience: 10
   items:
   - amount: 1
-    name: Helmet
+    sceneItem: {fileID: 0}
