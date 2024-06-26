@@ -427,14 +427,27 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    private void ItemAddEvenHandler(Item item)
+    {
+        _ = AddItem(item);
+    }
+
     private void OnEnable()
     {
         GameEventsManager.Instance.gameModeEvents.OnToggleInventory += ToggleInventoryMenu;
+
+        GameEventsManager.Instance.playerEvents.OnGoldAdd += UpdateMoney;
+        GameEventsManager.Instance.playerEvents.OnExpAdd += AddExp;
+        GameEventsManager.Instance.playerEvents.OnItemAdd += ItemAddEvenHandler;
     }
 
     private void OnDisable()
     {
         GameEventsManager.Instance.gameModeEvents.OnToggleInventory -= ToggleInventoryMenu;
+
+        GameEventsManager.Instance.playerEvents.OnGoldAdd -= UpdateMoney;
+        GameEventsManager.Instance.playerEvents.OnExpAdd -= AddExp;
+        GameEventsManager.Instance.playerEvents.OnItemAdd -= ItemAddEvenHandler;
     }
 
     //Metoda zapisuj¹ca przedmioty w ekwipunku
