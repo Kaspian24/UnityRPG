@@ -76,6 +76,7 @@ public class QuestManager : MonoBehaviour
         {
             QuestUnavailable(id);
         }
+        CheckReqiurements();
         GameEventsManager.Instance.questEvents.QuestStateChange(quest);
     }
     private void QuestStart(string questId)
@@ -93,7 +94,6 @@ public class QuestManager : MonoBehaviour
         {
             GiveRewards(quest);
             QuestChangeState(quest.staticData.Id, QuestState.Completed);
-            CheckReqiurements();
         }
     }
     private void GiveRewards(Quest quest)
