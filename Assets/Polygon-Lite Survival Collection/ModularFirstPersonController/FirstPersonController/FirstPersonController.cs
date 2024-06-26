@@ -603,6 +603,11 @@ public class FirstPersonController : MonoBehaviour
         if (isCrouched)
         {
             transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
+
+            // naprawienie na szybko glitcha z kucaniem i biegiem
+            walkSpeed = 5f;
+            sprintSpeed = 7f;
+
             walkSpeed /= speedReduction;
 
             isCrouched = false;
@@ -612,6 +617,11 @@ public class FirstPersonController : MonoBehaviour
         else
         {
             transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
+
+            // naprawienie na szybko glitcha z kucaniem i biegiem
+            walkSpeed = 5f;
+            sprintSpeed = 7f;
+
             walkSpeed *= speedReduction;
 
             isCrouched = true;
