@@ -24,4 +24,18 @@ MonoBehaviour:
   - {fileID: 756308439264660248, guid: 0106340726b284a45a22f80af5ae6d7a, type: 3}
   gold: 0
   experience: 70
-  items: []
+  items:
+  - amount: 1
+    sceneItem: {fileID: 4629359628111859692, guid: 224bda507e70d7f4581b096403230d25, type: 3}
+  - amount: 2
+    sceneItem: {fileID: 1146865430929662935, guid: 597d3e9f7f55e094d887da62330292c3, type: 3}
+  - amount: 2
+    sceneItem: {fileID: 3232653860387892569, guid: 32ff3346317945b4e8c151643d5a3ade, type: 3}
+  - amount: 1
+    sceneItem: {fileID: 654286790345127983, guid: 9571ad3bc4507f745b97c54cbffaafd8, type: 3}
+  - amount: 1
+    sceneItem: {fileID: -1924105493954954430, guid: 2cdd1cffbc2be174ab0c6324d2775d69, type: 3}
+  - amount: 1
+    sceneItem: {fileID: 6880322589897306233, guid: 42ba01a98c1389f41a1008ec99089626, type: 3}
+  - amount: 1
+    sceneItem: {fileID: 2953054705440091157, guid: 7f45b5492cfd0e248b06de4dc1c5b025, type: 3}

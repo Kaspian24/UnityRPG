@@ -4,7 +4,7 @@ using UnityEngine;
 public class RewardItemData
 {
     public int amount;
-    public string name;
+    public SceneItem sceneItem;
 }
 
 [System.Serializable]

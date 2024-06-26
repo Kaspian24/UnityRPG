@@ -14,10 +14,10 @@ public class PlayerEvents
         OnGoldAdd?.Invoke(amount);
     }
 
-    public event Action<int, string> OnItemAdd; // subscribe to this to react on item addition
-    public void ItemAdd(int amount, string name) // call this to notify about item being added
+    public event Action<Item> OnItemAdd; // subscribe to this to react on item addition
+    public void ItemAdd(Item item) // call this to notify about item being added
     {
-        OnItemAdd?.Invoke(amount, name);
+        OnItemAdd?.Invoke(item);
     }
 
     public event Action OnLevelGained; // subscribe to this to react on level gained

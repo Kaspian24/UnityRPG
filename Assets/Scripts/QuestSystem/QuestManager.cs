@@ -100,9 +100,12 @@ public class QuestManager : MonoBehaviour
     {
         GameEventsManager.Instance.playerEvents.ExpAdd(quest.staticData.experience);
         GameEventsManager.Instance.playerEvents.GoldAdd(quest.staticData.gold);
-        foreach (RewardItemData item in quest.staticData.items)
+        foreach (RewardItemData rewardItemData in quest.staticData.items)
         {
-            GameEventsManager.Instance.playerEvents.ItemAdd(item.amount, item.name);
+            for(int i = 0; i < rewardItemData.amount; i++)
+            {
+                GameEventsManager.Instance.playerEvents.ItemAdd(rewardItemData.sceneItem.Item);
+            }
         }
     }
     private void TaskDataChange(string questId, int taskIndex, TaskData taskData)
