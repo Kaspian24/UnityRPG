@@ -43,12 +43,14 @@ Wróc jeżeli zmienisz zdanie.
 Dziękujemy!
 W pierwszej kolejności postaraj się pokonać chociaż część z pobliskich szkieletów.
 Najbliższy oddział znajduje się za lasem za moim domem.
+Weź to wyposażenie, przyda ci się.
 -> DONE
 
 == DialogSzkielety ==
 Widzę że udało Ci się uporać z kilkoma szkieletami.
 Myślę jednak, że powinieneś zdobyć więcej doświadczenia nim zawalczysz ze smokiem.
 Nie będę Cię jednak powstrzymywał, smok znajduje się na łące za pojedynczym domem w pobliżu jeziora.
+Weź to wyposażenie, bez niego marny twój los w walce ze smokiem.
 { speedrun:
  -> DialogSpeedrun
 }
@@ -66,6 +68,7 @@ Co?!
 ~topicTalkedAbout("Szef", "Szkielety")
 ~disableTopic("Szef", "Szkielety")
 ~startQuest("UkonczGre")
+Z tym uzbrojeniem?! Jak ci się to udało?!
 Jesteś prawdziwym bohaterem!
 -> DONE
 
@@ -73,5 +76,6 @@ Jesteś prawdziwym bohaterem!
 + udało mi się pokonać smoka
 ~topicTalkedAbout("Szef", "Smok")
 ~disableTopic("Szef", "Smok")
+Dzięki tobie nasza wioska jest znacznie bezpieczniejsza.
 Jesteś prawdziwym bohaterem!
 -> DONE
