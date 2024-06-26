@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ChestController : MonoBehaviour
 {
@@ -55,7 +52,7 @@ public class ChestController : MonoBehaviour
     {
         ItemList itemList = new ItemList();
 
-        for(int i = 0; i < equipmentSlots.Length; i++)
+        for (int i = 0; i < equipmentSlots.Length; i++)
         {
             if (equipmentSlots[i].IsFull)
             {
@@ -65,13 +62,13 @@ public class ChestController : MonoBehaviour
 
         string json = JsonUtility.ToJson(itemList);
 
-        File.WriteAllText("Assets/Resources/Prefabs/InventorySystem/ChestJsons/"+currentId+".json", json);
-        AssetDatabase.ImportAsset("Assets/Resources/Prefabs/InventorySystem/ChestJsons/"+currentId+".json");
+        File.WriteAllText("Assets/Resources/Prefabs/InventorySystem/ChestJsons/" + currentId + ".json", json);
+        AssetDatabase.ImportAsset("Assets/Resources/Prefabs/InventorySystem/ChestJsons/" + currentId + ".json");
     }
 
     public void FromJson(string id)
     {
-        String json = File.ReadAllText("Assets/Resources/Prefabs/InventorySystem/ChestJsons/" +id+ ".json");
+        String json = File.ReadAllText("Assets/Resources/Prefabs/InventorySystem/ChestJsons/" + id + ".json");
         ItemList itemList = JsonUtility.FromJson<ItemList>(json);
         for (int i = 0; i < itemList.items.Count; i++)
         {
@@ -152,7 +149,7 @@ public class ChestController : MonoBehaviour
 
     private void OnDestroy()
     {
-        
+
     }
 
 

@@ -1,16 +1,8 @@
-using JetBrains.Annotations;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -123,7 +115,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(EXP == EXPTOLV)
+        if (EXP == EXPTOLV)
         {
             LevelUp();
         }
@@ -190,12 +182,12 @@ public class InventoryManager : MonoBehaviour
 
     public bool UseItem(Item item)
     {
-        if(item.ItemType != ItemType.Consumable)
+        if (item.ItemType != ItemType.Consumable)
         {
             return false;
         }
 
-        if(item.HP > 0 && HP < MaxHP)
+        if (item.HP > 0 && HP < MaxHP)
         {
             if ((HP + item.HP) <= MaxHP)
             {
@@ -245,7 +237,7 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateStats(Item item, bool equipped)
     {
-        if(equipped)
+        if (equipped)
         {
             MaxHP += item.HP;
             MaxMP += item.MP;
@@ -253,7 +245,7 @@ public class InventoryManager : MonoBehaviour
             MAG += item.MAG;
             DEF += item.DEF;
         }
-        else if(!equipped)
+        else if (!equipped)
         {
             MaxHP -= item.HP;
             MaxMP -= item.MP;
@@ -316,7 +308,7 @@ public class InventoryManager : MonoBehaviour
             if (item.ItemType == ItemType.Consumable)
             {
                 itemDescription.text = item.Description + "\n\nQuantity: " + item.Quantity + "\n" + item.PrintStats();
-                
+
             }
             else
             {
@@ -326,8 +318,8 @@ public class InventoryManager : MonoBehaviour
             RectTransform panelRect = descriptionScrollPanel.GetComponent<RectTransform>();
             if (descriptionOpen == false)
             {
-                
-                panelRect.offsetMin = new Vector2(panelRect.offsetMin.x, panelRect.offsetMin.y - descriptionRect.offsetMin.y -100);
+
+                panelRect.offsetMin = new Vector2(panelRect.offsetMin.x, panelRect.offsetMin.y - descriptionRect.offsetMin.y - 100);
             }
 
             itemName.enabled = true;
@@ -341,7 +333,7 @@ public class InventoryManager : MonoBehaviour
             itemName.enabled = false;
             itemDescription.enabled = false;
         }
-        
+
     }
 
     public void CloseDescription()
@@ -358,12 +350,12 @@ public class InventoryManager : MonoBehaviour
     {
         RectTransform rectTransform = scrollPanel.GetComponent<RectTransform>();
         rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, rectTransform.offsetMin.y - 110);
-        GameObject newSlot; 
+        GameObject newSlot;
         for (int i = 0; i < 6; i++)
         {
             newSlot = Instantiate(slotPrefab, scrollPanel.transform);
             equipmentSlots.Add(newSlot.GetComponent<EquipmentSlot>());
-            
+
         }
     }
 
@@ -376,7 +368,7 @@ public class InventoryManager : MonoBehaviour
         int tmp;
         levelUpText.text = "";
 
-        if(EXP == EXPTOLV)
+        if (EXP == EXPTOLV)
         {
             LEVEL += 1;
 
@@ -420,13 +412,13 @@ public class InventoryManager : MonoBehaviour
 
     private void ToggleInventoryMenu(bool state)
     {
-            InventoryPanel.SetActive(state);
-            InventoryMenu.SetActive(state);
-            moneyPanel.SetActive(state);
-            levelUpPanel.SetActive(false);
-            descriptionPanel.SetActive(false);
-            EquipmentMenu.SetActive(false);
-            
+        InventoryPanel.SetActive(state);
+        InventoryMenu.SetActive(state);
+        moneyPanel.SetActive(state);
+        levelUpPanel.SetActive(false);
+        descriptionPanel.SetActive(false);
+        EquipmentMenu.SetActive(false);
+
     }
 
     private void OnEnable()
@@ -440,10 +432,10 @@ public class InventoryManager : MonoBehaviour
     }
 
     //Metoda zapisuj¹ca przedmioty w ekwipunku
-    public List<KeyValuePair<string, int>>SaveItems()
+    public List<KeyValuePair<string, int>> SaveItems()
     {
         List<KeyValuePair<string, int>> items = new List<KeyValuePair<string, int>>();
-        for(int i = 0; i < equipmentSlots.Count; i++)
+        for (int i = 0; i < equipmentSlots.Count; i++)
         {
             if (equipmentSlots[i].IsFull)
             {
@@ -461,10 +453,10 @@ public class InventoryManager : MonoBehaviour
     }
 
     //Metoda zapisuj¹ca wyekwipowane przedmioty
-    public List<KeyValuePair<string, string>>SaveEquippedItems()
+    public List<KeyValuePair<string, string>> SaveEquippedItems()
     {
         List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
-        for(int i = 0; i < playerSlots.Length; i++)
+        for (int i = 0; i < playerSlots.Length; i++)
         {
             if (playerSlots[i].IsFull)
             {
@@ -478,7 +470,7 @@ public class InventoryManager : MonoBehaviour
     //Metoda wczytuj¹ca przedmioty do ekwipunku
     public void LoadItems(List<KeyValuePair<string, int>> items)
     {
-        foreach(KeyValuePair<string, int> entry in items)
+        foreach (KeyValuePair<string, int> entry in items)
         {
             GameObject tempObject = Resources.Load("Prefabs/Items/" + entry.Key) as GameObject;
             Item tempItem = tempObject.GetComponent<SceneItem>().Item;
@@ -498,9 +490,9 @@ public class InventoryManager : MonoBehaviour
             Item tempItem = tempObject.GetComponent<SceneItem>().Item;
             Item i = new Item();
             i.copyItem(tempItem);
-            for(int j = 0; j < playerSlots.Length; j++)
+            for (int j = 0; j < playerSlots.Length; j++)
             {
-                if(entry.Value == playerSlots[j].TypeList[0].ToString())
+                if (entry.Value == playerSlots[j].TypeList[0].ToString())
                 {
                     GameObject tempDrag = createNewDraggableItem(i, playerSlots[j].transform);
                     playerSlots[j].AddItem(tempDrag.GetComponent<DraggableItem>().Item);
@@ -514,7 +506,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public Dictionary<string, int>saveStats()
+    public Dictionary<string, int> saveStats()
     {
         Dictionary<string, int> stats = new Dictionary<string, int>();
 
@@ -536,9 +528,9 @@ public class InventoryManager : MonoBehaviour
 
     public void loadStats(Dictionary<string, int> stats)
     {
-        foreach(KeyValuePair<string, int> item in stats)
+        foreach (KeyValuePair<string, int> item in stats)
         {
-            switch(item.Key)
+            switch (item.Key)
             {
                 case "LEVEL":
                     LEVEL = item.Value;
@@ -578,8 +570,8 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
- 
-    
+
+
 
 
 }

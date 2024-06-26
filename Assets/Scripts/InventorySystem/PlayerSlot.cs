@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class PlayerSlot : EquipmentSlot
 {
@@ -13,7 +8,7 @@ public class PlayerSlot : EquipmentSlot
 
     private void Update()
     {
-        if(transform.childCount == 0 && IsFull)
+        if (transform.childCount == 0 && IsFull)
         {
             InventoryManager.UpdateStats(Item, false);
             UnequipItem();
@@ -42,12 +37,12 @@ public class PlayerSlot : EquipmentSlot
             draggableItem.parentAfterDrag = transform;
             AddItem(draggableItem.Item);
             InventoryManager.UpdateStats(draggableItem.Item, true);
-            if(draggableItem.Item.ItemType == ItemType.EquipHand)
+            if (draggableItem.Item.ItemType == ItemType.EquipHand)
             {
                 EquipItem();
             }
         }
-            
+
     }
 
     public override void DropItem()
@@ -77,7 +72,7 @@ public class PlayerSlot : EquipmentSlot
         weaponSlot.GetComponent<Rigidbody>().isKinematic = true;
         weaponSlot.GetComponent<Rigidbody>().detectCollisions = false;
         weaponSlot.GetComponent<Collider>().enabled = false;
-        if(weaponSlot.tag == "Spellbook")
+        if (weaponSlot.tag == "Spellbook")
         {
             weaponSlot.GetComponent<MeshRenderer>().enabled = false;
         }
