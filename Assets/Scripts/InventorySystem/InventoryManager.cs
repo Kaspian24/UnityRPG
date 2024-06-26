@@ -367,7 +367,7 @@ public class InventoryManager : MonoBehaviour
     public void AddExp(int amount)
     {
         EXP += amount;
-        ExpText.text = EXP.ToString();
+        ExpText.text = "EXP - " + EXP.ToString() + "/" + EXPTOLV.ToString();
     }
 
     public void LevelUp()
