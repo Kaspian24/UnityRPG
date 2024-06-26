@@ -5346,8 +5346,8 @@ GameObject:
   - component: {fileID: 784323758}
   - component: {fileID: 784323757}
   - component: {fileID: 784323756}
-  - component: {fileID: 784323755}
   - component: {fileID: 784323754}
+  - component: {fileID: 784323759}
   m_Layer: 0
   m_Name: Tent
   m_TagString: Untagged
@@ -5367,27 +5367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee1ca18f07702049b26418d0515d333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &784323755
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 784323753}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &784323756
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5408,7 +5387,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e47e8f0bb92aaff4c93eedb0398a1c96, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5437,7 +5416,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784323753}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6705128238138053353, guid: 6724caf277831854fa8c7e4bcd500aa1, type: 3}
 --- !u!4 &784323758
 Transform:
   m_ObjectHideFlags: 0
@@ -5446,13 +5425,35 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784323753}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 478.17, y: 9.3, z: 691.77}
-  m_LocalScale: {x: 4, y: 2, z: 2}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!64 &784323759
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784323753}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6705128238138053353, guid: 6724caf277831854fa8c7e4bcd500aa1, type: 3}
 --- !u!1 &795312002 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1574705480282506, guid: 9e6377f4cae22eb4194f71c6e76c37b9, type: 3}
@@ -9336,6 +9337,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4208458315195486, guid: c96016c34e7be62488e588470988ef5b, type: 3}
   m_PrefabInstance: {fileID: 1780501044}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1165888770 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9059893134986822850, guid: dd6ea0f8546c4e648bd98b800a1c5875, type: 3}
+  m_PrefabInstance: {fileID: 4324586575708733298}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1167275858 stripped
 MonoBehaviour:
@@ -16445,12 +16451,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.11131266, y: 0.32182878, z: 0.042575292}
-  m_Center: {x: -0.000042655036, y: 0.10138163, z: -0.0073010437}
+  m_Size: {x: 0.11131266, y: 0.4933545, z: 0.042575292}
+  m_Center: {x: -0.0000426532, y: 0.18714614, z: -0.0073010093}
 --- !u!114 &8694195056383715731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16483,6 +16489,8 @@ MonoBehaviour:
   HP: 40
   animator: {fileID: 2841697146906176439}
   sword: {fileID: 8694195056383715729}
+  potionPrefab: {fileID: 3771452789413926460, guid: 32ff3346317945b4e8c151643d5a3ade, type: 3}
+  dropPoint: {fileID: 1165888770}
   healthBar: {fileID: 2019735240}
 --- !u!65 &8846265970484374393
 BoxCollider:

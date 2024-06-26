@@ -11,16 +11,28 @@ public class AttackSkeletonState : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        timer = 0;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         SkeletonScript skeletonController = animator.GetComponent<SkeletonScript>();
         sword = skeletonController.sword;
-        sword.GetComponent<Collider>().isTrigger = true;
+        sword.GetComponent<Collider>().isTrigger = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //sword.GetComponent<Collider>().isTrigger = true;
+        timer += Time.deltaTime;
+
+        if (timer > 0.1 && timer < 1)
+        {
+            sword.GetComponent<Collider>().isTrigger = true;
+        }
+        else if (timer > 1 && timer < 2)
+        {
+            sword.GetComponent<Collider>().isTrigger = false;
+        }
+        else if (timer > 2)
+            timer = 0;
 
         animator.transform.LookAt(new Vector3(player.position.x, animator.transform.position.y, player.position.z));
         float distance = Vector3.Distance(player.position, animator.transform.position);

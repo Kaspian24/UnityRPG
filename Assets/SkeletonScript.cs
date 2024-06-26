@@ -8,6 +8,9 @@ public class SkeletonScript : MonoBehaviour
     public Animator animator;
     public GameObject sword;
 
+    public GameObject potionPrefab;
+    public Transform dropPoint;
+
     public HealthBar healthBar;
 
     public void Start()
@@ -24,6 +27,8 @@ public class SkeletonScript : MonoBehaviour
 
         if (HP <= 0)
         {
+            DropPotion();
+
             if (randomNumber == 1)
             {
                 animator.SetTrigger("Die1");
@@ -39,5 +44,15 @@ public class SkeletonScript : MonoBehaviour
             GetComponent<Collider>().enabled = false;
             healthBar.gameObject.SetActive(false);
         }   
+    }
+
+    private void DropPotion()
+    {
+        int randomNumber = Random.Range(1, 4);
+        if (randomNumber == 1)
+        {
+            Debug.Log("Drop");
+            Instantiate(potionPrefab, dropPoint.position, Quaternion.identity);
+        }
     }
 }

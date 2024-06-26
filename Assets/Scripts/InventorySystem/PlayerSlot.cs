@@ -81,7 +81,7 @@ public class PlayerSlot : EquipmentSlot
     public void UnequipItem()
     {
         GameObject weapon = GameObject.FindGameObjectWithTag("PlayerHand");
-        if (weapon.transform.childCount != 0)
+        if (weapon.transform.childCount != 0 && Item.ItemType == ItemType.EquipHand)
         {
             Destroy(weapon.transform.GetChild(0).gameObject);
         }
