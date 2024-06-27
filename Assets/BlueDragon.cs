@@ -26,6 +26,7 @@ public class BlueDragon : MonoBehaviour
             GameEventsManager.Instance.questEvents.EnemyDeath("BlueDragon");
             GameEventsManager.Instance.playerEvents.ExpAdd(100);
             GetComponent<Collider>().enabled = false;
+            GetComponent<AudioSource>().enabled = false;
             healthBar.gameObject.SetActive(false);
         }
         else
