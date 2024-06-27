@@ -74,6 +74,7 @@ Jesteś prawdziwym bohaterem!
 
 == DialogSmok ==
 + udało mi się pokonać smoka
+Wspaniale!
 ~topicTalkedAbout("Szef", "Smok")
 ~disableTopic("Szef", "Smok")
 Dzięki tobie nasza wioska jest znacznie bezpieczniejsza.

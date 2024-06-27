@@ -337,19 +337,8 @@ public class GameModeManager : MonoBehaviour
             case GameMode.InventoryMenu:
                 SwitchToInventoryMenu();
                 break;
-            case GameMode.PauseMenu:
-                SwitchToGameplay();
-                break;
-            case GameMode.LoadMenu:
-                SwitchToGameplay();
-                break;
-            case GameMode.SaveMenu:
-                SwitchToGameplay();
-                break;
-            case GameMode.GameFinishedMessage:
-                SwitchToGameplay();
-                break;
             default:
+                SwitchToGameplay();
                 break;
         }
     }
