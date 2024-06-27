@@ -138,6 +138,7 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.Gameplay;
         Resume();
         TogglePanels(TogglablePanels.ToggleQuestTrackVisibility, TogglablePanels.ToggleMiniMap, TogglablePanels.ToggleUIBars);
@@ -150,6 +151,7 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.QuestMenu;
         Pause();
         TogglePanels(TogglablePanels.ToggleQuestMenu);
@@ -175,6 +177,7 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.Dialogue;
         Pause();
         TogglePanels(TogglablePanels.ToggleDialogue);
@@ -187,6 +190,7 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.InventoryMenu;
         Pause();
         TogglePanels(TogglablePanels.ToggleInventory, TogglablePanels.ToggleUIBars);
@@ -199,6 +203,7 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.LoadMenu;
         Pause();
         TogglePanels(TogglablePanels.ToggleLoadMenu);
@@ -211,6 +216,7 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.SaveMenu;
         Pause();
         TogglePanels(TogglablePanels.ToggleSaveMenu);
@@ -218,6 +224,7 @@ public class GameModeManager : MonoBehaviour
 
     private void SwitchToDeathMessage()
     {
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.Gameplay;
         Pause();
         Time.timeScale = 1f;
@@ -231,7 +238,10 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
-        lastGameMode = currentGameMode;
+        if (lastGameMode != GameMode.Dialogue)
+        {
+            lastGameMode = currentGameMode;
+        }
         currentGameMode = GameMode.GameFinishedMessage;
         Pause();
         TogglePanels(TogglablePanels.ToggleGameFinishedMessage);
@@ -244,6 +254,7 @@ public class GameModeManager : MonoBehaviour
             SwitchToDeathMessage();
             return;
         }
+        lastGameMode = currentGameMode;
         currentGameMode = GameMode.LevelUpMessage;
         Pause();
         TogglePanels(TogglablePanels.ToggleLevelUpMessage, TogglablePanels.ToggleUIBars);
@@ -267,7 +278,7 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
-    private void TogglePanel (TogglablePanels panel, bool state)
+    private void TogglePanel(TogglablePanels panel, bool state)
     {
         switch (panel)
         {
