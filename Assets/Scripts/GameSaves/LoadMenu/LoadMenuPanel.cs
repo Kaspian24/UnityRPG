@@ -1,10 +1,12 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controlls load menu panel.
+/// </summary>
 public class LoadMenuPanel : MonoBehaviour
 {
     public GameObject saveListPanel;
@@ -16,12 +18,19 @@ public class LoadMenuPanel : MonoBehaviour
 
     private string savesPath;
 
+    /// <summary>
+    /// Links go back button with function to switch to the last game mode. Gets saves path from save manager.
+    /// </summary>
     private void Awake()
     {
         savesPath = SaveManager.Instance.savesPath;
         backButton.onClick.AddListener(() => { GameModeManager.Instance.SwitchToLastGameMode(); });
     }
 
+    /// <summary>
+    /// Clears list of instatniated game objects.
+    /// </summary>
+    /// <param name="gameObjects">Game object list to clear.</param>
     private void ClearInstantiated(List<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)
@@ -31,6 +40,9 @@ public class LoadMenuPanel : MonoBehaviour
         gameObjects.Clear();
     }
 
+    /// <summary>
+    /// Reloads saves in load menu.
+    /// </summary>
     private void ReloadLoadMenu()
     {
         ClearInstantiated(instantiatedSaveListItems);
@@ -53,6 +65,9 @@ public class LoadMenuPanel : MonoBehaviour
         saveDataList.Clear();
     }
 
+    /// <summary>
+    /// Subscribes to events.
+    /// </summary>
     private void OnEnable()
     {
         ReloadLoadMenu();
@@ -60,6 +75,9 @@ public class LoadMenuPanel : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.OnReloadLoadMenu += ReloadLoadMenu;
     }
 
+    /// <summary>
+    /// Unsubscribes from events.
+    /// </summary>
     private void OnDisable()
     {
         ClearInstantiated(instantiatedSaveListItems);

@@ -4,6 +4,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manages save system.
+/// </summary>
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
@@ -23,6 +26,9 @@ public class SaveManager : MonoBehaviour
 
     private int menuSceneIndex = 0;
 
+    /// <summary>
+    /// Initializes singleton and prevents destruction of the game object on load.
+    /// </summary>
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -34,6 +40,12 @@ public class SaveManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    /// <summary>
+    /// Creates a save file.
+    /// </summary>
+    /// <param name="name">Save name.</param>
+    /// <param name="canOverride">Decides if save can be overwritten on name conflict.</param>
+    /// <returns>true if save was successfull, false otherwise.</returns>
     public bool Save(string name, bool canOverride)
     {
         Directory.CreateDirectory(savesPath);
@@ -58,6 +70,10 @@ public class SaveManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Loads save from a file.
+    /// </summary>
+    /// <param name="name">Save name.</param>
     public void Load(string name)
     {
         string path = Path.Combine(savesPath, name + ".json");
@@ -73,6 +89,10 @@ public class SaveManager : MonoBehaviour
         SceneManager.LoadScene(gameSceneIndex);
     }
 
+    /// <summary>
+    /// Deletes save file.
+    /// </summary>
+    /// <param name="name">Save name.</param>
     public void Delete(string name)
     {
         string path = Path.Combine(savesPath, name + ".json");
@@ -84,18 +104,29 @@ public class SaveManager : MonoBehaviour
         File.Delete(path);
     }
 
+    /// <summary>
+    /// Sets current save to an empty save and loads game scene.
+    /// </summary>
     public void NewGame()
     {
         currentSave = new SaveData();
         SceneManager.LoadScene(gameSceneIndex);
     }
 
+    /// <summary>
+    /// Loads main menu scene and unlocks cursor.
+    /// </summary>
     public void MainMenu()
     {
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(menuSceneIndex);
     }
 
+    /// <summary>
+    /// Sets player position after scene was loaded.
+    /// </summary>
+    /// <param name="scene">Loaded scene.</param>
+    /// <param name="mode">Load scene mode.</param>
     private void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex != gameSceneIndex)
@@ -112,11 +143,17 @@ public class SaveManager : MonoBehaviour
         GameModeManager.Instance.ForceResume();
     }
 
+    /// <summary>
+    /// Subscribes to events.
+    /// </summary>
     private void OnEnable()
     {
         SceneManager.sceneLoaded += SceneLoaded;
     }
 
+    /// <summary>
+    /// Unsubscribes to events.
+    /// </summary>
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= SceneLoaded;

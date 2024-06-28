@@ -2,6 +2,9 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class containing save data.
+/// </summary>
 [System.Serializable]
 public class SaveData
 {
@@ -28,6 +31,9 @@ public class SaveData
     [JsonIgnore]
     public bool enabled;
 
+    /// <summary>
+    /// Default constructor.
+    /// </summary>
     public SaveData()
     {
         saveName = string.Empty;
@@ -43,6 +49,19 @@ public class SaveData
         enabled = false;
     }
 
+    /// <summary>
+    /// Constructor with arguments.
+    /// </summary>
+    /// <param name="saveName">Name of the save file.</param>
+    /// <param name="questsDataDict">Quests data.</param>
+    /// <param name="playerControllerPosition">Player position.</param>
+    /// <param name="playerControllerRotation">Player rotation</param>
+    /// <param name="currentlyTrackedQuest">Tracked quest.</param>
+    /// <param name="items">Player items.</param>
+    /// <param name="equippedItems">Player equipped items.</param>
+    /// <param name="stats">Player stats.</param>
+    /// <param name="enabledTopics">Enabled dialogue topics.</param>
+    /// <param name="saveDate">Date of the save in binary.</param>
     public SaveData(string saveName, Dictionary<string, QuestData> questsDataDict, Vector3 playerControllerPosition, Quaternion playerControllerRotation, string currentlyTrackedQuest, List<KeyValuePair<string, int>> items, List<KeyValuePair<string, string>> equippedItems, Dictionary<string, int> stats, HashSet<(string, string)> enabledTopics, long saveDate)
     {
         this.saveName = saveName;

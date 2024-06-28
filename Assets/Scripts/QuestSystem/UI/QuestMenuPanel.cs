@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controlls quest menu panel.
+/// </summary>
 public class QuestMenuPanel : MonoBehaviour
 {
     public GameObject questListItemPrefab;
@@ -16,6 +19,9 @@ public class QuestMenuPanel : MonoBehaviour
     private List<GameObject> instantiatedQuestListItems = new List<GameObject>();
     private List<GameObject> instantiatedTaskListItems = new List<GameObject>();
 
+    /// <summary>
+    /// Displays all active (not secret) or completed quests sorted by last change. Selects the first one for description panel.
+    /// </summary>
     private void OnEnable()
     {
         List<Quest> questList = QuestManager.Instance.GetQuestsSortedByLastChanged();
@@ -54,6 +60,10 @@ public class QuestMenuPanel : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Displays quest description,
+    /// </summary>
+    /// <param name="questId">Id of the quest whose description will be displayed.</param>
     private void SelectQuest(string questId)
     {
         ClearInstantiated(instantiatedTaskListItems);
@@ -76,6 +86,10 @@ public class QuestMenuPanel : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clears list of instatniated game objects.
+    /// </summary>
+    /// <param name="gameObjects">Game object list to clear.</param>
     private void ClearInstantiated(List<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)
@@ -84,6 +98,10 @@ public class QuestMenuPanel : MonoBehaviour
         }
         gameObjects.Clear();
     }
+
+    /// <summary>
+    /// Clears instantiated quests and tasks descriptions.
+    /// </summary>
     private void OnDisable()
     {
         ClearInstantiated(instantiatedQuestListItems);

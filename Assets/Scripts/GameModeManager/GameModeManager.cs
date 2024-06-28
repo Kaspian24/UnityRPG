@@ -2,8 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+/// <summary>
+/// Manages game modes.
+/// </summary>
 public class GameModeManager : MonoBehaviour
 {
+    /// <summary>
+    /// Enumeration representing different togglable panels.
+    /// </summary>
     private enum TogglablePanels
     {
         ToggleQuestMenu,
@@ -35,6 +42,9 @@ public class GameModeManager : MonoBehaviour
 
     private bool playerAlive = true;
 
+    /// <summary>
+    /// Initializes singleton.
+    /// </summary>
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -45,11 +55,17 @@ public class GameModeManager : MonoBehaviour
         Instance = this;
     }
 
+    /// <summary>
+    /// Changes time scale to 1f.
+    /// </summary>
     private void Start()
     {
         Time.timeScale = 1f;
     }
 
+    /// <summary>
+    /// Reacts on key inputs depending on game mode.
+    /// </summary>
     private void Update()
     {
         switch (currentGameMode)
@@ -131,6 +147,9 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Switches to gameplay mode if player is alive.
+    /// </summary>
     private void SwitchToGameplay()
     {
         if (!playerAlive)
@@ -144,6 +163,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleQuestTrackVisibility, TogglablePanels.ToggleMiniMap, TogglablePanels.ToggleUIBars);
     }
 
+    /// <summary>
+    /// Switches to quest menu mode if player is alive.
+    /// </summary>
     private void SwitchToQuestMenu()
     {
         if (!playerAlive)
@@ -157,6 +179,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleQuestMenu);
     }
 
+    /// <summary>
+    /// Switches to pause menu mode if player is alive.
+    /// </summary>
     private void SwitchToPauseMenu()
     {
         if (!playerAlive)
@@ -170,6 +195,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.TogglePauseMenu);
     }
 
+    /// <summary>
+    /// Switches to dialogue mode if player is alive.
+    /// </summary>
     private void SwitchToDialogue()
     {
         if (!playerAlive)
@@ -183,6 +211,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleDialogue);
     }
 
+    /// <summary>
+    /// Switches to inventory mode if player is alive.
+    /// </summary>
     private void SwitchToInventoryMenu()
     {
         if (!playerAlive)
@@ -196,6 +227,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleInventory, TogglablePanels.ToggleUIBars);
     }
 
+    /// <summary>
+    /// Switches to load menu mode if player is alive.
+    /// </summary>
     private void SwitchToLoadMenu()
     {
         if (!playerAlive)
@@ -209,6 +243,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleLoadMenu);
     }
 
+    /// <summary>
+    /// Switches to save menu mode if player is alive.
+    /// </summary>
     private void SwitchToSaveMenu()
     {
         if (!playerAlive)
@@ -222,6 +259,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleSaveMenu);
     }
 
+    /// <summary>
+    /// Switches to death message mode.
+    /// </summary>
     private void SwitchToDeathMessage()
     {
         lastGameMode = currentGameMode;
@@ -231,6 +271,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleDeathMessage);
     }
 
+    /// <summary>
+    /// Switches to game finished message mode if player is alive. If the last mode was dialogue it doesn't overwrite it.
+    /// </summary>
     private void SwitchToGameFinishedMessage()
     {
         if (!playerAlive)
@@ -247,6 +290,9 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleGameFinishedMessage);
     }
 
+    /// <summary>
+    /// Switches to level up message mode if player is alive.
+    /// </summary>
     private void SwitchToLevelUpMessage()
     {
         if (!playerAlive)
@@ -260,6 +306,10 @@ public class GameModeManager : MonoBehaviour
         TogglePanels(TogglablePanels.ToggleLevelUpMessage, TogglablePanels.ToggleUIBars);
     }
 
+    /// <summary>
+    /// Toggles panels on or off.
+    /// </summary>
+    /// <param name="panels">Panels to turn on.</param>
     private void TogglePanels(params TogglablePanels[] panels)
     {
         var allPanels = Enum.GetValues(typeof(TogglablePanels)).Cast<TogglablePanels>();
@@ -278,6 +328,11 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Toggles panel on or off.
+    /// </summary>
+    /// <param name="panel">Panel that will change state.</param>
+    /// <param name="state">New state of the panel. True for show, false for hide.</param>
     private void TogglePanel(TogglablePanels panel, bool state)
     {
         switch (panel)
@@ -323,6 +378,9 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Switches to last game mode if the player is alive. To prevent loops for most game modes it will switch to gameplay mode instead.
+    /// </summary>
     public void SwitchToLastGameMode()
     {
         if (!playerAlive)
@@ -354,6 +412,10 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Toggles dialogue panel.
+    /// </summary>
+    /// <param name="state">State of the panel. True for show, false for hide.</param>
     private void ToggleDialogue(bool state)
     {
         if (state)
@@ -366,6 +428,10 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Toggles load menu panel.
+    /// </summary>
+    /// <param name="state">State of the panel. True for show, false for hide.</param>
     private void ToggleLoadMenu(bool state)
     {
         if (state)
@@ -378,6 +444,10 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Toggles save menu panel.
+    /// </summary>
+    /// <param name="state">State of the panel. True for show, false for hide.</param>
     private void ToggleSaveMenu(bool state)
     {
         if (state)
@@ -390,6 +460,10 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Toggles game finished message panel.
+    /// </summary>
+    /// <param name="state">State of the panel. True for show, false for hide.</param>
     private void ToggleGameFinishedMessage(bool state)
     {
         if (state)
@@ -402,6 +476,10 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Toggles level up message panel.
+    /// </summary>
+    /// <param name="state">State of the panel. True for show, false for hide.</param>
     private void ToggleLevelUpMessage(bool state)
     {
         if (state)
@@ -414,11 +492,17 @@ public class GameModeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resumes game without checking for current game mode.
+    /// </summary>
     public void ForceResume()
     {
         Resume();
     }
 
+    /// <summary>
+    /// Pauses the game.
+    /// </summary>
     private void Pause()
     {
         Time.timeScale = 0f;
@@ -428,6 +512,9 @@ public class GameModeManager : MonoBehaviour
         playerController.GetComponent<FirstPersonController>().enabled = false;
     }
 
+    /// <summary>
+    /// Resumes the game.
+    /// </summary>
     private void Resume()
     {
         Time.timeScale = 1f;
@@ -436,12 +523,18 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.ToggleCrosshair(true);
     }
 
+    /// <summary>
+    /// Reacts to player death.
+    /// </summary>
     private void Death()
     {
         playerAlive = false;
         SwitchToDeathMessage();
     }
 
+    /// <summary>
+    /// Subscribes to events.
+    /// </summary>
     private void OnEnable()
     {
         GameEventsManager.Instance.gameModeEvents.OnDialogueStartEnd += ToggleDialogue;
@@ -452,6 +545,9 @@ public class GameModeManager : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.OnLevelUpMessageOnOff += ToggleLevelUpMessage;
     }
 
+    /// <summary>
+    /// Unsubscribes to events.
+    /// </summary>
     private void OnDisable()
     {
         GameEventsManager.Instance.gameModeEvents.OnDialogueStartEnd -= ToggleDialogue;

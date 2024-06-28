@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controlls death messages and calls scene change function.
+/// </summary>
 public class DeathMessagePanel : MonoBehaviour
 {
     public float fadeDuration = 3.0f;
@@ -11,16 +14,26 @@ public class DeathMessagePanel : MonoBehaviour
 
     private TMP_Text text;
 
+    /// <summary>
+    /// Initializes private variables.
+    /// </summary>
     private void Awake()
     {
         panelImage = GetComponent<Image>();
         text = GetComponentInChildren<TMP_Text>();
     }
+    /// <summary>
+    /// Starts Death courutine.
+    /// </summary>
     private void OnEnable()
     {
         StartCoroutine(Death());
     }
 
+    /// <summary>
+    /// Handles fade-in effect, calls scene switching function at the end.
+    /// </summary>
+    /// <returns>Ienumerator for a courutine.</returns>
     private IEnumerator Death()
     {
 

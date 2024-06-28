@@ -1,6 +1,9 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
+/// <summary>
+/// TaskTalk data.
+/// </summary>
 [System.Serializable]
 public class TaskTalkData
 {
@@ -10,11 +13,20 @@ public class TaskTalkData
     public string displayedNameInSentence;
     public string displayedTopicInSentence;
 }
+
+/// <summary>
+/// Talk to npc task type.
+/// </summary>
 public class TaskTalk : Task
 {
     public TaskTalkData[] npcsToTalkTo;
     private bool[] npcsTalkedTo;
 
+    /// <summary>
+    /// Toggles npc talked to if the npc and topic name matches with one from the array.
+    /// </summary>
+    /// <param name="npcName">Name of the npc</param>
+    /// <param name="conversationTopic">Conversation topic</param>
     private void TopicTalkedAbout(string npcName, string conversationTopic)
     {
         for (int i = 0; i < npcsToTalkTo.Length; i++)
@@ -28,6 +40,9 @@ public class TaskTalk : Task
         }
     }
 
+    /// <summary>
+    /// Initializes npcsTalkedTo array, overwrites not specified displayed npc and topic names with defaults.
+    /// </summary>
     private void Awake()
     {
         npcsTalkedTo = new bool[npcsToTalkTo.Length];
@@ -44,6 +59,9 @@ public class TaskTalk : Task
         }
     }
 
+    /// <summary>
+    /// Enables not yet talked topics. Calls update state on start.
+    /// </summary>
     private void Start()
     {
         for (int i = 0; i < npcsToTalkTo.Length; i++)
@@ -57,14 +75,26 @@ public class TaskTalk : Task
         }
         UpdateState();
     }
+
+    /// <summary>
+    /// Subscribes to topic talked about event.
+    /// </summary>
     private void OnEnable()
     {
         GameEventsManager.Instance.dialogueEvents.OnTopicTalkedAbout += TopicTalkedAbout;
     }
+
+    /// <summary>
+    /// Unsubscribes from topic talked about event.
+    /// </summary>
     private void OnDisable()
     {
         GameEventsManager.Instance.dialogueEvents.OnTopicTalkedAbout -= TopicTalkedAbout;
     }
+
+    /// <summary>
+    /// Updates task state.
+    /// </summary>
     private void UpdateState()
     {
         string state = JsonConvert.SerializeObject(npcsTalkedTo);
@@ -87,6 +117,8 @@ public class TaskTalk : Task
             Complete();
         }
     }
+
+    /// <inheritdoc/>
     protected override void SetTaskState(string state)
     {
         npcsTalkedTo = JsonConvert.DeserializeObject<bool[]>(state);

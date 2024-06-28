@@ -1,11 +1,13 @@
 using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controlls load menu panel.
+/// </summary>
 public class SaveMenuPanel : MonoBehaviour
 {
     public TMP_InputField newSaveInput;
@@ -20,6 +22,9 @@ public class SaveMenuPanel : MonoBehaviour
     private string savesPath;
     private Color saveInputDefaultColor;
 
+    /// <summary>
+    /// Links go buttons with functions. Gets saves path from save manager.
+    /// </summary>
     private void Awake()
     {
         savesPath = SaveManager.Instance.savesPath;
@@ -39,6 +44,10 @@ public class SaveMenuPanel : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// Clears list of instatniated game objects.
+    /// </summary>
+    /// <param name="gameObjects">Game object list to clear.</param>
     private void ClearInstantiated(List<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)
@@ -48,6 +57,9 @@ public class SaveMenuPanel : MonoBehaviour
         gameObjects.Clear();
     }
 
+    /// <summary>
+    /// Reloads saves in save menu.
+    /// </summary>
     private void ReloadSaveMenu()
     {
         ClearInstantiated(instantiatedSaveListItems);
@@ -70,6 +82,9 @@ public class SaveMenuPanel : MonoBehaviour
         saveDataList.Clear();
     }
 
+    /// <summary>
+    /// Subscribes to events.
+    /// </summary>
     private void OnEnable()
     {
         ReloadSaveMenu();
@@ -77,6 +92,9 @@ public class SaveMenuPanel : MonoBehaviour
         GameEventsManager.Instance.gameModeEvents.OnReloadSaveMenu += ReloadSaveMenu;
     }
 
+    /// <summary>
+    /// Unsubscribes from events.
+    /// </summary>
     private void OnDisable()
     {
         ClearInstantiated(instantiatedSaveListItems);

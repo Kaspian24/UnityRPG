@@ -1,3 +1,6 @@
+/// <summary>
+/// Enumeration representing different game modes.
+/// </summary>
 public enum GameMode
 {
     Gameplay,

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Manages events.
+/// </summary>
 public class GameEventsManager : MonoBehaviour
 {
     public static GameEventsManager Instance { get; private set; }
@@ -12,6 +15,9 @@ public class GameEventsManager : MonoBehaviour
 
     public PlayerEvents playerEvents;
 
+    /// <summary>
+    /// Singleton initialization.
+    /// </summary>
     private void Awake()
     {
         if (Instance != null && Instance != this)

@@ -1,3 +1,6 @@
+/// <summary>
+/// Enumeration representing quest states.
+/// </summary>
 public enum QuestState
 {
     CannotStart,

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Reward item data.
+/// </summary>
 [System.Serializable]
 public class RewardItemData
 {
@@ -7,6 +10,9 @@ public class RewardItemData
     public SceneItem sceneItem;
 }
 
+/// <summary>
+/// Anti requirements data.
+/// </summary>
 [System.Serializable]
 public class AntiRequirementData
 {
@@ -14,6 +20,9 @@ public class AntiRequirementData
     public QuestState state;
 }
 
+/// <summary>
+/// Static quest info Scriptable Object.
+/// </summary>
 [CreateAssetMenu(fileName = "QuestStaticSO", menuName = "Quests/QuestStaticSO", order = 1)]
 public class QuestStaticSO : ScriptableObject
 {
@@ -38,7 +47,10 @@ public class QuestStaticSO : ScriptableObject
     public int experience;
     public RewardItemData[] items;
 
-    private void OnValidate() // Enforces that the id and file name is the same as Id
+    /// <summary>
+    /// Enforces that the id and file name is the same as Id.
+    /// </summary>
+    private void OnValidate()
     {
 #if UNITY_EDITOR
         Id = this.name;

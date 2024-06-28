@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Controlls finished/started quest panel.
+/// </summary>
 public class FinishedStartedQuestPanel : MonoBehaviour
 {
     public TMP_Text questFinishedStartedMessage;
@@ -12,6 +15,10 @@ public class FinishedStartedQuestPanel : MonoBehaviour
 
     bool currentlyDisplayed;
 
+    /// <summary>
+    /// Adds quest to queue if it was completed or started.
+    /// </summary>
+    /// <param name="quest"></param>
     public void AddFinishedStartedQuest(Quest quest)
     {
         if (!(quest.state == QuestState.Completed || (quest.state == QuestState.Active && !quest.staticData.secret)))
@@ -29,6 +36,9 @@ public class FinishedStartedQuestPanel : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Displays the panel with message.
+    /// </summary>
     private void DisplayFinishedStartedMessage()
     {
         currentlyDisplayed = true;
@@ -49,6 +59,10 @@ public class FinishedStartedQuestPanel : MonoBehaviour
         StartCoroutine(FinishDisplaying());
     }
 
+    /// <summary>
+    /// Disables panel. Calls DisplayFinishedStartedMessage again if there are quests in the queue.
+    /// </summary>
+    /// <returns>Ienumerator for a courutine.</returns>
     private IEnumerator FinishDisplaying()
     {
         yield return new WaitForSecondsRealtime(2.0f);

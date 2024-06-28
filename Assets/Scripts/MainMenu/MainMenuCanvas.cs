@@ -4,6 +4,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages main menu canvas.
+/// </summary>
 public class MainMenuCanvas : MonoBehaviour
 {
     public GameObject MainMenuPanel;
@@ -27,6 +30,9 @@ public class MainMenuCanvas : MonoBehaviour
 
     private string savesPath;
 
+    /// <summary>
+    /// Sets default active panels. Adds listeners to buttons.
+    /// </summary>
     private void Awake()
     {
         MainMenuPanel.SetActive(true);
@@ -40,6 +46,10 @@ public class MainMenuCanvas : MonoBehaviour
         savesPath = SaveManager.Instance.savesPath;
     }
 
+    /// <summary>
+    /// Clears list of instatniated game objects.
+    /// </summary>
+    /// <param name="gameObjects">Game object list to clear.</param>
     private void ClearInstantiated(List<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)
@@ -49,6 +59,9 @@ public class MainMenuCanvas : MonoBehaviour
         gameObjects.Clear();
     }
 
+    /// <summary>
+    /// Reloads saves in load menu.
+    /// </summary>
     private void ReloadLoadMenu()
     {
         ClearInstantiated(instantiatedSaveListItems);
@@ -71,11 +84,17 @@ public class MainMenuCanvas : MonoBehaviour
         saveDataList.Clear();
     }
 
+    /// <summary>
+    /// Subscribes to events.
+    /// </summary>
     private void OnEnable()
     {
         GameEventsManager.Instance.gameModeEvents.OnReloadLoadMenu += ReloadLoadMenu;
     }
 
+    /// <summary>
+    /// Unsubscribes from events.
+    /// </summary>
     private void OnDisable()
     {
         GameEventsManager.Instance.gameModeEvents.OnReloadLoadMenu -= ReloadLoadMenu;

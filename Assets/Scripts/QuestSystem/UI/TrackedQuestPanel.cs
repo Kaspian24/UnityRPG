@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Controlls tracked quest panel.
+/// </summary>
 public class TrackedQuestPanel : MonoBehaviour
 {
     public TMP_Text questTitle;
@@ -11,6 +14,10 @@ public class TrackedQuestPanel : MonoBehaviour
     private List<GameObject> instantiatedTaskListItems = new List<GameObject>();
 
     private string questId = "";
+
+    /// <summary>
+    /// Updates tracked quest info. If there's no currently tracked quest or it has been finished - searches for last changed active (not secret) quest.
+    /// </summary>
     public void UpdateTracked()
     {
         ClearInstantiated(instantiatedTaskListItems);
@@ -57,17 +64,29 @@ public class TrackedQuestPanel : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets tracked quest. Calls UpdateTracked.
+    /// </summary>
+    /// <param name="questId"></param>
     public void TrackQuest(string questId)
     {
         this.questId = questId;
         UpdateTracked();
     }
 
+    /// <summary>
+    /// Getter for currently tracked quest.
+    /// </summary>
+    /// <returns>Id of the currently tracked quest.</returns>
     public string GetCurrentlyTrackedQuest()
     {
         return this.questId;
     }
 
+    /// <summary>
+    /// Clears list of instatniated game objects.
+    /// </summary>
+    /// <param name="gameObjects">Game object list to clear.</param>
     private void ClearInstantiated(List<GameObject> gameObjects)
     {
         foreach (GameObject gameObject in gameObjects)
