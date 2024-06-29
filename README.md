@@ -1,1 +1,2 @@
 # UnityRPG
+W celu uruchomienia projektu należy zainstalować Unity Hub. Następnie należy wybrać opcję Add i podać ścieżkę do projektu. Projekt powstał w wersji edytora Unity 2022.3.22f1 i w tej wersji powinien być uruchomiony w celu uniknięcia problemów w działaniu.
