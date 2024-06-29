@@ -1,11 +1,18 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Class that manages slots with equipped items
+/// </summary>
 public class PlayerSlot : EquipmentSlot
 {
     //public GameObject weapon;
     public Transform weaponPoint;
 
+
+    /// <summary>
+    /// Deletes or adds and object if dragged to or away but not added to another slot
+    /// </summary>
     private void Update()
     {
         if (transform.childCount == 0 && IsFull)
@@ -23,6 +30,7 @@ public class PlayerSlot : EquipmentSlot
         }
     }
 
+    /// <inheritdoc/>
     public override void OnDrop(PointerEventData eventData)
     {
 
@@ -45,6 +53,9 @@ public class PlayerSlot : EquipmentSlot
 
     }
 
+    /// <summary>
+    /// Drops item on the ground and unequips it
+    /// </summary>
     public override void DropItem()
     {
         InventoryManager.UpdateStats(Item, false);
@@ -53,8 +64,13 @@ public class PlayerSlot : EquipmentSlot
 
     }
 
+    /// <summary>
+    /// Creates a weapon object and puts it in player's hand
+    /// </summary>
     public void EquipItem()
     {
+        if (TypeList[0] != ItemType.EquipHand)
+            return;
         Transform weaponPoint = GameObject.FindGameObjectWithTag("PlayerHand").GetComponent<Transform>();
 
         // Utwórz instancjê prefabrykatu
@@ -78,8 +94,14 @@ public class PlayerSlot : EquipmentSlot
         }
     }
 
+    /// <summary>
+    /// Deletes weapon object from player's hand
+    /// </summary>
     public void UnequipItem()
     {
+        if (TypeList[0] != ItemType.EquipHand)
+            return;
+
         GameObject weapon = GameObject.FindGameObjectWithTag("PlayerHand");
         if (weapon.transform.childCount != 0 && Item.ItemType == ItemType.EquipHand)
         {

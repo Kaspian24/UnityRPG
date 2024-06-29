@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class that manages equipment slots in equipment tab
+/// </summary>
 public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
     [SerializeField]
@@ -27,11 +30,17 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     public Item Item { get => item; set => item = value; }
     public ItemType[] TypeList { get => typeList; set => typeList = value; }
 
+    /// <summary>
+    /// Finds the inventory manager on start
+    /// </summary>
     private void Start()
     {
         InventoryManager = GameObject.FindGameObjectWithTag("InventoryCanvas").GetComponent<InventoryManager>();
     }
 
+    /// <summary>
+    /// Deletes or adds and object if dragged to or away but not added to another slot
+    /// </summary>
     private void Update()
     {
         if(transform.childCount == 0 && IsFull)
@@ -45,6 +54,10 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    /// <summary>
+    /// Adds an item reference to the slot
+    /// </summary>
+    /// <param name="item"></param>
     public virtual void AddItem(Item item)
     {
         this.item = item;
@@ -54,6 +67,9 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 
     }
 
+    /// <summary>
+    /// Deletes item reference from the slot
+    /// </summary>
     public virtual void DeleteItem()
     {
         this.isFull = false;
@@ -61,6 +77,10 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         this.itemPrefab = null;
     }
 
+    /// <summary>
+    /// Gets the reference to item when it's put in the slot
+    /// </summary>
+    /// <param name="eventData"></param>
     public virtual void OnDrop(PointerEventData eventData)
     {
         if (!isFull)
@@ -80,6 +100,9 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    /// <summary>
+    /// Drops item on the ground
+    /// </summary>
     public virtual void DropItem()
     {
         //itemPrefab.GetComponent<DraggableItem>().Item.copyItem(this.Item);
@@ -91,16 +114,28 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    /// <summary>
+    /// Shows description of the item
+    /// </summary>
+    /// <param name="item"></param>
     public void ShowDescription(Item item)
     {
         InventoryManager.showDescription(item);
     }
 
+    /// <summary>
+    /// Closes the description window
+    /// </summary>
     public void CloseDescription()
     {
         InventoryManager.CloseDescription();
     }
 
+    /// <summary>
+    /// Checks if the item can be put in the slot
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public bool CheckTypeList(Item item)
     {
         foreach(ItemType type in typeList)
@@ -113,6 +148,10 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         return false;
     }
 
+    /// <summary>
+    /// Manages mouse clicks
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
         CloseDescription();

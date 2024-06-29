@@ -6,9 +6,13 @@ using UnityEngine.EventSystems;
 using TMPro;
 using Unity.VisualScripting;
 
+/// <summary>
+/// Manages the behaviour of draggable item object in inventory
+/// </summary>
 [System.Serializable]
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+
     public Transform parentAfterDrag;
     [SerializeField]
     private Image image;
@@ -19,6 +23,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Item Item { get => item; set => item = value; }
     public Image Image { get => image; set => image = value; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrag = transform.parent;
@@ -27,17 +35,29 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Image.raycastTarget = false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = Input.mousePosition;
     }
 
+    /// <summary>
+    /// Sets a slot as parent
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData)
     {
         Image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
     }
 
+    /// <summary>
+    /// Manages mouse button clicks
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
@@ -54,6 +74,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
+    /// <summary>
+    /// Opens description window with name and description of item
+    /// </summary>
     private void OnLeftCLick()
     {
         EquipmentSlot slot;
@@ -63,6 +86,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
+    /// <summary>
+    /// Uses item
+    /// </summary>
     private void OnRightClick()
     {
         InventorySlot slot;
@@ -82,6 +108,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
+    /// <summary>
+    /// Drops item on the ground
+    /// </summary>
     private void OnMiddleClick()
     {
         if (this.Item.ItemType == ItemType.KeyItem)

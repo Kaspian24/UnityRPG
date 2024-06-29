@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Item types
+/// </summary>
 public enum ItemType
 { 
     None,
@@ -15,6 +18,10 @@ public enum ItemType
     EquipHand,
     KeyItem,
 }
+
+/// <summary>
+/// Class containing item data
+/// </summary>
 [Serializable]
 public class Item
 {
@@ -62,6 +69,11 @@ public class Item
     public int MAG { get => mag; set => mag = value; }
     public int DEF { get => def; set => def = value; }
 
+
+    /// <summary>
+    /// Copies attributes from different item
+    /// </summary>
+    /// <param name="item"></param>
     public void copyItem(Item item)
     {
         this.hp = item.HP;
@@ -77,6 +89,10 @@ public class Item
         this.description = String.Copy(item.Description);
     }
 
+    /// <summary>
+    /// Creates a string with item attributes
+    /// </summary>
+    /// <returns> String with item attributes</returns>
     public string PrintStats()
     {
         string returnedStats = "";
