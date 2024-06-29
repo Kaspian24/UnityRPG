@@ -21,6 +21,9 @@ interface IInteractable
     public void Interact();
 }
 
+/// <summary>
+/// Controller script for the first-person player character.
+/// </summary>
 public class FirstPersonController : MonoBehaviour
 {
 
@@ -229,6 +232,16 @@ public class FirstPersonController : MonoBehaviour
         #endregion
     }
 
+    /// <summary>
+    /// Updates player stats and UI elements.
+    /// </summary>
+    /// <param name="hp">Current health points.</param>
+    /// <param name="maxHp">Maximum health points.</param>
+    /// <param name="mp">Current mana points.</param>
+    /// <param name="maxMp">Maximum mana points.</param>
+    /// <param name="str">Strength stat.</param>
+    /// <param name="mag">Magic stat.</param>
+    /// <param name="def">Defense stat.</param>
     public void UpdateStats(int hp, int maxHp, int mp, int maxMp, int str, int mag, int def)
     {
         HP = hp;
@@ -246,16 +259,28 @@ public class FirstPersonController : MonoBehaviour
         mannaBar.setHealth(MP);
     }
 
+    /// <summary>
+    /// Returns the current strength stat.
+    /// </summary>
+    /// <returns>Current strength stat.</returns>
     public int getStrenght()
     {
         return STR;
     }
 
+    /// <summary>
+    /// Returns the current magic stat.
+    /// </summary>
+    /// <returns>Current magic stat.</returns>
     public int getMagic()
     {
         return MAG;
     }
 
+    /// <summary>
+    /// Returns the current defense stat divided by 10.
+    /// </summary>
+    /// <returns>Current defense stat divided by 10.</returns>
     public int getDefense()
     {
         return DEF/10;
@@ -687,6 +712,10 @@ public class FirstPersonController : MonoBehaviour
 
     string currentAnimationState;
 
+    /// <summary>
+    /// Changes the current animation state.
+    /// </summary>
+    /// <param name="newState">Name of the new animation state.</param>
     public void ChangeAnimationState(string newState)
     {
         // STOP THE SAME ANIMATION FROM INTERRUPTING WITH ITSELF //
@@ -697,6 +726,9 @@ public class FirstPersonController : MonoBehaviour
         animator.CrossFadeInFixedTime(currentAnimationState, 0.2f);
     }
 
+    /// <summary>
+    /// Sets animations based on player's current state.
+    /// </summary>
     void SetAnimations()
     {
         // If player is not attacking
@@ -740,7 +772,10 @@ public class FirstPersonController : MonoBehaviour
     private bool spellReady = false;
     bool attacking = false;
     bool readyToAttack = true;
- 
+
+    /// <summary>
+    /// Initiates the attack sequence.
+    /// </summary>
     public void Attack()
     {
         if (!readyToAttack || attacking || isTakingDamage) return;
@@ -758,12 +793,12 @@ public class FirstPersonController : MonoBehaviour
         Invoke(nameof(ResetAttack), 1.4f);
         Invoke(nameof(AttackRaycast), attackDelay);
 
-        //audioSource.pitch = Random.Range(0.9f, 1.1f);
-        //audioSource.PlayOneShot(swordSwing);
-
         ChangeAnimationState(ATTACK1);
     }
 
+    /// <summary>
+    /// Initiates casting a spell.
+    /// </summary>
     private void CastSpell()
     {
         if (Time.time < lastSpellTime + spellCooldown) return;
@@ -781,14 +816,15 @@ public class FirstPersonController : MonoBehaviour
         Rigidbody spellRb = spell.GetComponent<Rigidbody>();
         if (spellRb != null)
         {
-            spellRb.isKinematic = true; // Ustaw jako kinematyczny
+            spellRb.isKinematic = true;
             spellRb.detectCollisions = false;
         }
         ChangeAnimationState(CASTSPELL);
-
-        //Invoke(nameof(ResetAttack), attackSpeed); // Upewnij się, że ResetAttack przywróci domyślne stany
     }
 
+    /// <summary>
+    /// Initiates throwing a spell.
+    /// </summary>
     private void ThrowSpell()
     {
         if (Time.time < lastThrowSpellTime + throwSpellCooldown) return;
@@ -816,9 +852,8 @@ public class FirstPersonController : MonoBehaviour
 
         if (spellRb != null)
         {
-            spellRb.isKinematic = false; // Ustaw jako nie-kinematyczny
+            spellRb.isKinematic = false;
             spellRb.detectCollisions = true;
-            //spellRb.AddForce(transform.forward * spellDistance, ForceMode.Impulse);
             spellRb.velocity = (destination - spellPoint.position).normalized * spellDistance;
         }
         spellDistance = 5;
@@ -827,6 +862,9 @@ public class FirstPersonController : MonoBehaviour
         Invoke(nameof(ResetAttack), 1f);
     }
 
+    /// <summary>
+    /// Resets the attack state after an attack is completed.
+    /// </summary>
     void ResetAttack()
     {
         spellReady = false;
@@ -837,6 +875,10 @@ public class FirstPersonController : MonoBehaviour
             sword.GetComponent<Collider>().enabled = false;
     }
 
+    /// <summary>
+    /// Handles player taking damage.
+    /// </summary>
+    /// <param name="damage">Amount of damage to take.</param>
     public void TakeDamage(int damage)
     {
         isTakingDamage = true;
@@ -862,6 +904,9 @@ public class FirstPersonController : MonoBehaviour
         Invoke(nameof(ResetDamage), 0.7f);
     }
 
+    /// <summary>
+    /// Resets player state after taking damage.
+    /// </summary>
     void ResetDamage()
     {
         walkSpeed = 5f;
@@ -869,22 +914,23 @@ public class FirstPersonController : MonoBehaviour
         isTakingDamage = false;
     }
 
+    /// <summary>
+    /// Performs a raycast to detect targets within attack range.
+    /// </summary>
     void AttackRaycast()
     {
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
         {
             HitTarget(hit.point);
-
-            //if (hit.transform.TryGetComponent<Actor>(out Actor T))
-            //{ T.TakeDamage(attackDamage); }
         }
     }
 
+    /// <summary>
+    /// Spawns a hit effect at the given position.
+    /// </summary>
+    /// <param name="pos">Position where the hit effect should spawn.</param>
     void HitTarget(Vector3 pos)
     {
-        //audioSource.pitch = 1;
-        //audioSource.PlayOneShot(hitSound);
-
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
     }

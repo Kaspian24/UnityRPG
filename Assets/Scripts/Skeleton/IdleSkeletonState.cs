@@ -2,54 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackSkeletonState : StateMachineBehaviour
+/// <summary>
+/// Controls the idle state behavior of a skeleton enemy.
+/// </summary>
+public class IdleSkeletonState : StateMachineBehaviour
 {
-    float timer;
     Transform player;
-    GameObject sword;
 
+    /// <summary>
+    /// Initializes the player reference when the state is entered.
+    /// </summary>
+    /// <param name="animator">The Animator component associated with the skeleton.</param>
+    /// <param name="stateInfo">Current state information.</param>
+    /// <param name="layerIndex">Layer index.</param>
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timer = 0;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        SkeletonScript skeletonController = animator.GetComponent<SkeletonScript>();
-        sword = skeletonController.sword;
-        sword.GetComponent<Collider>().isTrigger = false;
     }
 
+    /// <summary>
+    /// Checks the distance to the player and transitions to chase state if within range.
+    /// </summary>
+    /// <param name="animator">The Animator component associated with the skeleton.</param>
+    /// <param name="stateInfo">Current state information.</param>
+    /// <param name="layerIndex">Layer index.</param>
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timer += Time.deltaTime;
-
-        if (timer > 0.1 && timer < 1)
-        {
-            sword.GetComponent<Collider>().isTrigger = true;
-        }
-        else if (timer > 1 && timer < 2)
-        {
-            sword.GetComponent<Collider>().isTrigger = false;
-        }
-        else if (timer > 2)
-            timer = 0;
-
-        animator.transform.LookAt(new Vector3(player.position.x, animator.transform.position.y, player.position.z));
         float distance = Vector3.Distance(player.position, animator.transform.position);
 
-        if (distance > 3)
+        if (distance < 20)
         {
-            animator.SetBool("isAttacking1", false);
-            animator.SetBool("isAttacking2", false);
+            animator.SetBool("isChasing", true);
         }
-
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {   
-        sword.GetComponent<Collider>().isTrigger = false;
-    }
+    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

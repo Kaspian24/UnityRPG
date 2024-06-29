@@ -1,18 +1,26 @@
 using UnityEngine;
 
+/// <summary>
+/// Spawns skeletons around the player within a specified distance.
+/// </summary>
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public float spawnDistance = 100.0f;
     float timer;
-
     private Transform playerTransform;
+
+    /// <summary>
+    /// Initializes the playerTransform reference when the script starts.
+    /// </summary>
     void Start()
     {
-        // Znajdü gracza po tagu
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    /// <summary>
+    /// Checks the distance to the player and spawns enemies if within spawnDistance.
+    /// </summary>
     void Update()
     {
         if (playerTransform != null)
@@ -27,6 +35,9 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns an enemy at a random position around the spawner within a radius of 20 units.
+    /// </summary>
     void SpawnEnemies()
     {
         Vector3 randomPosition2D = Random.insideUnitCircle * 20;

@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// The ChaseSkeletonState class represents the state where a skeleton chases the player using NavMeshAgent.
+/// </summary>
 public class ChaseSkeletonState : StateMachineBehaviour
 {
     NavMeshAgent agent;
     Transform player;
 
+    /// <summary>
+    /// Called when the state machine enters this state.
+    /// Initializes the NavMeshAgent, retrieves the player's Transform, and sets the agent's speed.
+    /// </summary>
+    /// <param name="animator">The Animator component controlling the skeleton's animations.</param>
+    /// <param name="stateInfo">Information about the current animator state.</param>
+    /// <param name="layerIndex">The index of the current layer in the animator.</param>
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -16,6 +26,14 @@ public class ChaseSkeletonState : StateMachineBehaviour
         agent.speed = 2.5f;
     }
 
+    /// <summary>
+    /// Called on each frame update while the state machine is in this state.
+    /// Updates the NavMeshAgent's destination, checks the distance to the player,
+    /// and triggers attacks based on proximity.
+    /// </summary>
+    /// <param name="animator">The Animator component controlling the skeleton's animations.</param>
+    /// <param name="stateInfo">Information about the current animator state.</param>
+    /// <param name="layerIndex">The index of the current layer in the animator.</param>
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -48,6 +66,13 @@ public class ChaseSkeletonState : StateMachineBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when the state machine exits this state.
+    /// Resets the NavMeshAgent's path and velocity to stop movement.
+    /// </summary>
+    /// <param name="animator">The Animator component controlling the skeleton's animations.</param>
+    /// <param name="stateInfo">Information about the current animator state.</param>
+    /// <param name="layerIndex">The index of the current layer in the animator.</param>
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the behavior of a skeleton enemy.
+/// </summary>
 public class SkeletonScript : MonoBehaviour
 {
     public int HP = 40;
@@ -13,12 +16,19 @@ public class SkeletonScript : MonoBehaviour
 
     public HealthBar healthBar;
 
+    /// <summary>
+    /// Initializes the skeleton's health and health bar on start.
+    /// </summary>
     public void Start()
     {
         healthBar.setMaxHealth(HP);
         healthBar.setHealth(HP);
     }
 
+    /// <summary>
+    /// Reduces the skeleton's health by the given amount.
+    /// </summary>
+    /// <param name="damage">Amount of damage to apply.</param>
     public void TakeDamage(int damage)
     {
         int randomNumber = Random.Range(1, 3);
@@ -46,6 +56,9 @@ public class SkeletonScript : MonoBehaviour
         }   
     }
 
+    /// <summary>
+    /// Drops a mana potion at the drop point with a random chance.
+    /// </summary>
     private void DropPotion()
     {
         int randomNumber = Random.Range(1, 4);

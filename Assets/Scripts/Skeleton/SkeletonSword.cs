@@ -3,8 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles collision with player and deals damage.
+/// </summary>
 public class SkeletonSword : MonoBehaviour
 {
+    /// <summary>
+    /// Triggered when another collider enters this collider.
+    /// </summary>
+    /// <param name="other">The collider that entered this collider.</param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -14,17 +21,6 @@ public class SkeletonSword : MonoBehaviour
 
             GetComponent<Collider>().isTrigger = false;
             other.GetComponent<FirstPersonController>().TakeDamage(damage <= 0 ? 1: damage);
-
-            //StartCoroutine(ResetSwordCollider());
         }
     }
-
-    private IEnumerator ResetSwordCollider()
-    {
-        GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(1.2f); // Adjust the duration as needed
-        GetComponent<Collider>().enabled = true;
-    }
 }
-
-
