@@ -24,7 +24,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Image Image { get => image; set => image = value; }
 
     /// <summary>
-    /// 
+    /// Sets current slot as parent
     /// </summary>
     /// <param name="eventData"></param>
     public void OnBeginDrag(PointerEventData eventData)
@@ -36,7 +36,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
 
     /// <summary>
-    /// 
+    /// Object follows mouse cursor
     /// </summary>
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
@@ -45,7 +45,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
 
     /// <summary>
-    /// Sets a slot as parent
+    /// Sets new slot as parent
     /// </summary>
     /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData)

@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class that manages the entire inventory system
+/// </summary>
 public class InventoryManager : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -94,7 +97,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI levelUpText;
 
-
+    /// <summary>
+    /// Loads data from current save and initializes objects
+    /// </summary>
     void Start()
     {
         LoadItems(SaveManager.Instance.currentSave.items);
@@ -112,7 +117,9 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Levels up player if they collect enough experience
+    /// </summary>
     void Update()
     {
         if (EXP >= EXPTOLV)
@@ -121,6 +128,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Adds the item to inventory, based on it's type. Creates a draggable item object and puts it in first free slot in the correct inventory tab
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns>True if item was succesfully added. False if all slots are occupied</returns>
     public bool AddItem(Item item)
     {
 
@@ -166,6 +179,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates new draggable item object
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="transform">Parent transform</param>
+    /// <returns>GameObject with DraggableItem component</returns>
     public GameObject createNewDraggableItem(Item item, Transform transform)
     {
         GameObject draggableItem = new GameObject("DraggableItem");
@@ -180,6 +199,11 @@ public class InventoryManager : MonoBehaviour
         return draggableItem;
     }
 
+    /// <summary>
+    /// Use given item and update stats
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns>True if item was used. False otherwise.</returns>
     public bool UseItem(Item item)
     {
         if (item.ItemType != ItemType.Consumable)
@@ -221,6 +245,9 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Updates stats in UI
+    /// </summary>
     public void UpdateStats()
     {
         LevelText.text = "LEVEL - " + LEVEL.ToString();
@@ -235,6 +262,11 @@ public class InventoryManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().UpdateStats(HP, MaxHP, MP, MaxMP, STR, MAG, DEF);
     }
 
+    /// <summary>
+    /// Updates stats with given item parameters. Adds if equipped. Subtracts if not
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="equipped"></param>
     public void UpdateStats(Item item, bool equipped)
     {
         if (equipped)
@@ -263,6 +295,10 @@ public class InventoryManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>().UpdateStats(HP, MaxHP, MP, MaxMP, STR, MAG, DEF);
     }
 
+    /// <summary>
+    /// Updates hp stat
+    /// </summary>
+    /// <param name="hp"></param>
     public void UpdateHP(int hp)
     {
         HP = hp;
@@ -274,6 +310,10 @@ public class InventoryManager : MonoBehaviour
             + "\n" + "DEF - " + DEF.ToString();
     }
 
+    /// <summary>
+    /// Updates mp stat
+    /// </summary>
+    /// <param name="mp"></param>
     public void UpdateMP(int mp)
     {
         MP = mp;
@@ -285,6 +325,9 @@ public class InventoryManager : MonoBehaviour
             + "\n" + "DEF - " + DEF.ToString();
     }
 
+    /// <summary>
+    /// Opens inventory tab
+    /// </summary>
     public void openInventory()
     {
         InventoryMenu.SetActive(true);
@@ -292,6 +335,9 @@ public class InventoryManager : MonoBehaviour
         CloseDescription();
     }
 
+    /// <summary>
+    /// Opens equipment tab
+    /// </summary>
     public void openEquipment()
     {
         InventoryMenu.SetActive(false);
@@ -299,6 +345,10 @@ public class InventoryManager : MonoBehaviour
         CloseDescription();
     }
 
+    /// <summary>
+    /// Opens description window with description of given item
+    /// </summary>
+    /// <param name="item"></param>
     public void showDescription(Item item)
     {
         if (item != null)
@@ -336,21 +386,34 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Closes desciption window
+    /// </summary>
     public void CloseDescription()
     {
         descriptionPanel.SetActive(false);
     }
 
+    /// <summary>
+    /// Closes level up window
+    /// </summary>
     public void CloseLevelUp()
     {
         GameEventsManager.Instance.gameModeEvents.LevelUpMessageOnOff(false);
     }
 
+    /// <summary>
+    /// Toggles level up window's state
+    /// </summary>
+    /// <param name="state"></param>
     public void ToggleLevelUp(bool state)
     {
         levelUpPanel.SetActive(state);
     }
 
+    /// <summary>
+    /// Adds new equipment slots in equipment tab (unused)
+    /// </summary>
     public void AddSlots()
     {
         RectTransform rectTransform = scrollPanel.GetComponent<RectTransform>();
@@ -364,12 +427,19 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds given amount to EXP variable and updates UI
+    /// </summary>
+    /// <param name="amount"></param>
     public void AddExp(int amount)
     {
         EXP += amount;
         ExpText.text = "EXP - " + EXP.ToString() + "/" + EXPTOLV.ToString();
     }
 
+    /// <summary>
+    /// Levels up player's stats
+    /// </summary>
     public void LevelUp()
     {
 
@@ -416,12 +486,20 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds given amount to GOLD stat an updates UI
+    /// </summary>
+    /// <param name="amount"></param>
     private void UpdateMoney(int amount)
     {
         GOLD += amount;
         MoneyText.text = GOLD.ToString();
     }
 
+    /// <summary>
+    /// Toggles inventory menu with given state
+    /// </summary>
+    /// <param name="state"></param>
     private void ToggleInventoryMenu(bool state)
     {
         InventoryPanel.SetActive(state);
@@ -432,11 +510,18 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Adds given item to inventory 
+    /// </summary>
+    /// <param name="item"></param>
     private void ItemAddEvenHandler(Item item)
     {
         _ = AddItem(item);
     }
 
+    /// <summary>
+    /// Subscribes to events.
+    /// </summary>
     private void OnEnable()
     {
         GameEventsManager.Instance.gameModeEvents.OnToggleInventory += ToggleInventoryMenu;
@@ -447,6 +532,9 @@ public class InventoryManager : MonoBehaviour
         GameEventsManager.Instance.playerEvents.OnItemAdd += ItemAddEvenHandler;
     }
 
+    /// <summary>
+    /// Unsubscribes from events.
+    /// </summary>
     private void OnDisable()
     {
         GameEventsManager.Instance.gameModeEvents.OnToggleInventory -= ToggleInventoryMenu;
@@ -457,7 +545,10 @@ public class InventoryManager : MonoBehaviour
         GameEventsManager.Instance.playerEvents.OnItemAdd -= ItemAddEvenHandler;
     }
 
-    //Metoda zapisuj¹ca przedmioty w ekwipunku
+    /// <summary>
+    /// Creates a list of items in inventory and equipment to a list
+    /// </summary>
+    /// <returns>List of pairs (itemId, Quantity)</returns>
     public List<KeyValuePair<string, int>> SaveItems()
     {
         List<KeyValuePair<string, int>> items = new List<KeyValuePair<string, int>>();
@@ -478,7 +569,10 @@ public class InventoryManager : MonoBehaviour
         return items;
     }
 
-    //Metoda zapisuj¹ca wyekwipowane przedmioty
+    /// <summary>
+    /// Creates a list of equipped items
+    /// </summary>
+    /// <returns>List of pairs (itemId, itemType)</returns>
     public List<KeyValuePair<string, string>> SaveEquippedItems()
     {
         List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
@@ -493,7 +587,10 @@ public class InventoryManager : MonoBehaviour
         return items;
     }
 
-    //Metoda wczytuj¹ca przedmioty do ekwipunku
+    /// <summary>
+    /// Adds items to inventory based on given list of pairs (itemId, quantity)
+    /// </summary>
+    /// <param name="items"></param>
     public void LoadItems(List<KeyValuePair<string, int>> items)
     {
         foreach (KeyValuePair<string, int> entry in items)
@@ -507,7 +604,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    //Metoda wczytuj¹ca wyekwipowane przedmioty
+    /// <summary>
+    /// Equips items based on list of pairs (itemId, itemType)
+    /// </summary>
+    /// <param name="items"></param>
     public void LoadEquippedItems(List<KeyValuePair<string, string>> items)
     {
         foreach (KeyValuePair<string, string> entry in items)
@@ -532,6 +632,10 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Creates a dictionary containing player stats
+    /// </summary>
+    /// <returns>Dictionary containing player stats</returns>
     public Dictionary<string, int> saveStats()
     {
         Dictionary<string, int> stats = new Dictionary<string, int>();
@@ -552,6 +656,10 @@ public class InventoryManager : MonoBehaviour
         return stats;
     }
 
+    /// <summary>
+    /// Changes player stats based on a given dictionary object
+    /// </summary>
+    /// <param name="stats"></param>
     public void loadStats(Dictionary<string, int> stats)
     {
         foreach (KeyValuePair<string, int> item in stats)
