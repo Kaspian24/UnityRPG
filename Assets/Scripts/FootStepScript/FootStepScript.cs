@@ -2,16 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages footsteps sounds
+/// </summary>
 public class FootStepScript : MonoBehaviour
 {
+    /// <summary>
+    /// Class object Footstep
+    /// </summary>
     public GameObject FootStep;
-    // Start is called before the first frame update
+    /// <summary>
+    /// Footsteps are set to false
+    /// Start is called before the first frame update
+    /// </summary>
     void Start()
     {
         FootStep.SetActive(false);
     }
-
-    // Update is called once per frame
+    /// <summary>
+    /// Plays sound when player presses the move key button and stops when the key is relesed
+    /// Update is called once per frame
+    /// </summary>
     void Update()
     {
         if(Input.GetKeyDown("w"))
